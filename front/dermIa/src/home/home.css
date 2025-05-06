@@ -10,16 +10,26 @@
     color: #2c3e50;
     margin-bottom: 30px;
     line-height: 1.4;
+    text-align: left;
+    max-width: 50%;
 }
 
 .text {
     font-size: 1.2em;
     color: #7f8c8d;
     margin-bottom: 40px;
+    text-align: left;
+    max-width: 50%;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: left;
+    align-items: left
 }
 
 .button {
-    background-color: #3498db;
+    background-color: #000000;
     color: white;
     padding: 15px 40px;
     font-size: 1.1em;
@@ -28,10 +38,17 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-bottom: 40px;
-}
 
+}
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: #6553F5;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
 .button:hover {
-    background-color: #2980b9;
+    background-color: #6553F5;
 }
 
 .features-section {
@@ -62,7 +79,7 @@
 }
 
 .feature-title {
-    color: #3498db;
+    color: #000000;
     font-size: 1.4em;
     margin-bottom: 15px;
 }
@@ -73,22 +90,6 @@
     margin: 0 auto;
 }
 
-.add-section {
-    background-color: transparent;
-    border: 2px dashed #3498db;
-    color: #3498db;
-    padding: 10px 30px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1em;
-    margin-top: 30px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.add-section:hover {
-    background-color: rgba(52, 152, 219, 0.1);
-    transform: scale(1.05);
-}
 
 .steps-section {
     display: flex;
@@ -109,6 +110,24 @@
     text-align: center;
 }
 
+
+.steps-features-title {
+    font-size: 2em;
+    max-width: 60%;
+    color: #2c3e50;
+    margin: 0 auto 40px;
+    padding-left: 30%;
+    padding-right: 30%;
+}
+
+.steps-intro {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    text-align: center;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
 .step-divider {
     display: none;
 }
@@ -119,7 +138,7 @@
     }
 
     .title {
-        font-size: 2em;
+        font-size: 1em;
     }
 
     .features-title {

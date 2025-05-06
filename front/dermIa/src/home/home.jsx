@@ -6,7 +6,9 @@ const Home = () => {
     <div className="container">
       <h1 className="title">Détectez la dangerosité de vos grains de beauté en un clin d’œil.</h1>
       <p className="text">Notre IA générative analyse vos grains de beauté pour garantir votre sécurité et votre santé.</p>
+      <div className="btn-container">
       <button className="button">Commencer</button>
+      </div>
       <h2 className="features-title">Découvrez nos fonctionnalités innovantes pour la santé de votre peau.</h2>
       <div className="features-section">
           
@@ -25,11 +27,9 @@ const Home = () => {
             <p className="feature-text">Déplacez vos images de grains de beauté facilement pour une analyse rapide.</p>
           </div>
         </div>
-        <div className="section-placeholder">
-          <button className="add-section">+ Section</button>
-        </div>
+        
         <div className="steps-section">
-        <h2 className="steps-main-title">Découvrez comment utiliser notre service</h2>
+        <h2 className="steps-features-title">Découvrez comment utiliser notre service</h2>
         <p className="steps-intro">Commencez par créer un compte pour accéder à toutes nos fonctionnalités. Une fois connecté, vous pourrez détecter la dangerosité de vos grains de beauté et suivre leur évolution.</p>
 
         <div className="step">
