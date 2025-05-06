@@ -28,6 +28,39 @@ const Home = () => {
         <div className="section-placeholder">
           <button className="add-section">+ Section</button>
         </div>
+        <div className="steps-section">
+        <h2 className="steps-main-title">Découvrez comment utiliser notre service</h2>
+        <p className="steps-intro">Commencez par créer un compte pour accéder à toutes nos fonctionnalités. Une fois connecté, vous pourrez détecter la dangerosité de vos grains de beauté et suivre leur évolution.</p>
+
+        <div className="step">
+          <h3 className="step-title">Étape 1 : Créez votre compte</h3>
+          <p className="step-text">Inscrivez-vous en quelques clics pour commencer.</p>
+        </div>
+
+        <div className="step-divider"></div>
+
+        <div className="step">
+          <h3 className="step-title">Étape 2 : Téléchargez vos photos</h3>
+          <p className="step-text">Glissez-déposez vos images de grains de beauté pour analyse.</p>
+        </div>
+
+        <div className="step-divider"></div>
+
+        <div className="step">
+          <h3 className="step-title">Étape 3 : Suivez l'évolution</h3>
+          <p className="step-text">Organisez vos photos dans des albums pour un suivi facile.</p>
+        </div>
+      </div>
+      <div className="step-actions">
+            <button className="step-button unchecked">Commencer</button>
+            <button className="step-button checked">Se connecter</button>
+          </div>
+
+      <div className="cta-section">
+        <h1 className="title">Créez votre compte gratuitement</h1>
+        <p className="text">Rejoignez notre communauté et commencez à surveiller la santé de vos grains de beauté. Essayez notre service innovant sans frais dès aujourd’hui !</p>
+        <button className="button">Inscription</button>
+      </div>
     </div>
   );
 };
