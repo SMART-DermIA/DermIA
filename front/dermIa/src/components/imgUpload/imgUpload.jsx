@@ -25,7 +25,11 @@ export default function ImageUpload() {
 
     const handleConfirm = () => {
         setConfirmed(true);
-        console.log("Image confirmée");
+        
+		setTimeout(() => {
+			// Simulate an API call
+			navigate("/result", {state: { image: preview }});
+		}, 3000);
     };
 
 	const handleCancel = () => {
