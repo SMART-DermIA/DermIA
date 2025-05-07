@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 80%;
+    max-width: 75%;
     margin: 0 auto;
 }
 
@@ -16,13 +16,33 @@
 }
 
 .historique-title {
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
 }
 
 .historique-header {
     margin-top: 40px;
+    margin-left: 40px;
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+.historique-header-button{
+    padding: 3%;
+}
+.nouvelle-button {
+    padding: 20px;
+    min-height: 3%;
+    background-color: #F0CFDF;
+    color: #660033;
+    border: none;
+    border-radius: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nouvelle-button:hover {
+    color: #660033; 
 }
