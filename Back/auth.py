@@ -27,13 +27,24 @@ def register():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+
+    if not data:
+        return jsonify({"error": "No input data provided"}), 400
+
     username = data.get('username')
     password = data.get('password')
 
+    if not username or not password:
+        return jsonify({"error": "Username and password are required"}), 400
+
     user = User.query.filter_by(username=username).first()
+    if user:
+        print(f"User trouvé : {user.username} (id: {user.id})")
+    else:
+        print("Aucun utilisateur trouvé pour :", username)
 
     if not user or not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"error": "Invalid username or password"}), 401
+        return jsonify({"error": "Invalid username or password OUAIS"}), 401
 
     access_token = create_access_token(identity=user.id)
 
