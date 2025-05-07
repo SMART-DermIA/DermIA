@@ -79,7 +79,7 @@
   padding-inline: 10px;
   text-decoration: none;
   border-bottom: 2px solid transparent;
-  transition: border-bottom 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease, border-bottom 0.3s ease;
 }
 
 
@@ -90,7 +90,7 @@
 .nav-elem:hover {
   transform: scale(1.1);
   color: #660033;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+  text-shadow: 2px 2px 5px rgba(102, 0, 51, 0.35); 
 }
 
 .nav-center {

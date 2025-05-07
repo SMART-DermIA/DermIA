@@ -19,7 +19,7 @@
 }
 
 .upload-box {
-	border: 2px dashed #a3005b;
+	border: 2px dashed #660033;
 	border-radius: 1em;
 	padding: 3em 1em;
 	width: 100%;
@@ -33,11 +33,6 @@
 	background-color: #f8e6ef;
 }
 
-.upload-icon {
-	font-size: 3rem;
-	color: #a3005b;
-	margin-bottom: 1em;
-}
 
 .drop-text {
 	font-size: 1.2rem;
@@ -51,8 +46,8 @@
 }
 
 .upload-button {
-	background-color: #e3a8c1;
-	color: #4a0033;
+	background-color: #F0CFDF;
+	color: #660033;
 	padding: 0.8em 1.2em;
 	border-radius: 0.5em;
 	font-weight: bold;
@@ -90,8 +85,8 @@
 }
 
 .cancel-button {
-	background-color: #ccc;
-	color: #333;
+	background-color: #F0CFDF;
+	color: #660033;
 	padding: 0.8em 1.5em;
 	border: none;
 	border-radius: 1em;
@@ -127,4 +122,10 @@
 	100% {
 	  transform: rotate(360deg);
 	}
+  }
+
+
+  .img {	
+	max-width: 15%;
+	margin-bottom: 20px;
   }

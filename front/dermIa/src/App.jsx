@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import Navbar from './components/navbar'
-import Footer from './components/common/footer'
+import Navbar from './components/navBar/navbar'
+import Footer from './components/footer/footer'
 import HomePage from './home/home'
-import Login from './login'
+import Login from './login/login'
 import Register from './register'
 import UserAccueil from './userAccueil/userAccueil'
 
