@@ -41,7 +41,7 @@
   input,
   .password-input-container input {
     width: 100%; /* Asegura que todos los inputs ocupen el mismo ancho */
-    height: 50px; /* Define una altura consistente */
+    height: 44px; /* Define una altura consistente */
     padding: 0.8rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
@@ -52,8 +52,10 @@
   
   .password-input-container {
     width: 100%; /* Asegura que el contenedor de la contraseña tenga el mismo ancho */
-    height: 50px; /* Igual altura que los otros inputs */
+    height: 44px; /* Igual altura que los otros inputs */
     position: relative;
+    margin-bottom: 1.5rem;
+    
   }
   
   .password-input-container input {
@@ -79,6 +81,9 @@
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
+    margin: 0 auto;
+    display: block;
+    width: 137px;
   }
   
   .submit-button:hover {
