@@ -73,9 +73,9 @@ export default function Navbar() {
                 </li>
                 <li className="nav-item nav-elem">
                   <Link
-                    to="/profile"
+                    to="/historique"
                     className={`nav-elem ${
-                      location.pathname === "/profile" ? "active" : ""
+                      location.pathname === "/historique" ? "active" : ""
                     }`}
                   >
                     Historique
