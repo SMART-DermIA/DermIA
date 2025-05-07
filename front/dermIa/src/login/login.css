@@ -1,0 +1,98 @@
+
+  
+  .login-card {
+    background: #fff;
+    padding: 0rem 5rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .login-card h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-card p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    color: #555;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+  }
+  
+.form-group{
+    align-items: left;
+    text-align: left;
+}
+  
+  input,
+  .password-input-container input {
+    width: 100%; 
+    height: 50px; 
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; 
+  }
+  
+  .password-input-container {
+    width: 100%;
+    height: 50px; 
+    position: relative;
+  }
+  
+  .password-input-container input {
+    height: 100%; 
+    padding-right: 40px; 
+  }
+  
+  .password-input-container .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .submit-button {
+    margin-top: 50px;
+    background-color: #800020;
+    color: #fff;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .submit-button:hover {
+    background-color: #a00028;
+  }
+  
+  .terms {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 1rem;
+  }
+  
+  .login-logo {
+    display: block;
+    margin: 0 auto 1rem auto; 
+    max-width: 100px;
+    height: auto;
+  }
+
+
+  .register-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
