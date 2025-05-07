@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './home.css';
 import Navbar from '../components/navBar/navbar';
 import Footer from '../components/footer/footer';
@@ -8,6 +8,20 @@ import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiStats } from "react-icons/bi";
 
 const Home = () => {
+
+	const [backendMessage, setBackendMessage] = useState('Chargement...');
+	const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
+
+	useEffect(() => {
+		fetch(`${API_BASE_URL}/`)
+		.then(response => response.json())
+		.then(data => setBackendMessage(data.message))
+		.catch(error => {
+			console.error('Erreur lors de la connexion au backend:', error);
+			setBackendMessage('Erreur de connexion au backend');
+		});
+	}, []);
+
 	return (
 		<div className="home">
 			<Navbar className="navbar"/>
@@ -70,6 +84,11 @@ const Home = () => {
 					<button className="button">Inscription</button>
 				</div>
 			</div>
+
+		<div style={{ marginTop: "2em", textAlign: "center", fontSize: "0.9em", color: "gray" }}>
+        	Backend : {backendMessage}
+        </div>
+		
 		</div>
 		<Footer />
 	</div>
