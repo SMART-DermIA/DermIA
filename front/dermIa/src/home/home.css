@@ -5,6 +5,12 @@
     margin: 0 auto;
 }
 
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
 .title {
     font-size: 2.5em;
     color: #000000;
@@ -39,6 +45,7 @@
 .icon {
     width: 15%;
     height: 15%;
+    margin-bottom: 10px;
 }
 
 .button {
@@ -124,19 +131,16 @@
 
 .steps-features-title {
     font-size: 2em;
-    max-width: 60%;
+    min-width: 60%;
     color: #660033;
     margin: 0 auto 40px;
     padding-left: 30%;
     padding-right: 30%;
 }
 
-.steps-intro {
-    font-size: 1.2em;
-    margin-bottom: 40px;
-    text-align: center;
-    padding-left: 20%;
-    padding-right: 20%;
+.step-title {
+    font-size: 1.4em;
+    color: #000000;
 }
 
 .step-divider {

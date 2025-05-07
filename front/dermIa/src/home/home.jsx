@@ -1,8 +1,11 @@
 import React from 'react';
 import './home.css';
+import Navbar from '../components/navbar';
 
 const Home = () => {
   return (
+    <div className="home">
+    <Navbar className="navbar"/>
     <div className="container">
       <h1 className="title">Détectez la dangerosité de vos grains de beauté en un clin d’œil.</h1>
       <p className="text">Notre IA générative analyse vos grains de beauté pour garantir votre sécurité et votre santé.</p>
@@ -66,6 +69,7 @@ const Home = () => {
         <button className="button">Inscription</button>
         </div>
       </div>
+    </div>
     </div>
   );
 };

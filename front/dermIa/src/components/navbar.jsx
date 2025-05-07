@@ -11,9 +11,11 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg bg-light">
+        <nav className="navbar navbar-expand-lg">
             <div className="container-fluid d-flex justify-content-between">
-				<Link to="/" className="navbar-brand">DermIA Logo</Link>
+			<Link to="/" className="navbar-brand">
+                <img src="/logo.png" alt="DermIA Logo" style={{ height: "100px" }} />
+            </Link>
                 <button 
                     className="navbar-toggler custom-toggler" 
                     type="button" 

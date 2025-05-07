@@ -4,11 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Navbar from './components/navbar'
-import HomePage from './home'
+import HomePage from './home/home'
 import Login from './login'
 import Register from './register'
 
-import './App.css'
 
 function App() {
   return (

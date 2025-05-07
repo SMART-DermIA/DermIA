@@ -1,6 +1,9 @@
 .navbar {
   padding: .5em 1.5em;
+  background-color: #ffffff;
+  box-shadow: 0 1px 5px rgba(102, 0, 51, 0.5);
 }
+
 
 @media (min-width: 992px) {
   .navbar-expand-lg .navbar-nav .nav-link {
@@ -9,7 +12,7 @@
 }
 
 .nav-link {
-  color: #fff;
+  color: #ffffff;
   font-weight: 500;
   padding: 1em;
   margin: 1em;
@@ -45,13 +48,13 @@
 
 .nav-link-secondary, .nav-link-secondary:hover{
   background-color: #660033;
-  border: 1px solid #fff; /* Borde negro sólido */
-  color: #fff;
+  border: 1px solid #000000; /* Borde negro sólido */
+  color: #ffffff;
   border-radius: 1em;
 }
 
 .nav-link-primary, .nav-link-primary:hover {
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid #660033; /* Borde negro sólido */
   color: #660033;
   border-radius: 1em;
