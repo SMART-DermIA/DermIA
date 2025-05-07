@@ -15,7 +15,7 @@ export default function Navbar() {
             <div className="container-fluid d-flex justify-content-between">
 				<Link to="/" className="navbar-brand">DermIA Logo</Link>
                 <button 
-                    className="navbar-toggler" 
+                    className="navbar-toggler custom-toggler" 
                     type="button" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#navbarNav" 
@@ -23,7 +23,7 @@ export default function Navbar() {
                     aria-expanded="false" 
                     aria-label="Toggle navigation"
                 >
-                    <span className="navbar-toggler-icon">aaa</span>
+                    <span className="navbar-toggler-icon"></span>
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarNav">
@@ -63,5 +63,6 @@ export default function Navbar() {
                 </div>
             </div>
         </nav>
+        
     );
 }
