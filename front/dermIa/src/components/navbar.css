@@ -1,0 +1,58 @@
+.navbar {
+  padding: .5em 1.5em;
+}
+
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav .nav-link {
+  padding: .8em 1.2em;
+  }
+}
+
+.nav-link {
+  color: #fff;
+  font-weight: 500;
+  padding: 1em;
+  margin: 1em;
+}
+
+.custom-toggler.navbar-toggler {
+  border-color: rgb(102, 0, 51);
+}
+
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath stroke='rgba(102, 0, 51, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24' /%3E%3C/svg%3E");
+
+  }
+
+.nav-lang {
+  font-weight: 400;
+  padding: 0.5em 0.8em;
+  /*margin-left: 1em;*/
+  cursor: pointer;
+  color: #000;
+  text-decoration: none;
+}
+
+.nav-lang.active {
+  font-weight: 700;
+  color: #660033;
+}
+
+.nav-lang:hover {
+  color: #660033;
+  text-decoration: none;
+}
+
+.nav-link-secondary, .nav-link-secondary:hover{
+  background-color: #660033;
+  border: 1px solid #fff; /* Borde negro sólido */
+  color: #fff;
+  border-radius: 1em;
+}
+
+.nav-link-primary, .nav-link-primary:hover {
+  background-color: #fff;
+  border: 1px solid #660033; /* Borde negro sólido */
+  color: #660033;
+  border-radius: 1em;
+}
