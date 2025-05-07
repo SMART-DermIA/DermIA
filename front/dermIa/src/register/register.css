@@ -1,0 +1,113 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+  }
+  
+  .register-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .register-card h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .register-card p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    color: #555;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    text-align: left;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  input,
+  .password-input-container input {
+    width: 100%; /* Asegura que todos los inputs ocupen el mismo ancho */
+    height: 50px; /* Define una altura consistente */
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Incluye padding y borde en el ancho y alto */
+  }
+  
+  .password-input-container {
+    width: 100%; /* Asegura que el contenedor de la contraseña tenga el mismo ancho */
+    height: 50px; /* Igual altura que los otros inputs */
+    position: relative;
+  }
+  
+  .password-input-container input {
+    height: 100%; /* Asegura que el input dentro del contenedor ocupe toda la altura */
+    padding-right: 40px; /* Espacio para el ícono */
+  }
+  
+  .password-input-container .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .submit-button {
+    background-color: #800020;
+    color: #fff;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .submit-button:hover {
+    background-color: #a00028;
+  }
+  
+  .terms {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 1rem;
+  }
+  
+  .login-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .login-link a {
+    color: #800020;
+    text-decoration: none;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+
+  .register-logo {
+    display: block;
+    margin: 0 auto 1rem auto; /* Center the logo and add spacing below */
+    max-width: 100px; /* Adjust size as needed */
+    height: auto;
+  }

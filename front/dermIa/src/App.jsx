@@ -7,7 +7,7 @@ import Navbar from './components/navBar/navbar'
 import Footer from './components/footer/footer'
 import HomePage from './home/home'
 import Login from './login/login'
-import Register from './register'
+import Register from './register/register'
 import UserAccueil from './userAccueil/userAccueil'
 
 
