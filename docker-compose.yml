@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://backend:8000
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ia
+      - db
+    environment:
+      - IA_URL=http://ia:8500
+      - DATABASE_URL=postgresql://user:password@db:5432/dermia
+
+  ia:
+    build: ./ia
+    ports:
+      - "8500:8500"
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dermia
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
