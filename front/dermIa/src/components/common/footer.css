@@ -1,0 +1,15 @@
+.footer {
+	padding: .5em 1.5em;
+	background-color: #f8ebf1;
+}
+
+.footer-link, .footer-link:hover {
+	font-weight: 600;
+	text-decoration: none;
+	color: #660033;
+}
+
+.footer-names {
+	font-weight: 600;
+	color: #660033;
+}
