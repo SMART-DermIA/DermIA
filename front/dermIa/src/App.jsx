@@ -6,7 +6,7 @@ import viteLogo from '/vite.svg'
 import Navbar from './components/navBar/navbar'
 import Footer from './components/footer/footer'
 import HomePage from './home/home'
-import Login from './login'
+import Login from './login/login'
 import Register from './register'
 import UserAccueil from './userAccueil/userAccueil'
 

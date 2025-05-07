@@ -96,7 +96,7 @@ export default function Navbar() {
               <>
                 <li className="nav-item">
                   <Link
-                    to="/"
+                    to="/login"
                     className="nav-link nav-link-primary"
                     onClick={() => setIsAuthenticated(true)}
                   >
