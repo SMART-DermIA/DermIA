@@ -1,7 +1,7 @@
 import React from 'react';
 import './home.css';
-import Navbar from '../components/navbar';
-import Footer from '../components/common/footer';
+import Navbar from '../components/navBar/navbar';
+import Footer from '../components/footer/footer';
 
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineAddAPhoto } from "react-icons/md";
@@ -67,7 +67,7 @@ const Home = () => {
 					<h1 className="title-final">Créez votre compte gratuitement</h1>
 					<div className="cta-divider">
 					<p className="cta-text">Rejoignez notre communauté et commencez à surveiller la santé de vos grains de beauté. Essayez notre service innovant sans frais dès aujourd'hui !</p>
-					<button className="button">S’inscrire</button>
+					<button className="button">Inscription</button>
 				</div>
 			</div>
 		</div>

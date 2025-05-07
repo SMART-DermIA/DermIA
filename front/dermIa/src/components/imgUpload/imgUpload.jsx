@@ -3,6 +3,8 @@ import { useDropzone } from "react-dropzone";
 import "./imgUpload.css";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { PiSpinnerGap } from "react-icons/pi";
+import { LuScanSearch } from "react-icons/lu";
+import { GrUndo } from "react-icons/gr";
 
 export default function ImageUpload() {
     const [preview, setPreview] = useState(null);
@@ -45,7 +47,7 @@ export default function ImageUpload() {
             {!preview ? (
                 <div {...getRootProps()} className={`upload-box ${isDragActive ? "drag-active" : ""}`}>
                     <input {...getInputProps()} />
-                    <FaCloudUploadAlt className="upload-icon" />
+                    <img src="/iconUpload.png" className="img" />
                     <p className="drop-text">Glissez-déposez votre image ici</p>
                     <p className="or-text">ou</p>
                     <div className="upload-button">Choisir un fichier depuis votre appareil</div>
@@ -55,11 +57,13 @@ export default function ImageUpload() {
                     {!confirmed ? (
 						<div><img src={preview} alt="Aperçu" className="preview-image" />
 							<div className="button-group">
-								<button className="confirm-button" onClick={handleConfirm}>
-									Confirmer l’image
-								</button>
 								<button className="cancel-button" onClick={handleCancel}>
+                                    <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
 									Annuler
+								</button>
+								<button className="confirm-button" onClick={handleConfirm}>
+                                    <LuScanSearch size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                                    Lancer l’analyse
 								</button>
 							</div>
 						</div>

@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./navbar.css";
 
 export default function Navbar() {
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    JSON.parse(localStorage.getItem("isAuthenticated")) || false
+  );
+  const location = useLocation();
   let lastScrollY = 0;
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem("isAuthenticated");
   };
 
   useEffect(() => {
@@ -27,6 +35,10 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
+  }, [isAuthenticated]);
 
   return (
     <nav className={`navbar navbar-expand-lg ${showNavbar ? "visible" : "hidden"}`}>
@@ -49,34 +61,45 @@ export default function Navbar() {
           <ul className="navbar-nav ms-auto">
             {isAuthenticated ? (
               <>
-              <li className="nav-item nav-elem">
-                <Link to="/userAccueil" className={`nav-elem ${
-                      location.pathname === "/userAccueil" ? "active" : ""
-                    }`}>
-                  Accueil
-                </Link>
-              </li>
                 <li className="nav-item nav-elem">
-                  <Link to="/profile" className={`nav-elem ${
+                  <Link
+                    to="/userAccueil"
+                    className={`nav-elem ${
+                      location.pathname === "/userAccueil" ? "active" : ""
+                    }`}
+                  >
+                    Accueil
+                  </Link>
+                </li>
+                <li className="nav-item nav-elem">
+                  <Link
+                    to="/profile"
+                    className={`nav-elem ${
                       location.pathname === "/profile" ? "active" : ""
-                    }`}>
+                    }`}
+                  >
                     Historique
                   </Link>
                 </li>
                 <div className="nav-center"></div>
                 <li className="nav-item">
-                  <button
+                  <Link
+                    to="/"
                     className="nav-link nav-link-secondary"
-                    onClick={() => setIsAuthenticated(false)}
+                    onClick={handleLogout}
                   >
                     Se déconnecter
-                  </button>
+                  </Link>
                 </li>
               </>
             ) : (
               <>
                 <li className="nav-item">
-                  <Link to="/login" className="nav-link nav-link-primary">
+                  <Link
+                    to="/"
+                    className="nav-link nav-link-primary"
+                    onClick={() => setIsAuthenticated(true)}
+                  >
                     Se connecter
                   </Link>
                 </li>

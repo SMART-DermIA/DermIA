@@ -1,6 +1,8 @@
 .footer {
 	padding: .5em 1.5em;
 	background-color: #f8ebf1;
+	border-top-left-radius: 40px;
+ 	border-top-right-radius: 40px;
 }
 
 .footer-link, .footer-link:hover {
