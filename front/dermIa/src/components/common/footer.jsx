@@ -9,8 +9,10 @@ export default function Footer() {
                 <div className="row">
 
                     {/* Logo */}
-                    <div className="col-md-3 mb-3">
-                        <h5>DermIA Logo</h5>
+                    <div className="col-md-3 mb-3 text-center">
+					<Link to="/" className="navbar-brand">
+						<img src="/logo.png" alt="DermIA Logo" style={{ height: "150px" }} />
+					</Link>
                     </div>
 
                     {/* CGU */}
@@ -43,7 +45,7 @@ export default function Footer() {
                 </div>
 
                 <div className="text-start py-3 border-top mt-3">
-                    © {new Date().getFullYear()} DermIA. Tous droits réservés.
+                    © {new Date().getFullYear()} Derm'IA. Tous droits réservés.
                 </div>
             </div>
         </footer>
