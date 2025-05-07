@@ -70,3 +70,29 @@
   color: #660033;
   border-radius: 1em;
 }
+
+.nav-elem {
+  color: #660033;
+  font-weight: 500;
+  font-size: 1.15em;
+  padding-top: 25px;
+  padding-inline: 10px;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.3s ease;
+}
+
+
+.nav-elem.active {
+  border-bottom: 2px solid #660033; 
+}
+
+.nav-elem:hover {
+  transform: scale(1.1);
+  color: #660033;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+}
+
+.nav-center {
+  margin-right: 240px;
+}

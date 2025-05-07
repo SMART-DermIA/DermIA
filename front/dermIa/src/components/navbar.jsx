@@ -5,6 +5,7 @@ import "./navbar.css";
 export default function Navbar() {
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   let lastScrollY = 0;
 
   const handleLanguageChange = (lang) => {
@@ -14,9 +15,9 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
-        setShowNavbar(false); 
+        setShowNavbar(false);
       } else {
-        setShowNavbar(true); 
+        setShowNavbar(true);
       }
       lastScrollY = window.scrollY;
     };
@@ -46,16 +47,46 @@ export default function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link to="/login" className="nav-link nav-link-primary">
-                Se connecter
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/register" className="nav-link nav-link-secondary">
-                S'inscrire
-              </Link>
-            </li>
+            {isAuthenticated ? (
+              <>
+              <li className="nav-item nav-elem">
+                <Link to="/userAccueil" className={`nav-elem ${
+                      location.pathname === "/userAccueil" ? "active" : ""
+                    }`}>
+                  Accueil
+                </Link>
+              </li>
+                <li className="nav-item nav-elem">
+                  <Link to="/profile" className={`nav-elem ${
+                      location.pathname === "/profile" ? "active" : ""
+                    }`}>
+                    Historique
+                  </Link>
+                </li>
+                <div className="nav-center"></div>
+                <li className="nav-item">
+                  <button
+                    className="nav-link nav-link-secondary"
+                    onClick={() => setIsAuthenticated(false)}
+                  >
+                    Se déconnecter
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link nav-link-primary">
+                    Se connecter
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/register" className="nav-link nav-link-secondary">
+                    S'inscrire
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
           <div className="d-flex align-items-center">
             <span

@@ -15,7 +15,7 @@ const Home = () => {
 				<h1 className="title">Détectez la dangerosité de vos grains de beauté en un clin d’œil.</h1>
 				<p className="text">Notre IA générative analyse vos grains de beauté pour garantir votre sécurité et votre santé.</p>
 				<div className="btn-container">
-					<button className="button">Commencer</button>
+					<button className="button">S’inscrire et commencer</button>
 				</div>
 				<img src="/image1.png" alt="Foto Finder" className='image' />
 				<h2 className="features-title">Découvrez nos fonctionnalités innovantes pour la santé de votre peau.</h2>
@@ -67,7 +67,7 @@ const Home = () => {
 					<h1 className="title-final">Créez votre compte gratuitement</h1>
 					<div className="cta-divider">
 					<p className="cta-text">Rejoignez notre communauté et commencez à surveiller la santé de vos grains de beauté. Essayez notre service innovant sans frais dès aujourd'hui !</p>
-					<button className="button">Inscription</button>
+					<button className="button">S’inscrire</button>
 				</div>
 			</div>
 		</div>
