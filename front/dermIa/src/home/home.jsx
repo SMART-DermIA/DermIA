@@ -3,6 +3,10 @@ import './home.css';
 import Navbar from '../components/navbar';
 import Footer from '../components/common/footer';
 
+import { FaRegUser } from "react-icons/fa";
+import { MdOutlineAddAPhoto } from "react-icons/md";
+import { BiStats } from "react-icons/bi";
+
 const Home = () => {
 	return (
 		<div className="home">
@@ -37,7 +41,7 @@ const Home = () => {
 				<div className="steps-section">
 					<h2 className="steps-features-title">Découvrez comment utiliser notre service</h2>
 					<div className="step">
-						<img src="/icon1.png" alt="-" className='icon' />
+						<FaRegUser size={32} style={{ margin: '.5em' }} />
 						<h3 className="step-title">Étape 1 : Créez votre compte</h3>
 						<p className="step-text">Inscrivez-vous en quelques clics pour commencer.</p>
 					</div>
@@ -45,7 +49,7 @@ const Home = () => {
 					<div className="step-divider"></div>
 
 					<div className="step">
-					<img src="/icon2.png" alt="-" className='icon' />
+						<MdOutlineAddAPhoto  size={32} style={{ margin: '.5em' }} />
 						<h3 className="step-title">Étape 2 : Téléchargez vos photos</h3>
 						<p className="step-text">Glissez-déposez vos images de grains de beauté pour analyse.</p>
 					</div>
@@ -53,7 +57,7 @@ const Home = () => {
 					<div className="step-divider"></div>
 
 					<div className="step">
-						<img src="/icon3.png" alt="-" className='icon' />
+						<BiStats size={32} style={{ margin: '.5em' }} />
 						<h3 className="step-title">Étape 3 : Suivez l'évolution</h3>
 						<p className="step-text">Organisez vos photos dans des albums pour un suivi facile.</p>
 					</div>
