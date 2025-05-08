@@ -17,6 +17,9 @@ db.init_app(app)
 bcrypt.init_app(app)
 jwt = JWTManager(app)
 
+with app.app_context():
+    db.create_all()
+
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(analyze_bp)
 
