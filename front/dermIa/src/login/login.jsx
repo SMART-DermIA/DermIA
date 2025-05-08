@@ -3,20 +3,51 @@ import { useNavigate } from "react-router-dom";
 import "./login.css"; 
 
 function Login({ closePopup, setIsAuthenticated }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+    const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
 
-    setIsAuthenticated(true);
-    closePopup();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
 
-    navigate("/userAccueil");
-  };
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: email,   // envoie l'email comme username pour l'instant
+                    password: password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Token reçu :", data.access_token);
+                setSuccess("Connexion réussie !");
+                // Option bonus : sauvegarder le token pour la session
+                localStorage.setItem("token", data.access_token);
+                setIsAuthenticated(true);
+                closePopup();
+
+                navigate("/userAccueil");
+            } else {
+                setError(data.error || "Erreur de connexion.");
+            }
+        } catch (err) {
+            console.error("Erreur réseau ou serveur :", err);
+            setError("Erreur réseau ou serveur.");
+        }
+    };
+
 
   return (
       <div className="login-card">
@@ -26,7 +57,7 @@ function Login({ closePopup, setIsAuthenticated }) {
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
-              type="email"
+              type="text"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
