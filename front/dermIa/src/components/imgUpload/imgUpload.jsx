@@ -41,7 +41,7 @@ export default function ImageUpload() {
     };
 
 	const handleCancel = () => {
-		setPreview(null);
+		setPreview(false);
 		setAnalyzing(false);
         setResult(false);
         setUpload(true);
