@@ -9,6 +9,7 @@ import HomePage from './home/home'
 import Login from './login'
 import Register from './register'
 import UserAccueil from './userAccueil/userAccueil'
+import Result from './result/result'
 
 
 function App() {
@@ -20,7 +21,6 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/userAccueil" element={<UserAccueil/>}/>
-        
       </Routes>
     </Router>
   </div>

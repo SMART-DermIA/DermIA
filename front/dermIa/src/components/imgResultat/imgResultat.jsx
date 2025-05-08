@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { LuBookImage } from "react-icons/lu";
+import { GrUndo } from "react-icons/gr";
 
 import "./imgResultat.css";
 
@@ -12,7 +13,7 @@ export default function ImageResultat() {
 
 	useEffect(() => {
 		if (!image) {
-			navigate("/");
+			navigate("/result");
 		}
 	}, [image, navigate]);
 	
@@ -41,11 +42,11 @@ export default function ImageResultat() {
 			</div>
 			<p className="resultat-text">Votre grain de beauté ne présente pas d'anomalie</p>
 			<div className="button-group">
-				<button className="cancel-button" onClick={handleCancel}>
+				<button className="cancel-button">
 					<GrUndo size={20} />
 					Annuler
 				</button>
-				<button className="ajouter-button" onClick={handleAjouter}>
+				<button className="ajouter-button">
 					<LuBookImage size={20} />
 					Ajouter à un album
 				</button>
