@@ -24,7 +24,7 @@ function Register() {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Cambia entre mostrar y ocultar la contraseña
+    setShowPassword(!showPassword); 
   };
 
   const handleSubmit = async (e) => {
@@ -58,12 +58,11 @@ function Register() {
       console.error("Erreur réseau ou serveur :", err);
       alert("Erreur réseau ou serveur");
     }
+
   };
 
   return (
     <>
-      <Navbar />
-      <div className="register-container">
         <div className="register-card">
           <img
             src="../public/logo.png"
@@ -130,7 +129,6 @@ function Register() {
             Déjà membre ? <a href="/login">Se connecter</a>
           </p>
         </div>
-      </div>
     </>
   );
 }
