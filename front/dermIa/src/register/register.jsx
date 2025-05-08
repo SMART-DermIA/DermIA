@@ -3,6 +3,7 @@ import Navbar from "../components/navBar/navbar";
 import "./register.css"; // Asegúrate de crear un archivo CSS para los estilos.
 import { MdOutlineVisibilityOff } from "react-icons/md";
 import { MdOutlineVisibility } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,10 @@ function Register() {
     age: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+
+  const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
 
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar la visibilidad de la contraseña
 
@@ -22,10 +27,37 @@ function Register() {
     setShowPassword(!showPassword); // Cambia entre mostrar y ocultar la contraseña
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form data submitted:", formData);
-    // Aquí puedes manejar el envío del formulario, como enviarlo a un backend.
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.identifier,
+          password: formData.password,
+          age: formData.age,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Inscription réussie !");
+        // Option : rediriger vers la page de login
+        navigate("/login");
+      } else {
+        console.error("Erreur d'inscription :", data.error || "Erreur inconnue");
+        alert(data.error || "Erreur d'inscription");
+      }
+    } catch (err) {
+      console.error("Erreur réseau ou serveur :", err);
+      alert("Erreur réseau ou serveur");
+    }
   };
 
   return (
