@@ -19,19 +19,17 @@ function Register() {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Cambia entre mostrar y ocultar la contraseña
+    setShowPassword(!showPassword); 
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data submitted:", formData);
-    // Aquí puedes manejar el envío del formulario, como enviarlo a un backend.
+    
   };
 
   return (
     <>
-      <Navbar />
-      <div className="register-container">
         <div className="register-card">
           <img
             src="../public/logo.png"
@@ -98,7 +96,6 @@ function Register() {
             Déjà membre ? <a href="/login">Se connecter</a>
           </p>
         </div>
-      </div>
     </>
   );
 }

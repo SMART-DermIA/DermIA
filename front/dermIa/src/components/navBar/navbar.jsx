@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Login from "../../login/login"; 
+import Login from "../../login/login";
+import Register from "../../register/register";
 import "./navbar.css";
 
 export default function Navbar() {
@@ -9,7 +10,8 @@ export default function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     JSON.parse(localStorage.getItem("isAuthenticated")) || false
   );
-  const [showLoginPopup, setShowLoginPopup] = useState(false); 
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
   const location = useLocation();
   let lastScrollY = 0;
 
@@ -23,11 +25,19 @@ export default function Navbar() {
   };
 
   const handleLoginClick = () => {
-    setShowLoginPopup(true); 
+    setShowLoginPopup(true);
   };
 
-  const closePopup = () => {
-    setShowLoginPopup(false); 
+  const handleRegisterClick = () => {
+    setShowRegisterPopup(true);
+  };
+
+  const closeLoginPopup = () => {
+    setShowLoginPopup(false);
+  };
+
+  const closeRegisterPopup = () => {
+    setShowRegisterPopup(false);
   };
 
   useEffect(() => {
@@ -114,9 +124,12 @@ export default function Navbar() {
                     </button>
                   </li>
                   <li className="nav-item">
-                    <Link to="/register" className="nav-link nav-link-secondary">
+                    <button
+                      className="nav-link nav-link-secondary"
+                      onClick={handleRegisterClick}
+                    >
                       S'inscrire
-                    </Link>
+                    </button>
                   </li>
                 </>
               )}
@@ -143,10 +156,21 @@ export default function Navbar() {
       {showLoginPopup && (
         <div className="popup-overlay">
           <div className="popup">
-            <button className="close-popup" onClick={closePopup}>
+            <button className="close-popup" onClick={closeLoginPopup}>
               &times;
             </button>
-            <Login closePopup={closePopup} setIsAuthenticated={setIsAuthenticated} />
+            <Login closePopup={closeLoginPopup} setIsAuthenticated={setIsAuthenticated} />
+          </div>
+        </div>
+      )}
+
+      {showRegisterPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <button className="close-popup" onClick={closeRegisterPopup}>
+              &times;
+            </button>
+            <Register closePopup={closeRegisterPopup} />
           </div>
         </div>
       )}
