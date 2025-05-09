@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
 
-export default function Navbar() {
+export default function Navbar({ passPopupHandlers }) {
+  const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(
-    JSON.parse(localStorage.getItem("isAuthenticated")) || false
+    !!localStorage.getItem("token")
   );
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
@@ -17,19 +19,24 @@ export default function Navbar() {
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
+    i18n.changeLanguage(lang.toLowerCase());
+    localStorage.setItem("language", lang); 
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("token");
+    n
   };
 
-  const handleLoginClick = () => {
+  const openLoginPopup = () => {
     setShowLoginPopup(true);
+    setShowRegisterPopup(false);
   };
 
-  const handleRegisterClick = () => {
+  const openRegisterPopup = () => {
     setShowRegisterPopup(true);
+    setShowLoginPopup(false);
   };
 
   const closeLoginPopup = () => {
@@ -38,10 +45,6 @@ export default function Navbar() {
 
   const closeRegisterPopup = () => {
     setShowRegisterPopup(false);
-  };
-
-  const openLoginPopup = () => {
-    setShowLoginPopup(true);
   };
 
   useEffect(() => {
@@ -63,6 +66,25 @@ export default function Navbar() {
   useEffect(() => {
     localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("language") || "EN"; 
+    setLanguage(savedLanguage);
+    i18n.changeLanguage(savedLanguage.toLowerCase());
+  }, []);
+
+  useEffect(() => {
+    if (passPopupHandlers) {
+      passPopupHandlers({
+        openLoginPopup,
+        openRegisterPopup,
+        closeLoginPopup,
+        closeRegisterPopup,
+        showLoginPopup,
+        showRegisterPopup,
+      });
+    }
+  }, [passPopupHandlers, showLoginPopup, showRegisterPopup]);
 
   return (
     <>
@@ -86,53 +108,33 @@ export default function Navbar() {
             <ul className="navbar-nav ms-auto">
               {isAuthenticated ? (
                 <>
-                  <li className="nav-item nav-elem">
-                    <Link
-                      to="/userAccueil"
-                      className={`nav-elem ${
-                        location.pathname === "/userAccueil" ? "active" : ""
-                      }`}
-                    >
-                      Accueil
+                  <li className={`nav-item nav-elem ${location.pathname === "/userAccueil" ? "active" : ""}`}>
+                    <Link to="/userAccueil" className="nav-elem">
+                      {t("navbar.home")}
                     </Link>
                   </li>
-                  <li className="nav-item nav-elem">
-                    <Link
-                      to="/historique"
-                      className={`nav-elem ${
-                        location.pathname === "/historique" ? "active" : ""
-                      }`}
-                    >
-                      Historique
+                  <li className={`nav-item nav-elem ${location.pathname === "/historique" ? "active" : ""}`}>
+                    <Link to="/historique" className="nav-elem">
+                      {t("navbar.history")}
                     </Link>
                   </li>
                   <div className="nav-center"></div>
                   <li className="nav-item">
-                    <Link
-                      to="/"
-                      className="nav-link nav-link-secondary"
-                      onClick={handleLogout}
-                    >
-                      Se déconnecter
+                    <Link to="/" className="nav-link nav-link-secondary" onClick={handleLogout}>
+                      {t("navbar.logout")}
                     </Link>
                   </li>
                 </>
               ) : (
                 <>
                   <li className="nav-item">
-                    <button
-                      className="nav-link nav-link-primary"
-                      onClick={handleLoginClick}
-                    >
-                      Se connecter
+                    <button className="nav-link nav-link-primary" onClick={openLoginPopup}>
+                      {t("navbar.login")}
                     </button>
                   </li>
                   <li className="nav-item">
-                    <button
-                      className="nav-link nav-link-secondary"
-                      onClick={handleRegisterClick}
-                    >
-                      S'inscrire
+                    <button className="nav-link nav-link-secondary" onClick={openRegisterPopup}>
+                      {t("navbar.register")}
                     </button>
                   </li>
                 </>
@@ -165,8 +167,8 @@ export default function Navbar() {
             </button>
             <Login
               closePopup={closeLoginPopup}
-              setIsAuthenticated={setIsAuthenticated}
-              openRegisterPopup={handleRegisterClick}
+              openRegisterPopup={openRegisterPopup}
+              setIsAuthenticated={setIsAuthenticated} 
             />
           </div>
         </div>
@@ -178,7 +180,10 @@ export default function Navbar() {
             <button className="close-popup" onClick={closeRegisterPopup}>
               &times;
             </button>
-            <Register closePopup={closeRegisterPopup} openLoginPopup={openLoginPopup} />
+            <Register
+              closePopup={closeRegisterPopup}
+              openLoginPopup={openLoginPopup}
+            />
           </div>
         </div>
       )}

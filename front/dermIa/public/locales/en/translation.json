@@ -1,0 +1,94 @@
+{
+    "navbar": {
+      "login": "Login",
+      "register": "Sign up",
+      "logout": "Logout",
+      "home": "Home",
+      "history": "History"
+    },
+    "home": {
+      "title": "Detect the danger of your moles at a glance.",
+      "subtitle": "Our AI analyzes your moles to ensure your safety and health.",
+      "cta": "Sign up and get started",
+      "featuresTitle": "Discover our innovative features for your skin health.",
+      "feature1Title": "Easily and effectively track the evolution of your moles.",
+      "feature1Text": "Our AI detects the danger of your moles at a glance.",
+      "feature2Title": "Manage your moles with our intuitive and simple interface.",
+      "feature2Text": "Create albums to track the evolution of each mole.",
+      "feature3Title": "Use the drag & drop feature for a smooth user experience.",
+      "feature3Text": "Easily move your mole images for quick analysis.",
+      "stepsTitle": "Discover how to use our service",
+      "step1": "Step 1: Create your account",
+      "step1Text": "Sign up in just a few clicks to get started.",
+      "step2": "Step 2: Upload your photos",
+      "step2Text": "Drag and drop your mole images for analysis.",
+      "step3": "Step 3: Track progress",
+      "step3Text": "Organize your photos into albums for easy tracking.",
+      "ctaTitle": "Create your account for free",
+      "ctaText": "Join our community and start monitoring the health of your moles. Try our innovative service for free today!",
+      "ctaButton": "Sign up"
+    },
+    "album": {
+      "lastModified": "Last modified"
+    },
+    "imgUpload": {
+      "title": "Upload your image to start the analysis",
+      "subtitle": "Our AI analyzes your photo to detect potential anomalies. No data is stored without your consent.",
+      "dropText": "Drag and drop your image here",
+      "orText": "or",
+      "chooseFile": "Choose a file from your device",
+      "cancel": "Cancel",
+      "analyze": "Start analysis",
+      "analyzing": "Analyzing...",
+      "analysisComplete": "Analysis complete",
+      "riskRate": "Risk rate",
+      "noAnomaly": "No anomalies detected",
+      "irregularity": "Irregularity",
+      "asymmetry": "Asymmetry",
+      "size": "Size",
+      "color": "Color",
+      "learnMore": "Learn more",
+      "addToAlbum": "Add to album"
+    },
+    "footer": {
+      "cgu": "Terms of Use",
+      "privacyPolicy": "Privacy Policy",
+      "rightsReserved": "All rights reserved."
+    },
+    "historique": {
+      "title": "Your albums",
+      "subtitle": "Track the evolution of each of your moles",
+      "newAnalysis": "New analysis"
+    },
+    "login": {
+      "welcome": "Welcome to DERM'IA!",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Log in",
+      "terms": "By continuing, you accept DERM'IA's terms of use and acknowledge that you have read our privacy policy.",
+      "noAccount": "Don't have an account yet?",
+      "register": "Sign up",
+      "tokenReceived": "Token received:",
+      "success": "Login successful!",
+      "error": "Login failed.",
+      "networkError": "Network or server error."
+    },
+    "register": {
+      "welcome": "Welcome to DERM'IA!",
+      "subtitle": "Detect the danger of your moles at a glance.",
+      "identifier": "Username",
+      "identifierPlaceholder": "Enter your username",
+      "age": "Age",
+      "agePlaceholder": "Enter your age",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "submit": "Continue",
+      "terms": "By continuing, you accept DERM'IA's terms of use and acknowledge that you have read our privacy policy.",
+      "alreadyMember": "Already a member?",
+      "login": "Log in",
+      "error": "Registration failed.",
+      "networkError": "Network or server error."
+    }
+}
