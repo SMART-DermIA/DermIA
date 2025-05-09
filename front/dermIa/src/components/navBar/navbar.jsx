@@ -5,12 +5,12 @@ import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
 
-export default function Navbar() {
+export default function Navbar({ passPopupHandlers }) {
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(
-    JSON.parse(localStorage.getItem("isAuthenticated")) || false
+    !!localStorage.getItem("token")
   );
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
@@ -25,15 +25,18 @@ export default function Navbar() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("token");
+    n
   };
 
-  const handleLoginClick = () => {
+  const openLoginPopup = () => {
     setShowLoginPopup(true);
+    setShowRegisterPopup(false);
   };
 
-  const handleRegisterClick = () => {
+  const openRegisterPopup = () => {
     setShowRegisterPopup(true);
+    setShowLoginPopup(false);
   };
 
   const closeLoginPopup = () => {
@@ -42,10 +45,6 @@ export default function Navbar() {
 
   const closeRegisterPopup = () => {
     setShowRegisterPopup(false);
-  };
-
-  const openLoginPopup = () => {
-    setShowLoginPopup(true);
   };
 
   useEffect(() => {
@@ -74,7 +73,18 @@ export default function Navbar() {
     i18n.changeLanguage(savedLanguage.toLowerCase());
   }, []);
 
-  console.log(t("navbar.login")); // Debería devolver "Se connecter"
+  useEffect(() => {
+    if (passPopupHandlers) {
+      passPopupHandlers({
+        openLoginPopup,
+        openRegisterPopup,
+        closeLoginPopup,
+        closeRegisterPopup,
+        showLoginPopup,
+        showRegisterPopup,
+      });
+    }
+  }, [passPopupHandlers, showLoginPopup, showRegisterPopup]);
 
   return (
     <>
@@ -118,12 +128,12 @@ export default function Navbar() {
               ) : (
                 <>
                   <li className="nav-item">
-                    <button className="nav-link nav-link-primary" onClick={handleLoginClick}>
+                    <button className="nav-link nav-link-primary" onClick={openLoginPopup}>
                       {t("navbar.login")}
                     </button>
                   </li>
                   <li className="nav-item">
-                    <button className="nav-link nav-link-secondary" onClick={handleRegisterClick}>
+                    <button className="nav-link nav-link-secondary" onClick={openRegisterPopup}>
                       {t("navbar.register")}
                     </button>
                   </li>
@@ -157,8 +167,8 @@ export default function Navbar() {
             </button>
             <Login
               closePopup={closeLoginPopup}
-              setIsAuthenticated={setIsAuthenticated}
-              openRegisterPopup={handleRegisterClick}
+              openRegisterPopup={openRegisterPopup}
+              setIsAuthenticated={setIsAuthenticated} 
             />
           </div>
         </div>
@@ -170,7 +180,10 @@ export default function Navbar() {
             <button className="close-popup" onClick={closeRegisterPopup}>
               &times;
             </button>
-            <Register closePopup={closeRegisterPopup} openLoginPopup={openLoginPopup} />
+            <Register
+              closePopup={closeRegisterPopup}
+              openLoginPopup={openLoginPopup}
+            />
           </div>
         </div>
       )}

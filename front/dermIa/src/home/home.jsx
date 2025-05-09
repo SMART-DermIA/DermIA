@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 const Home = () => {
     const { t } = useTranslation();
     const [backendMessage, setBackendMessage] = useState(t("home.loading"));
-    const [showRegisterPopup, setShowRegisterPopup] = useState(false);
+    const [popupHandlers, setPopupHandlers] = useState(null); 
     const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
 
     useEffect(() => {
@@ -25,22 +25,14 @@ const Home = () => {
         });
     }, []);
 
-    const openRegisterPopup = () => {
-        setShowRegisterPopup(true);
-    };
-
-    const closeRegisterPopup = () => {
-        setShowRegisterPopup(false);
-    };
-
     return (
         <div className="home">
-            <Navbar className="navbar" />
+            <Navbar passPopupHandlers={setPopupHandlers} />
             <div className="container">
                 <h1 className="title">{t("home.title")}</h1>
                 <p className="text">{t("home.subtitle")}</p>
                 <div className="btn-container">
-                    <button className="button" onClick={openRegisterPopup}>{t("home.cta")}</button>
+                    <button className="button" onClick={() => popupHandlers?.openRegisterPopup()}>{t("home.cta")}</button>
                 </div>
                 <img src="/image1.png" alt="Foto Finder" className='image' />
                 <h2 className="features-title">{t("home.featuresTitle")}</h2>
@@ -92,7 +84,7 @@ const Home = () => {
                     <h1 className="title-final">{t("home.ctaTitle")}</h1>
                     <div className="cta-divider">
                         <p className="cta-text">{t("home.ctaText")}</p>
-                        <button className="button" onClick={openRegisterPopup}>{t("home.ctaButton")}</button>
+                        <button className="button" onClick={() => popupHandlers?.openRegisterPopup()}>{t("home.ctaButton")}</button>
                     </div>
                 </div>
 
@@ -101,17 +93,6 @@ const Home = () => {
                 </div>
             </div>
             <Footer />
-
-            {showRegisterPopup && (
-                <div className="popup-overlay">
-                    <div className="popup">
-                        <button className="close-popup" onClick={closeRegisterPopup}>
-                            &times;
-                        </button>
-                        <Register closePopup={closeRegisterPopup} />
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
