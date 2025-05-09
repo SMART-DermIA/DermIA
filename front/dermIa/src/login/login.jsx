@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./login.css";
 
 function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -31,18 +33,18 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Token reçu :", data.access_token);
-        setSuccess("Connexion réussie !");
+        console.log(t("login.tokenReceived"), data.access_token);
+        setSuccess(t("login.success"));
         localStorage.setItem("token", data.access_token);
         setIsAuthenticated(true);
         closePopup();
         navigate("/userAccueil");
       } else {
-        setError(data.error || "Erreur de connexion.");
+        setError(data.error || t("login.error"));
       }
     } catch (err) {
-      console.error("Erreur réseau ou serveur :", err);
-      setError("Erreur réseau ou serveur.");
+      console.error(t("login.networkError"), err);
+      setError(t("login.networkError"));
     }
   };
 
@@ -54,41 +56,41 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
   return (
     <div className="login-card">
       <img src="/logo.png" alt="Logo" className="login-logo" />
-      <h1>Bienvenue sur DERM'IA !</h1>
+      <h1>{t("login.welcome")}</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{t("login.email")}</label>
           <input
             type="text"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Identifiant"
+            placeholder={t("login.emailPlaceholder")}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Mot de passe</label>
+          <label htmlFor="password">{t("login.password")}</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Mot de passe"
+            placeholder={t("login.passwordPlaceholder")}
             required
           />
         </div>
         <button type="submit" className="submit-button">
-          Se connecter
+          {t("login.submit")}
         </button>
       </form>
       <p className="terms">
-        En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA et reconnaissez avoir lu notre politique de confidentialité. 
+        {t("login.terms")}
       </p>
       <p className="register-link">
-        Vous n’êtes pas encore sur DERM’IA ?{" "}
+        {t("login.noAccount")}{" "}
         <span className="link" onClick={handleRegisterLinkClick}>
-          Inscrivez-vous
+          {t("login.register")}
         </span>
       </p>
     </div>

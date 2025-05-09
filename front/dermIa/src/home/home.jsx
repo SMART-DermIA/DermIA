@@ -7,9 +7,11 @@ import Register from '../register/register';
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiStats } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
-    const [backendMessage, setBackendMessage] = useState('Chargement...');
+    const { t } = useTranslation();
+    const [backendMessage, setBackendMessage] = useState(t("home.loading"));
     const [showRegisterPopup, setShowRegisterPopup] = useState(false);
     const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
 
@@ -18,8 +20,8 @@ const Home = () => {
         .then(response => response.json())
         .then(data => setBackendMessage(data.message))
         .catch(error => {
-            console.error('Erreur lors de la connexion au backend:', error);
-            setBackendMessage('Erreur de connexion au backend');
+            console.error(t("home.backendError"), error);
+            setBackendMessage(t("home.backendError"));
         });
     }, []);
 
@@ -35,62 +37,62 @@ const Home = () => {
         <div className="home">
             <Navbar className="navbar" />
             <div className="container">
-                <h1 className="title">Détectez la dangerosité de vos grains de beauté en un clin d’œil.</h1>
-                <p className="text">Notre IA générative analyse vos grains de beauté pour garantir votre sécurité et votre santé.</p>
+                <h1 className="title">{t("home.title")}</h1>
+                <p className="text">{t("home.subtitle")}</p>
                 <div className="btn-container">
-                    <button className="button" onClick={openRegisterPopup}>S’inscrire et commencer</button>
+                    <button className="button" onClick={openRegisterPopup}>{t("home.cta")}</button>
                 </div>
                 <img src="/image1.png" alt="Foto Finder" className='image' />
-                <h2 className="features-title">Découvrez nos fonctionnalités innovantes pour la santé de votre peau.</h2>
+                <h2 className="features-title">{t("home.featuresTitle")}</h2>
                 <div className="features-section">
                     <div className="feature">
                         <img src="/image2.png" alt="-" className='image' />
-                        <h3 className="feature-title">Suivez l'évolution de vos grains de beauté facilement et efficacement.</h3>
-                        <p className="feature-text">Notre IA détecte la dangerosité de vos grains de beauté en un clin d'œil.</p>
+                        <h3 className="feature-title">{t("home.feature1Title")}</h3>
+                        <p className="feature-text">{t("home.feature1Text")}</p>
                     </div>
 
                     <div className="feature">
                         <img src="/image3.png" alt="-" className='image' />
-                        <h3 className="feature-title">Gérez vos grains de beauté avec notre interface intuitive et simple.</h3>
-                        <p className="feature-text">Créez des albums pour suivre l'évolution de chaque grain de beauté.</p>
+                        <h3 className="feature-title">{t("home.feature2Title")}</h3>
+                        <p className="feature-text">{t("home.feature2Text")}</p>
                     </div>
 
                     <div className="feature">
                         <img src="/image4.png" alt="-" className='image' />
-                        <h3 className="feature-title">Utilisez la fonction drag & drop pour une expérience utilisateur fluide.</h3>
-                        <p className="feature-text">Déplacez vos images de grains de beauté facilement pour une analyse rapide.</p>
+                        <h3 className="feature-title">{t("home.feature3Title")}</h3>
+                        <p className="feature-text">{t("home.feature3Text")}</p>
                     </div>
                 </div>
                 <div className="steps-section">
-                    <h2 className="steps-features-title">Découvrez comment utiliser notre service</h2>
+                    <h2 className="steps-features-title">{t("home.stepsTitle")}</h2>
                     <div className="step">
                         <FaRegUser size={32} style={{ margin: '.5em' }} />
-                        <h3 className="step-title">Étape 1 : Créez votre compte</h3>
-                        <p className="step-text">Inscrivez-vous en quelques clics pour commencer.</p>
+                        <h3 className="step-title">{t("home.step1")}</h3>
+                        <p className="step-text">{t("home.step1Text")}</p>
                     </div>
 
                     <div className="step-divider"></div>
 
                     <div className="step">
                         <MdOutlineAddAPhoto size={32} style={{ margin: '.5em' }} />
-                        <h3 className="step-title">Étape 2 : Téléchargez vos photos</h3>
-                        <p className="step-text">Glissez-déposez vos images de grains de beauté pour analyse.</p>
+                        <h3 className="step-title">{t("home.step2")}</h3>
+                        <p className="step-text">{t("home.step2Text")}</p>
                     </div>
 
                     <div className="step-divider"></div>
 
                     <div className="step">
                         <BiStats size={32} style={{ margin: '.5em' }} />
-                        <h3 className="step-title">Étape 3 : Suivez l'évolution</h3>
-                        <p className="step-text">Organisez vos photos dans des albums pour un suivi facile.</p>
+                        <h3 className="step-title">{t("home.step3")}</h3>
+                        <p className="step-text">{t("home.step3Text")}</p>
                     </div>
                 </div>
 
                 <div className="cta-section">
-                    <h1 className="title-final">Créez votre compte gratuitement</h1>
+                    <h1 className="title-final">{t("home.ctaTitle")}</h1>
                     <div className="cta-divider">
-                        <p className="cta-text">Rejoignez notre communauté et commencez à surveiller la santé de vos grains de beauté. Essayez notre service innovant sans frais dès aujourd'hui !</p>
-                        <button className="button" onClick={openRegisterPopup}>Inscription</button>
+                        <p className="cta-text">{t("home.ctaText")}</p>
+                        <button className="button" onClick={openRegisterPopup}>{t("home.ctaButton")}</button>
                     </div>
                 </div>
 

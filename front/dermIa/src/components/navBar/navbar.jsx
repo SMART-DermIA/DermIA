@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
 
 export default function Navbar() {
+  const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -17,6 +19,7 @@ export default function Navbar() {
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
+    i18n.changeLanguage(lang.toLowerCase());
   };
 
   const handleLogout = () => {
@@ -64,6 +67,8 @@ export default function Navbar() {
     localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
   }, [isAuthenticated]);
 
+  console.log(t("navbar.login")); // Debería devolver "Se connecter"
+
   return (
     <>
       <nav className={`navbar navbar-expand-lg ${showNavbar ? "visible" : "hidden"}`}>
@@ -93,7 +98,7 @@ export default function Navbar() {
                         location.pathname === "/userAccueil" ? "active" : ""
                       }`}
                     >
-                      Accueil
+                      {t("navbar.home")}
                     </Link>
                   </li>
                   <li className="nav-item nav-elem">
@@ -103,7 +108,7 @@ export default function Navbar() {
                         location.pathname === "/historique" ? "active" : ""
                       }`}
                     >
-                      Historique
+                      {t("navbar.history")}
                     </Link>
                   </li>
                   <div className="nav-center"></div>
@@ -113,7 +118,7 @@ export default function Navbar() {
                       className="nav-link nav-link-secondary"
                       onClick={handleLogout}
                     >
-                      Se déconnecter
+                      {t("navbar.logout")}
                     </Link>
                   </li>
                 </>
@@ -124,7 +129,7 @@ export default function Navbar() {
                       className="nav-link nav-link-primary"
                       onClick={handleLoginClick}
                     >
-                      Se connecter
+                      {t("navbar.login")}
                     </button>
                   </li>
                   <li className="nav-item">
@@ -132,7 +137,7 @@ export default function Navbar() {
                       className="nav-link nav-link-secondary"
                       onClick={handleRegisterClick}
                     >
-                      S'inscrire
+                      {t("navbar.register")}
                     </button>
                   </li>
                 </>
