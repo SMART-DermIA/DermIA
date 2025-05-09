@@ -40,6 +40,10 @@ export default function Navbar() {
     setShowRegisterPopup(false);
   };
 
+  const openLoginPopup = () => {
+    setShowLoginPopup(true);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
@@ -159,7 +163,11 @@ export default function Navbar() {
             <button className="close-popup" onClick={closeLoginPopup}>
               &times;
             </button>
-            <Login closePopup={closeLoginPopup} setIsAuthenticated={setIsAuthenticated} />
+            <Login
+              closePopup={closeLoginPopup}
+              setIsAuthenticated={setIsAuthenticated}
+              openRegisterPopup={handleRegisterClick}
+            />
           </div>
         </div>
       )}
@@ -170,7 +178,7 @@ export default function Navbar() {
             <button className="close-popup" onClick={closeRegisterPopup}>
               &times;
             </button>
-            <Register closePopup={closeRegisterPopup} />
+            <Register closePopup={closeRegisterPopup} openLoginPopup={openLoginPopup} />
           </div>
         </div>
       )}
