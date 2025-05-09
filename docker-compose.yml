@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   frontend:
     build:
@@ -19,8 +17,12 @@ services:
       - JWT_SECRET_KEY=super-secret-key
     depends_on:
       - db
+    volumes:
+      - backend_uploads:/app/uploads  # Mount uploads dir
 
   db:
+    ports:
+      - "5432:5432"  # Make the db be accessible from outside of Docker (to visualise data)
     image: postgres:15
     restart: always
     environment:
@@ -32,3 +34,4 @@ services:
 
 volumes:
   db_data:
+  backend_uploads:

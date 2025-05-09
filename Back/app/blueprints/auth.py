@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import db, User
+from ..models import db, User
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token
 
@@ -39,13 +39,13 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     if user:
-        print(f"User trouvé : {user.username} (id: {user.id})")
+        print(f"User found with username={user.username}: id={user.id}")
     else:
-        print("Aucun utilisateur trouvé pour :", username)
+        print(f"No user found with username={user.username}")
 
     if not user or not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"error": "Invalid username or password OUAIS"}), 401
+        return jsonify({"error": "Invalid username or password"}), 401
 
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
 
     return jsonify({"access_token": access_token}), 200
