@@ -41,7 +41,8 @@ export default function ImageUpload() {
             setAnalyzing(false);
             setPreview(false);
 		}, 3000);
-     
+
+    };
     const handleConfirm = async () => {
         if (!file) {
             console.error("Aucune image sélectionnée");
