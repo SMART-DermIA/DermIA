@@ -5,6 +5,8 @@ import UserAccueil from './userAccueil/userAccueil';
 import Historique from './historique/historique';
 import Album from './album/album';
 
+import './App.css';
+
 
 function App() {
   return (
