@@ -183,7 +183,7 @@ export default function ImageUpload() {
                         <div className="col-sm mb-3">
                             <button className="confirm-button">
                                 <MdShare size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                Partager à votre médecin traitant
+                                {t("imgUpload.share")}
                             </button>
                         </div>
                         <div className="col-sm mb-3 button-group">

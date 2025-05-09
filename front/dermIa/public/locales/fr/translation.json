@@ -48,7 +48,8 @@
       "size": "Taille",
       "color": "Couleur",
       "learnMore": "En savoir plus",
-      "addToAlbum": "Ajouter à l’album"
+      "addToAlbum": "Ajouter à l’album",
+      "share": "Partager à votre médecin traitant"
     },
     "footer": {
       "cgu": "CGU",
