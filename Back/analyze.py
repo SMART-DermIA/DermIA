@@ -1,3 +1,4 @@
+
 import io
 import os
 from flask import Blueprint, request, jsonify, current_app
@@ -11,7 +12,7 @@ analyze_bp = Blueprint('analyze', __name__)
 # ———— 1) Préparer le device et **charger le modèle** —————
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# On part du principe que ton `melanoma_cnn.pth` est copié dans /app du conteneur
+# On part du principe que ton melanoma_cnn.pth est copié dans /app du conteneur
 model = models.resnet18(pretrained=False)
 model.fc = torch.nn.Linear(model.fc.in_features, 2)
 model_path = os.path.join(os.getcwd(), "melanoma_cnn.pth")

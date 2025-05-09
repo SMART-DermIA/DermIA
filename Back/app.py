@@ -29,17 +29,9 @@ with app.app_context():
 bcrypt.init_app(app)
 jwt = JWTManager(app)
 
-<<<<<<< HEAD
 # Blueprints
 app.register_blueprint(auth_bp,    url_prefix='/auth')
 app.register_blueprint(analyze_bp, url_prefix='/')
-=======
-with app.app_context():
-    db.create_all()
-
-app.register_blueprint(auth_bp, url_prefix='/auth')
-app.register_blueprint(analyze_bp)
->>>>>>> origin/back
 
 @app.route('/')
 def home():
@@ -49,4 +41,3 @@ if __name__ == "__main__":
     # Créer dossier d’uploads si besoin
     os.makedirs(app.config['UPLOAD_PATH'], exist_ok=True)
     app.run(host="0.0.0.0", port=8000)
-
