@@ -18,6 +18,9 @@ export default function ImageUpload() {
         setImage(URL.createObjectURL(file));
         setPreview(true);
         setUpload(false);
+
+    const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
+
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -27,7 +30,7 @@ export default function ImageUpload() {
         onDrop
     });
 
-    const handleConfirm = () => {
+    const handleConfirmTemp = () => {
         setAnalyzing(true);
         setUpload(false);
         setPreview(false);
@@ -38,6 +41,54 @@ export default function ImageUpload() {
             setAnalyzing(false);
             setPreview(false);
 		}, 3000);
+     
+    const handleConfirm = async () => {
+        if (!file) {
+            console.error("Aucune image sélectionnée");
+            return;
+        }
+    
+        setConfirmed(true);
+    
+        /* const fileInput = document.querySelector('input[type="file"]');
+        const file = fileInput.files[0];*/
+    
+        if (!file) {
+            console.error("Fichier introuvable");
+            return;
+        }
+        
+        console.log("Fichier prêt à l'envoi :", file);
+        const formData = new FormData();
+        formData.append('image', file);
+    
+        try {
+            const token = localStorage.getItem('token');
+            for (var pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]);
+            }            
+            const response = await fetch(`${API_BASE_URL}/analyze`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                body: formData,
+            });
+    
+            const result = await response.json();
+    
+            if (response.ok) {
+                console.log("Résultat de l'analyse :", result);
+                // Ici tu pourrais afficher les résultats à l'utilisateur
+            } else {
+                console.error("Erreur analyse :", result.error || "Erreur inconnue");
+                alert(result.error || "Erreur d'analyse");
+            }
+        } catch (error) {
+            console.error("Erreur réseau ou serveur :", error);
+            alert("Erreur réseau ou serveur");
+        }
     };
 
 	const handleCancel = () => {
@@ -79,7 +130,7 @@ export default function ImageUpload() {
                                     <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
 									Annuler
 								</button>
-								<button className="confirm-button" onClick={handleConfirm}>
+								<button className="confirm-button" onClick={handleConfirmTemp}>
                                     <LuScanSearch size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
                                     Lancer l’analyse
 								</button>
@@ -129,7 +180,7 @@ export default function ImageUpload() {
                                     <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
 									Annuler
 								</button>
-								<button className="confirm-button" onClick={handleConfirm}>
+								<button className="confirm-button" onClick={handleConfirmTemp}>
                                     <BiPhotoAlbum size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
                                     Ajouter à un album
 								</button>
