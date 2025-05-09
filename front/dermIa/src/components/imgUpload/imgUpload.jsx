@@ -6,6 +6,7 @@ import { BiPhotoAlbum } from "react-icons/bi";
 import { PiSpinnerGap } from "react-icons/pi";
 import { LuScanSearch } from "react-icons/lu";
 import { GrUndo } from "react-icons/gr";
+import { MdShare } from "react-icons/md";
 
 export default function ImageUpload() {
     const { t } = useTranslation();
@@ -176,17 +177,27 @@ export default function ImageUpload() {
                     <div><span style={{ color: "#660033" }}>{t("imgUpload.color")}</span> <span>10%</span></div>
                     </div>
                 
-                    <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutanés/excroissances-cutanées-bénignes/grains-de-beauté#Diagnostic_v28368748_fr" className="more-info-link">{t("imgUpload.learnMore")}</a>
-                    <div className="button-group">
-                                <button className="cancel-button" onClick={handleCancel}>
-                                    <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                    {t("imgUpload.cancel")}
-                                </button>
-                                <button className="confirm-button" onClick={handleConfirmTemp}>
-                                    <BiPhotoAlbum size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                    {t("imgUpload.addToAlbum")}
-                                </button>
-                            </div>
+
+                    <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutanés/excroissances-cutanées-bénignes/grains-de-beauté#Diagnostic_v28368748_fr" className="more-info-link">En savoir plus sur les grains de beauté.</a>
+                    <div className="row">
+                        <div className="col-sm mb-3">
+                            <button className="confirm-button">
+                                <MdShare size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                                Partager à votre médecin traitant
+                            </button>
+                        </div>
+                        <div className="col-sm mb-3 button-group">
+                            <button className="cancel-button" onClick={handleCancel}>
+                                <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                                {t("imgUpload.cancel")}
+                            </button>
+                            <button className="confirm-button" onClick={handleConfirmTemp}>
+                                <BiPhotoAlbum size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                                {t("imgUpload.addToAlbum")}
+                            </button>
+                        </div>
+					</div>
+
                 </div>
             ) : null}
         </div>

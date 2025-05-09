@@ -1,0 +1,36 @@
+.album-title {
+	font-size: 1.8rem;
+	font-weight: bold;
+	color: #660033;
+	margin-bottom: 0.5em;
+}
+
+.album-subtitle {
+	font-size: 1rem;
+	color: #666;
+}
+
+.album-subtitle-2 {
+	font-size: 1rem;
+	color: #660033;
+	margin-bottom: 1em;
+}
+
+.album-scroll {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	padding-top: 1.5rem;
+	gap: 1rem;
+	scroll-behavior: smooth;
+}
+
+.album-stats {
+	margin-top: 1em;
+	padding: 0.5em 0em;
+	background-color: #F0CFDF;
+}
+
+.album-buttons {
+	padding: .5em 0;
+}
