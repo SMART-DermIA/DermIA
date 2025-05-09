@@ -163,7 +163,11 @@ export default function Navbar() {
             <button className="close-popup" onClick={closeLoginPopup}>
               &times;
             </button>
-            <Login closePopup={closeLoginPopup} setIsAuthenticated={setIsAuthenticated} />
+            <Login
+              closePopup={closeLoginPopup}
+              setIsAuthenticated={setIsAuthenticated}
+              openRegisterPopup={handleRegisterClick}
+            />
           </div>
         </div>
       )}

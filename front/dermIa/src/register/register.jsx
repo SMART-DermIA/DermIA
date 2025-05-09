@@ -41,14 +41,19 @@ function Register({ closePopup, openLoginPopup }) {
       const data = await response.json();
 
       if (response.ok) {
-        closePopup(); 
-        openLoginPopup(); 
+        closePopup();
+        openLoginPopup();
       } else {
         alert(data.error || "Erreur d'inscription");
       }
     } catch (err) {
       alert("Erreur réseau ou serveur");
     }
+  };
+
+  const handleLoginLinkClick = () => {
+    closePopup();
+    openLoginPopup();
   };
 
   return (
@@ -105,7 +110,10 @@ function Register({ closePopup, openLoginPopup }) {
         En poursuivant, vous acceptez les conditions d'utilisation de DERM’IA et reconnaissez avoir lu notre politique de confidentialité.
       </p>
       <p className="login-link">
-        Déjà membre ? <a href="/login">Se connecter</a>
+        Déjà membre ?{" "}
+        <span className="link" onClick={handleLoginLinkClick}>
+          Se connecter
+        </span>
       </p>
     </div>
   );

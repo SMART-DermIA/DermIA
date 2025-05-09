@@ -31,27 +31,27 @@
   
   input,
   .password-input-container input {
-    width: 100%; /* Asegura que todos los inputs ocupen el mismo ancho */
-    height: 44px; /* Define una altura consistente */
+    width: 100%; 
+    height: 44px; 
     padding: 0.8rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
-    box-sizing: border-box; /* Incluye padding y borde en el ancho y alto */
+    box-sizing: border-box; 
   }
   
   .password-input-container {
-    width: 100%; /* Asegura que el contenedor de la contraseña tenga el mismo ancho */
-    height: 44px; /* Igual altura que los otros inputs */
+    width: 100%; 
+    height: 44px; 
     position: relative;
     margin-bottom: 1.5rem;
     
   }
   
   .password-input-container input {
-    height: 100%; /* Asegura que el input dentro del contenedor ocupe toda la altura */
-    padding-right: 40px; /* Espacio para el ícono */
+    height: 100%; 
+    padding-right: 40px; 
   }
   
   .password-input-container .toggle-password {
@@ -90,6 +90,7 @@
   .login-link {
     margin-top: 1rem;
     font-size: 0.9rem;
+    font-weight: bold;
   }
   
   .login-link a {
@@ -103,7 +104,17 @@
 
   .register-logo {
     display: block;
-    margin: 0 auto 1rem auto; /* Center the logo and add spacing below */
-    max-width: 100px; /* Adjust size as needed */
+    margin: 0 auto 1rem auto;
+    max-width: 100px; 
     height: auto;
+  }
+
+  .link {
+    color: #660033;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    color: #a00028;
   }
