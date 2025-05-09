@@ -23,21 +23,21 @@ const Historique = () => {
                     </div>
                 </div>
                 <div className="historique-albums">
-                    <AlbumCard imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                    <AlbumCard imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                    <AlbumCard imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                    <AlbumCard imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                    <AlbumCard imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
+                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
+                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
+                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
+                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
+                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
+                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
+                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
+                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
+                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
+                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
+                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
+                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
+                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
+                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
+                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
                 </div>
             </div>
         </div>
