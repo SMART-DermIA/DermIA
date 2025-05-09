@@ -1,7 +1,7 @@
 .upload-container {
 	text-align: center;
 	padding: 4em 1em;
-	color: #4a0033;
+	
 	font-family: sans-serif;
 }
 
@@ -101,31 +101,92 @@
 .analyzing-box {
 	text-align: center;
 	margin-top: 2em;
-  }
-  
-  .analyzing-text {
+}
+
+.analyzing-text {
 	color: #660033;
 	font-size: 1.8rem;
 	font-weight: bold;
 	margin-bottom: 1em;
-  }
-  
-  .spinner-icon {
+}
+
+.spinner-icon {
 	font-size: 3rem;
 	color: #660033;
 	animation: spin 2s linear infinite;
 	margin: 0 auto;
 	display: block;
-  }
-  
-  @keyframes spin {
+}
+
+@keyframes spin {
 	100% {
-	  transform: rotate(360deg);
+	transform: rotate(360deg);
 	}
-  }
+}
 
-
-  .img {	
+.img {
 	max-width: 15%;
 	margin-bottom: 20px;
-  }
+}
+
+.result-image {	
+	max-width: 15%;
+	margin-bottom: 20px;
+	padding: 1em;
+	border-radius: 1em;
+	box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.risk-bar-container {
+	margin: 1em auto;
+	max-width: 400px;
+	text-align: center;
+}
+
+.risk-bar {
+	height: 25px;
+	background: linear-gradient(to right, #66cc66, #ff9966, #ff3333);
+	border-radius: 1em;
+	position: relative;
+}
+
+.risk-indicator {
+	position: absolute;
+	top: -10px;
+	width: 0;
+	height: 0;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 10px solid #000;
+	transform: translateX(-75%);
+	rotate: 180deg;
+}
+
+.risk-title {
+	font-size: 1.8rem;
+	color: darkgreen;
+	font-weight: bold;
+}
+
+.risk-message {
+	margin-top: 0.5em;
+	color: darkgreen;
+	font-weight: bold;
+}
+
+.criteria-grid {
+	display: grid;
+	justify-content: center;
+	margin: 2em auto;
+	max-width: 300px;
+	font-size: 1.2em;
+	text-align: left;
+	font-weight: 600;
+}
+
+.more-info-link {
+	color: #660033;
+	text-decoration: underline;
+	display: block;
+	margin-bottom: 1.5em;
+}
