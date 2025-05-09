@@ -44,7 +44,7 @@ def login():
         print("Aucun utilisateur trouvé pour :", username)
 
     if not user or not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"error": "Invalid username or password OUAIS"}), 401
+        return jsonify({"error": "Invalid username or password"}), 401
 
     access_token = create_access_token(identity=user.id)
 

@@ -8,6 +8,10 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+    volumes:
+      - ./front/dermIa:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
 
   backend:
     build:

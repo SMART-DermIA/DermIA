@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./register.css";
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
+import { toast } from "react-toastify";
 
 function Register({ closePopup, openLoginPopup }) {
   const [formData, setFormData] = useState({
@@ -11,7 +12,9 @@ function Register({ closePopup, openLoginPopup }) {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
+  const API_BASE_URL =
+    import.meta.env.VITE_API_URL ||
+    window.location.origin.replace(":5173", ":8000");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +44,7 @@ function Register({ closePopup, openLoginPopup }) {
       const data = await response.json();
 
       if (response.ok) {
+        toast.success("Inscription réussie !");
         closePopup();
         openLoginPopup();
       } else {
@@ -58,7 +62,11 @@ function Register({ closePopup, openLoginPopup }) {
 
   return (
     <div className="register-card">
-      <img src="../public/logo.png" alt="DermIA Logo" className="register-logo" />
+      <img
+        src="../public/logo.png"
+        alt="DermIA Logo"
+        className="register-logo"
+      />
       <h1>Bienvenue sur DERM’IA !</h1>
       <p>Détectez la dangerosité de vos grains de beauté en un clin d'œil.</p>
       <form onSubmit={handleSubmit}>
@@ -96,9 +104,15 @@ function Register({ closePopup, openLoginPopup }) {
             required
           />
           {showPassword ? (
-            <MdOutlineVisibilityOff className="toggle-password" onClick={togglePasswordVisibility} />
+            <MdOutlineVisibilityOff
+              className="toggle-password"
+              onClick={togglePasswordVisibility}
+            />
           ) : (
-            <MdOutlineVisibility className="toggle-password" onClick={togglePasswordVisibility} />
+            <MdOutlineVisibility
+              className="toggle-password"
+              onClick={togglePasswordVisibility}
+            />
           )}
         </div>
 
@@ -107,7 +121,8 @@ function Register({ closePopup, openLoginPopup }) {
         </button>
       </form>
       <p className="terms">
-        En poursuivant, vous acceptez les conditions d'utilisation de DERM’IA et reconnaissez avoir lu notre politique de confidentialité.
+        En poursuivant, vous acceptez les conditions d'utilisation de DERM’IA et
+        reconnaissez avoir lu notre politique de confidentialité.
       </p>
       <p className="login-link">
         Déjà membre ?{" "}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./login.css";
 
 function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
@@ -9,7 +10,9 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
+  const API_BASE_URL =
+    import.meta.env.VITE_API_URL ||
+    window.location.origin.replace(":5173", ":8000");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +34,7 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
       const data = await response.json();
 
       if (response.ok) {
+        toast.success("Connexion réussie !");
         console.log("Token reçu :", data.access_token);
         setSuccess("Connexion réussie !");
         localStorage.setItem("token", data.access_token);
@@ -38,11 +42,11 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
         closePopup();
         navigate("/userAccueil");
       } else {
-        setError(data.error || "Erreur de connexion.");
+        toast.error(data.error || "Erreur de connexion.");
       }
     } catch (err) {
       console.error("Erreur réseau ou serveur :", err);
-      setError("Erreur réseau ou serveur.");
+      toast.error(data.error || "Erreur réseau ou serveur.");
     }
   };
 
@@ -57,7 +61,7 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
       <h1>Bienvenue sur DERM'IA !</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Identifiant</label>
           <input
             type="text"
             id="email"
@@ -83,7 +87,8 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
         </button>
       </form>
       <p className="terms">
-        En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA et reconnaissez avoir lu notre politique de confidentialité. 
+        En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA et
+        reconnaissez avoir lu notre politique de confidentialité. 
       </p>
       <p className="register-link">
         Vous n’êtes pas encore sur DERM’IA ?{" "}
