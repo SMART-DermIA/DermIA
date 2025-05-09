@@ -20,6 +20,7 @@ export default function Navbar() {
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     i18n.changeLanguage(lang.toLowerCase());
+    localStorage.setItem("language", lang); 
   };
 
   const handleLogout = () => {
@@ -67,6 +68,12 @@ export default function Navbar() {
     localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
   }, [isAuthenticated]);
 
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("language") || "EN"; 
+    setLanguage(savedLanguage);
+    i18n.changeLanguage(savedLanguage.toLowerCase());
+  }, []);
+
   console.log(t("navbar.login")); // Debería devolver "Se connecter"
 
   return (
@@ -91,33 +98,19 @@ export default function Navbar() {
             <ul className="navbar-nav ms-auto">
               {isAuthenticated ? (
                 <>
-                  <li className="nav-item nav-elem">
-                    <Link
-                      to="/userAccueil"
-                      className={`nav-elem ${
-                        location.pathname === "/userAccueil" ? "active" : ""
-                      }`}
-                    >
+                  <li className={`nav-item nav-elem ${location.pathname === "/userAccueil" ? "active" : ""}`}>
+                    <Link to="/userAccueil" className="nav-elem">
                       {t("navbar.home")}
                     </Link>
                   </li>
-                  <li className="nav-item nav-elem">
-                    <Link
-                      to="/historique"
-                      className={`nav-elem ${
-                        location.pathname === "/historique" ? "active" : ""
-                      }`}
-                    >
+                  <li className={`nav-item nav-elem ${location.pathname === "/historique" ? "active" : ""}`}>
+                    <Link to="/historique" className="nav-elem">
                       {t("navbar.history")}
                     </Link>
                   </li>
                   <div className="nav-center"></div>
                   <li className="nav-item">
-                    <Link
-                      to="/"
-                      className="nav-link nav-link-secondary"
-                      onClick={handleLogout}
-                    >
+                    <Link to="/" className="nav-link nav-link-secondary" onClick={handleLogout}>
                       {t("navbar.logout")}
                     </Link>
                   </li>
@@ -125,18 +118,12 @@ export default function Navbar() {
               ) : (
                 <>
                   <li className="nav-item">
-                    <button
-                      className="nav-link nav-link-primary"
-                      onClick={handleLoginClick}
-                    >
+                    <button className="nav-link nav-link-primary" onClick={handleLoginClick}>
                       {t("navbar.login")}
                     </button>
                   </li>
                   <li className="nav-item">
-                    <button
-                      className="nav-link nav-link-secondary"
-                      onClick={handleRegisterClick}
-                    >
+                    <button className="nav-link nav-link-secondary" onClick={handleRegisterClick}>
                       {t("navbar.register")}
                     </button>
                   </li>
