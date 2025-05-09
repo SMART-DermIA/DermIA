@@ -11,7 +11,12 @@ export default function ImageUpload() {
     const [confirmed, setConfirmed] = useState(false);
     const [file, setFile] = useState(null);
 
-    const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+    ;
+    console.log("ENV VAR API_BASE_URL =", API_BASE_URL);
+
+
+
 
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
@@ -54,12 +59,10 @@ export default function ImageUpload() {
             }            
             const response = await fetch(`${API_BASE_URL}/analyze`, {
                 method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                credentials: "include",
-                body: formData,
-            });
+                headers: { Authorization: `Bearer ${token}` },
+                body: formData
+              });
+              
     
             const result = await response.json();
     
