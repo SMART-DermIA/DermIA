@@ -1,0 +1,94 @@
+{
+    "navbar": {
+      "login": "Se connecter",
+      "register": "S'inscrire",
+      "logout": "Se déconnecter",
+      "home": "Accueil",
+      "history": "Historique"
+    },
+    "home": {
+      "title": "Détectez la dangerosité de vos grains de beauté en un clin d’œil.",
+      "subtitle": "Notre IA analyse vos grains de beauté pour garantir votre sécurité et votre santé.",
+      "cta": "S’inscrire et commencer",
+      "featuresTitle": "Découvrez nos fonctionnalités innovantes pour la santé de votre peau.",
+      "feature1Title": "Suivez l'évolution de vos grains de beauté facilement et efficacement.",
+      "feature1Text": "Notre IA détecte la dangerosité de vos grains de beauté en un clin d'œil.",
+      "feature2Title": "Gérez vos grains de beauté avec notre interface intuitive et simple.",
+      "feature2Text": "Créez des albums pour suivre l'évolution de chaque grain de beauté.",
+      "feature3Title": "Utilisez la fonction drag & drop pour une expérience utilisateur fluide.",
+      "feature3Text": "Déplacez vos images de grains de beauté facilement pour une analyse rapide.",
+      "stepsTitle": "Découvrez comment utiliser notre service",
+      "step1": "Étape 1 : Créez votre compte",
+      "step1Text": "Inscrivez-vous en quelques clics pour commencer.",
+      "step2": "Étape 2 : Téléchargez vos photos",
+      "step2Text": "Glissez-déposez vos images de grains de beauté pour analyse.",
+      "step3": "Étape 3 : Suivez l'évolution",
+      "step3Text": "Organisez vos photos dans des albums pour un suivi facile.",
+      "ctaTitle": "Créez votre compte gratuitement",
+      "ctaText": "Rejoignez notre communauté et commencez à surveiller la santé de vos grains de beauté. Essayez notre service innovant sans frais dès aujourd'hui !",
+      "ctaButton": "Inscription"
+    },
+    "album": {
+      "lastModified": "Dernière modification"
+    },
+    "imgUpload": {
+      "title": "Téléchargez votre image pour commencer l’analyse",
+      "subtitle": "Notre IA analyse votre photo pour détecter d’éventuelles anomalies. Aucune donnée n’est stockée sans votre accord.",
+      "dropText": "Glissez-déposez votre image ici",
+      "orText": "ou",
+      "chooseFile": "Choisir un fichier depuis votre appareil",
+      "cancel": "Annuler",
+      "analyze": "Lancer l’analyse",
+      "analyzing": "Analyse en cours...",
+      "analysisComplete": "Analyse terminée",
+      "riskRate": "Taux de risque",
+      "noAnomaly": "Aucune anomalie détectée",
+      "irregularity": "Irrégularité",
+      "asymmetry": "Asymétrie",
+      "size": "Taille",
+      "color": "Couleur",
+      "learnMore": "En savoir plus",
+      "addToAlbum": "Ajouter à l’album"
+    },
+    "footer": {
+      "cgu": "CGU",
+      "privacyPolicy": "Politique de confidentialité",
+      "rightsReserved": "Tous droits réservés."
+    },
+    "historique": {
+      "title": "Vos albums",
+      "subtitle": "Suivez l'évolution de chacun de vos grains de beauté",
+      "newAnalysis": "Nouvelle analyse"
+    },
+    "login": {
+      "welcome": "Bienvenue sur DERM'IA !",
+      "email": "Email",
+      "emailPlaceholder": "Entrez votre email",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "submit": "Se connecter",
+      "terms": "En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA et reconnaissez avoir lu notre politique de confidentialité.",
+      "noAccount": "Vous n’êtes pas encore sur DERM’IA ?",
+      "register": "Inscrivez-vous",
+      "tokenReceived": "Token reçu :",
+      "success": "Connexion réussie !",
+      "error": "Erreur de connexion.",
+      "networkError": "Erreur réseau ou serveur."
+    },
+    "register": {
+      "welcome": "Bienvenue sur DERM'IA !",
+      "subtitle": "Détectez la dangerosité de vos grains de beauté en un clin d'œil.",
+      "identifier": "Identifiant",
+      "identifierPlaceholder": "Entrez votre identifiant",
+      "age": "Âge",
+      "agePlaceholder": "Entrez votre âge",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Créer un mot de passe",
+      "submit": "Continuer",
+      "terms": "En poursuivant, vous acceptez les conditions d'utilisation de DERM'IA et reconnaissez avoir lu notre politique de confidentialité.",
+      "alreadyMember": "Déjà membre ?",
+      "login": "Se connecter",
+      "error": "Erreur d'inscription.",
+      "networkError": "Erreur réseau ou serveur."
+    }
+}
