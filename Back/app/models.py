@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timezone
 
 db = SQLAlchemy()
 
@@ -13,7 +13,7 @@ class User(db.Model):
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     analyses = db.relationship('Analysis', backref='album', lazy=True)
 
@@ -21,5 +21,5 @@ class Analysis(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     photo = db.Column(db.String(200), nullable=False)  # chemin vers l'image
     result = db.Column(db.String(100), nullable=False)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
+    date = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=False)
