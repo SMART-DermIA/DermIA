@@ -65,7 +65,7 @@ function Login({ closePopup, setIsAuthenticated }) {
               required
             />
           </div>
-          <div className="form-group password-input-container">
+          <div className="form-group ">
             <label htmlFor="password">Mot de passe</label>
             <input
               type="password"
