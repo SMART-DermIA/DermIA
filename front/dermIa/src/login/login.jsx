@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../AuthContext";
 import "./login.css";
 
-function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+export default function Login({ closePopup, openRegisterPopup }) {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const API_BASE_URL =
     import.meta.env.VITE_API_URL ||
@@ -16,43 +17,34 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: email,
-          password: password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
+      console.log("login response payload:", data);
 
       if (response.ok) {
-        toast.success("Connexion réussie !");
-        console.log("Token reçu :", data.access_token);
-        setSuccess("Connexion réussie !");
-        localStorage.setItem("token", data.access_token);
-        setIsAuthenticated(true);
-        closePopup();
-        navigate("/userAccueil");
+        if (data.access_token && data.user) {
+          login(data.user, data.access_token);
+          toast.success("Connexion réussie !");
+          closePopup();
+          navigate("/userAccueil");
+        } else {
+          console.error("Login: payload incomplet", data);
+          toast.error("Réponse inattendue du serveur.");
+        }
       } else {
         toast.error(data.error || "Erreur de connexion.");
       }
     } catch (err) {
       console.error("Erreur réseau ou serveur :", err);
-      toast.error(data.error || "Erreur réseau ou serveur.");
+      toast.error("Erreur réseau ou serveur.");
     }
-  };
-
-  const handleRegisterLinkClick = () => {
-    closePopup();
-    openRegisterPopup();
   };
 
   return (
@@ -61,12 +53,12 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
       <h1>Bienvenue sur DERM'IA !</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Identifiant</label>
+          <label htmlFor="username">Identifiant</label>
           <input
             type="text"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Identifiant"
             required
           />
@@ -87,17 +79,14 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
         </button>
       </form>
       <p className="terms">
-        En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA et
-        reconnaissez avoir lu notre politique de confidentialité. 
+        En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA…
       </p>
       <p className="register-link">
         Vous n’êtes pas encore sur DERM’IA ?{" "}
-        <span className="link" onClick={handleRegisterLinkClick}>
+        <span className="link" onClick={openRegisterPopup}>
           Inscrivez-vous
         </span>
       </p>
     </div>
   );
 }
-
-export default Login;

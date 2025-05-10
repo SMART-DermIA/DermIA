@@ -3,25 +3,21 @@ import { Link, useLocation } from "react-router-dom";
 import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
+import { FaUserCircle } from "react-icons/fa";
+import { FiSettings, FiLogOut } from "react-icons/fi";
+import { useAuth } from "../../AuthContext";
 
 export default function Navbar() {
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    JSON.parse(localStorage.getItem("isAuthenticated")) || false
-  );
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
+  const { user, logout } = useAuth();
   const location = useLocation();
   let lastScrollY = 0;
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("isAuthenticated");
   };
 
   const handleLoginClick = () => {
@@ -44,6 +40,12 @@ export default function Navbar() {
     setShowLoginPopup(true);
   };
 
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
@@ -60,16 +62,20 @@ export default function Navbar() {
     };
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
-  }, [isAuthenticated]);
-
   return (
     <>
-      <nav className={`navbar navbar-expand-lg ${showNavbar ? "visible" : "hidden"}`}>
+      <nav
+        className={`navbar navbar-expand-lg ${
+          showNavbar ? "visible" : "hidden"
+        }`}
+      >
         <div className="container-fluid d-flex justify-content-between">
-          <Link to={isAuthenticated ? "/userAccueil" : "/"} className="navbar-brand">
-            <img src="/logo.png" alt="DermIA Logo" style={{ height: "100px" }} />
+          <Link to={user ? "/userAccueil" : "/"} className="navbar-brand">
+            <img
+              src="/logo.png"
+              alt="DermIA Logo"
+              style={{ height: "100px" }}
+            />
           </Link>
           <button
             className="navbar-toggler custom-toggler"
@@ -84,7 +90,7 @@ export default function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              {isAuthenticated ? (
+              {user ? (
                 <>
                   <li className="nav-item nav-elem">
                     <Link
@@ -111,7 +117,7 @@ export default function Navbar() {
                     <Link
                       to="/"
                       className="nav-link nav-link-secondary"
-                      onClick={handleLogout}
+                      onClick={logout}
                     >
                       Se déconnecter
                     </Link>
@@ -153,6 +159,31 @@ export default function Navbar() {
                 EN
               </span>
             </div>
+            {user && (
+              <li className="nav-item user-menu">
+                <FaUserCircle
+                  size={30}
+                  onClick={toggleUserMenu}
+                  style={{ cursor: "pointer" }}
+                />
+                {showUserMenu && (
+                  <div className="user-dropdown">
+                    <Link
+                      to="/settings"
+                      className="dropdown-item"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      <FiSettings style={{ marginRight: "8px" }} />
+                      Paramètres
+                    </Link>
+                    <Link to="/" className="dropdown-item" onClick={logout}>
+                      <FiLogOut style={{ marginRight: "8px" }} />
+                      Se déconnecter
+                    </Link>
+                  </div>
+                )}
+              </li>
+            )}
           </div>
         </div>
       </nav>
@@ -165,7 +196,6 @@ export default function Navbar() {
             </button>
             <Login
               closePopup={closeLoginPopup}
-              setIsAuthenticated={setIsAuthenticated}
               openRegisterPopup={handleRegisterClick}
             />
           </div>
@@ -178,7 +208,10 @@ export default function Navbar() {
             <button className="close-popup" onClick={closeRegisterPopup}>
               &times;
             </button>
-            <Register closePopup={closeRegisterPopup} openLoginPopup={openLoginPopup} />
+            <Register
+              closePopup={closeRegisterPopup}
+              openLoginPopup={openLoginPopup}
+            />
           </div>
         </div>
       )}

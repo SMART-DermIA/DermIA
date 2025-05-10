@@ -1,11 +1,20 @@
 from flask import Blueprint, request, jsonify
 from models import db, User
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import (
+    create_access_token,
+    jwt_required,
+    get_jwt_identity
+)
+
 
 bcrypt = Bcrypt()
 auth_bp = Blueprint('auth', __name__) # Crée un groupe de routes pour la connexion
 # (register, login)
+
+# ====================
+# Routes d'authentification
+# ====================
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
@@ -46,6 +55,30 @@ def login():
     if not user or not bcrypt.check_password_hash(user.password, password):
         return jsonify({"error": "Invalid username or password"}), 401
 
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
+    return jsonify({
+        "access_token": access_token,
+        "user": {
+            "id": user.id,
+            "username": user.username,
+        }
+    }), 200
 
-    return jsonify({"access_token": access_token}), 200
+# ====================
+# Routes de gestion de compte
+# ====================
+@auth_bp.route('/delete_account', methods=['DELETE'])
+@jwt_required()
+def delete_account():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({"message": "Account deleted successfully"}), 200
+
+

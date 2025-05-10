@@ -1,0 +1,204 @@
+/* settings.css */
+
+/* Conteneur principal, centré, largeur max 75 % */
+.settings-page {
+  max-width: 75%;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: "Inter", sans-serif;
+  color: #333;
+}
+
+/* Titres de section */
+.settings-page h1 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-weight: 600;
+  color: #660033;
+}
+
+.settings-page .section {
+  margin-bottom: 50px;
+}
+
+.settings-page .section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #660033;
+  border-bottom: 2px solid #f0cfdf;
+  padding-bottom: 8px;
+}
+
+/* Médecin traitant */
+.medecin-info p {
+  margin: 6px 0;
+  font-size: 1rem;
+  display: flex;
+}
+
+.medecin-info button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #f0cfdf;
+  color: #660033;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.medecin-info button:hover {
+  background-color: #e3bccc;
+}
+
+/* Formulaire médecin */
+.medecin-form {
+  display: flex;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.medecin-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+}
+
+.medecin-form input {
+  margin-top: 6px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 0.4em;
+  font-size: 1rem;
+}
+
+.medecin-form .form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.medecin-form .form-actions button {
+  padding: 8px 16px;
+  border-radius: 0.5em;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.medecin-form .form-actions button[type="submit"] {
+  background-color: #660033;
+  color: #fff;
+}
+
+.medecin-form .form-actions button[type="submit"]:hover {
+  background-color: #55002a;
+}
+
+.medecin-form .form-actions button[type="button"] {
+  background-color: #eee;
+  color: #333;
+}
+
+.medecin-form .form-actions button[type="button"]:hover {
+  background-color: #ddd;
+}
+
+/* Bouton danger (supprimer compte) */
+button.danger {
+  padding: 10px 20px;
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 0.5em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.danger:hover {
+  background-color: #c12e2a;
+}
+
+/* Boutons généraux */
+.settings-page button {
+  font-family: inherit;
+}
+
+/* Modal CGU */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal {
+  background: #fff;
+  max-width: 700px;
+  width: 90%;
+  padding: 20px 30px;
+  border-radius: 1em;
+  position: relative;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.close-modal {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal h3 {
+  margin-top: 0;
+  color: #660033;
+}
+
+.modal .cgu-text {
+  margin-top: 15px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.add-button {
+  background-color: #800020;
+  color: #fff;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cgu-button {
+  background-color: #b1849b;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Responsivité */
+@media (min-width: 768px) {
+  .medecin-form {
+    grid-template-columns: 1fr 1fr;
+  }
+  .medecin-form label {
+    font-size: 1rem;
+  }
+}
