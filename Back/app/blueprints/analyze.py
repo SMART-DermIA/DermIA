@@ -1,4 +1,3 @@
-# analyze.py
 import io
 import os
 from flask import Blueprint, request, jsonify, current_app
@@ -31,11 +30,13 @@ transform = transforms.Compose([
                         std=[0.229, 0.224, 0.225])
 ])
 
+# 4) La route d’API
 @analyze_bp.route('/analyze', methods=['POST', 'OPTIONS'])
-@jwt_required()  # Apply JWT authentication only to POST
 def analyze_image():
     if request.method == "OPTIONS":
         return "", 204  # Empty response for pre-flight
+
+    jwt_required()(lambda: None)()  # Apply JWT check for POST
 
     # → Verif présence et nom de fichier
     if 'image' not in request.files:
@@ -61,17 +62,17 @@ def analyze_image():
 
     # → Inference
     with torch.no_grad():
-        outputs = model(input_tensor)  # shape [1,2]
+        outputs = model(input_tensor)            # shape [1,2]
         probs = torch.softmax(outputs, dim=1)[0]  # Probabilities for each class
-        pred = torch.argmax(probs).item()  # Get the predicted class index (0 or 1)
-        conf = float(probs[pred])  # Probability of the predicted class
-        danger = float(probs[1])  # Probability of being malignant (class 1)
+        pred = probs.argmax().item()             # Predicted class index (0 or 1)
+        conf = probs[pred].item()                # Confidence of predicted class
+        danger = probs[1].item()                 # Probability of being malignant
 
     label = "malignant" if pred == 1 else "benign"
 
     # → Retourner le JSON
     return jsonify({
         "result": label,
-        "confidence": round(conf, 3),  # ex. 0.92
+        "confidence": round(conf, 3),          # ex. 0.92
         "danger_rate": round(danger * 100, 1)  # ex. 74.5 -> 74.5%
     }), 200

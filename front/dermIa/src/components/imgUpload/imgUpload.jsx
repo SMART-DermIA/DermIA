@@ -80,7 +80,7 @@ export default function ImageUpload() {
 
     return (
         <div className="upload-container">
-            {(upload || preview) && (
+            {(upload) && (
                 <div>
                     <h2 className="upload-title">Téléchargez votre image pour commencer l’analyse</h2>
                     <p className="upload-subtitle">
