@@ -8,8 +8,11 @@ function Register({ closePopup, openLoginPopup }) {
     identifier: "",
     age: "",
     password: "",
+    doctor_name: "",
+    doctor_phone: "",
+    doctor_email: "",
   });
-
+  const [showDoctorForm, setShowDoctorForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const API_BASE_URL =
@@ -38,6 +41,9 @@ function Register({ closePopup, openLoginPopup }) {
           username: formData.identifier,
           password: formData.password,
           age: formData.age,
+          doctor_name: formData.doctor_name || undefined,
+          doctor_phone: formData.doctor_phone || undefined,
+          doctor_email: formData.doctor_email || undefined,
         }),
       });
 
@@ -115,6 +121,46 @@ function Register({ closePopup, openLoginPopup }) {
             />
           )}
         </div>
+        {showDoctorForm && (
+          <div className="doctor-form">
+            <label>
+              Nom du médecin
+              <input
+                name="doctor_name"
+                value={formData.doctor_name}
+                onChange={handleChange}
+                placeholder="Dr. Dupont"
+              />
+            </label>
+            <label>
+              Téléphone
+              <input
+                name="doctor_phone"
+                value={formData.doctor_phone}
+                onChange={handleChange}
+                placeholder="0123456789"
+              />
+            </label>
+            <label>
+              Email
+              <input
+                name="doctor_email"
+                value={formData.doctor_email}
+                onChange={handleChange}
+                placeholder="medecin@exemple.com"
+              />
+            </label>
+          </div>
+        )}
+        <button
+          type="button"
+          className="toggle-doctor-btn"
+          onClick={() => setShowDoctorForm((v) => !v)}
+        >
+          {showDoctorForm
+            ? "Masquer médecin traitant (optionnel)"
+            : "Ajouter médecin traitant (optionnel)"}
+        </button>
 
         <button type="submit" className="submit-button">
           Continuer

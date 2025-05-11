@@ -13,41 +13,34 @@ export default function Settings() {
     window.location.origin.replace(":5173", ":8000");
   const { user, logout } = useAuth();
 
-  // État pour le médecin traitant
-  const [medecin, setMedecin] = useState(null);
+  const [medecin, setMedecin] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  });
   const [showMedecinForm, setShowMedecinForm] = useState(false);
   const [medecinFormMode, setMedecinFormMode] = useState("add"); // 'add' ou 'edit'
   const [formData, setFormData] = useState({
-    nom: "",
-    telephone: "",
+    name: "",
+    phone: "",
     email: "",
   });
 
-  // Charger les infos du médecin existant au montage
   useEffect(() => {
-    const fetchMedecin = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const resp = await fetch(`${API_BASE_URL}/user/medecin`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (resp.ok) {
-          const data = await resp.json();
-          setMedecin(data);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchMedecin();
-  });
+    if (user) {
+      setMedecin({
+        name: user.doctor_name || "",
+        phone: user.doctor_phone || "",
+        email: user.doctor_email || "",
+      });
+    }
+  }, [user]);
 
-  // Handlers Médecin
   const handleEditMedecin = () => {
     setFormData({
-      nom: medecin.nom,
-      telephone: medecin.telephone,
-      email: medecin.email,
+      name: user.doctor_name,
+      phone: user.doctor_phone,
+      email: user.doctor_email,
     });
     setMedecinFormMode("edit");
     setShowMedecinForm(true);
@@ -67,18 +60,26 @@ export default function Settings() {
   const handleMedecinFormSubmit = async (e) => {
     e.preventDefault();
     const endpoint =
-      medecinFormMode === "add" ? "/user/add_medecin" : "/user/update_medecin";
+      medecinFormMode === "add" ? "add_medecin" : "update_medecin";
+    console.log(medecinFormMode);
     const method = medecinFormMode === "add" ? "POST" : "PUT";
 
+    const token = localStorage.getItem("token");
+
+    const payload = {
+      doctor_name: formData.nom,
+      doctor_phone: formData.telephone,
+      doctor_email: formData.email,
+    };
+
     try {
-      const token = localStorage.getItem("token");
-      const resp = await fetch(`${API_URL}${endpoint}`, {
+      const resp = await fetch(`${API_BASE_URL}/user/${endpoint}`, {
         method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       const data = await resp.json();
       if (resp.ok) {
@@ -87,7 +88,11 @@ export default function Settings() {
             medecinFormMode === "add" ? "ajouté" : "modifié"
           } avec succès`
         );
-        setMedecin(formData);
+        setMedecin({
+          name: data.doctor.name,
+          phone: data.doctor.phone,
+          email: data.doctor.email,
+        });
         setShowMedecinForm(false);
       } else {
         toast.error(data.error || "Erreur lors de la mise à jour");
@@ -98,7 +103,6 @@ export default function Settings() {
     }
   };
 
-  // Handler Suppression compte
   const handleDeleteAccount = async () => {
     if (
       !window.confirm(
@@ -133,19 +137,18 @@ export default function Settings() {
       <div className="settings-page">
         <h1>Paramètres</h1>
 
-        {/* Section médecin traitant */}
         <section className="section">
           <h2>Médecin traitant</h2>
-          {medecin ? (
+          {medecin.name ? (
             <div className="medecin-info">
               <p>
-                <strong>Nom :</strong> {medecin.nom}
+                <strong>Nom : </strong> {medecin.name}
               </p>
               <p>
-                <strong>Téléphone :</strong> {medecin.telephone}
+                <strong>Téléphone : </strong> {medecin.phone}
               </p>
               <p>
-                <strong>Email :</strong> {medecin.email}
+                <strong>Email : </strong> {medecin.email}
               </p>
               <button onClick={handleEditMedecin}>Modifier</button>
             </div>
@@ -161,7 +164,7 @@ export default function Settings() {
                 Nom
                 <input
                   name="nom"
-                  value={formData.nom}
+                  value={formData.name}
                   onChange={handleMedecinFormChange}
                   required
                 />
@@ -170,7 +173,7 @@ export default function Settings() {
                 Téléphone
                 <input
                   name="telephone"
-                  value={formData.telephone}
+                  value={formData.phone}
                   onChange={handleMedecinFormChange}
                   required
                 />

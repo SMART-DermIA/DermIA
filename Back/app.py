@@ -2,6 +2,7 @@ from flask import Flask
 from models import db
 from auth import auth_bp, bcrypt
 from analyze import analyze_bp
+from doctor import user_bp
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
@@ -21,7 +22,9 @@ with app.app_context():
     db.create_all()
 
 app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(doctor_bp, url_prefix='/user')
 app.register_blueprint(analyze_bp)
+app.register_blueprint(user_bp)
 
 @app.route('/')
 def home():

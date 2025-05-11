@@ -23,11 +23,15 @@ def register():
     password = data.get('password')
     age = data.get('age')
 
+    doc_name = data.get('doctor_name')
+    doc_phone = data.get('doctor_phone')
+    doc_email = data.get('doctor_email')
+
     if User.query.filter_by(username=username).first():
         return jsonify({"error": "Username already exists"}), 400
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(username=username, password=hashed_password, age=age)
+    new_user = User(username=username, password=hashed_password, age=age, doctor_name=doc_name, doctor_phone=doc_phone, doctor_email=doc_email)
     db.session.add(new_user)
     db.session.commit()
 
@@ -61,6 +65,9 @@ def login():
         "user": {
             "id": user.id,
             "username": user.username,
+            "doctor_name" : user.doctor_name,
+            "doctor_phone" : user.doctor_phone,
+            "doctor_email" : user.doctor_email,
         }
     }), 200
 

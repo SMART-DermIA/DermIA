@@ -9,7 +9,6 @@ import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiStats } from "react-icons/bi";
 
 const Home = () => {
-  const { logout } = useAuth();
   const [backendMessage, setBackendMessage] = useState("Chargement...");
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
   const API_BASE_URL =
