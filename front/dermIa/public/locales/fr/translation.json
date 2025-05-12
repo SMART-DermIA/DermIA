@@ -53,8 +53,8 @@
     "share": "Partager à votre médecin traitant"
   },
   "footer": {
-    "cgu": "CGU",
-    "privacyPolicy": "Politique de confidentialité",
+    "cgu": "Conditions Générales d'Utilisation",
+    "privacyPolicy": "Politique de Confidentialité",
     "rightsReserved": "Tous droits réservés."
   },
   "historique": {
@@ -120,5 +120,15 @@
   },
   "userAccueil": {
     "welcome": "Bienvenue"
+  },
+  "privacyPolicy": {
+    "title": "Politique de Confidentialité",
+    "intro": "Bienvenue dans la Politique de Confidentialité de DermIA. Votre vie privée est importante pour nous.",
+    "section1Title": "1. Collecte des Données",
+    "section1Content": "Nous collectons des données pour offrir de meilleurs services à nos utilisateurs.",
+    "section2Title": "2. Utilisation des Données",
+    "section2Content": "Vos données sont utilisées pour améliorer nos services et garantir la sécurité.",
+    "section3Title": "3. Partage des Données",
+    "section3Content": "Nous ne partageons pas vos données avec des tiers sans votre consentement."
   }
 }

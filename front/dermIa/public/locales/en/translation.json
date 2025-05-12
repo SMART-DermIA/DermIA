@@ -57,6 +57,16 @@
     "privacyPolicy": "Privacy Policy",
     "rightsReserved": "All rights reserved."
   },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "intro": "Welcome to DermIA's Privacy Policy. Your privacy is important to us.",
+    "section1Title": "1. Data Collection",
+    "section1Content": "We collect data to provide better services to our users.",
+    "section2Title": "2. Data Usage",
+    "section2Content": "Your data is used to improve our services and ensure security.",
+    "section3Title": "3. Data Sharing",
+    "section3Content": "We do not share your data with third parties without your consent."
+  },
   "historique": {
     "title": "Your albums",
     "subtitle": "Track the evolution of each of your moles",
