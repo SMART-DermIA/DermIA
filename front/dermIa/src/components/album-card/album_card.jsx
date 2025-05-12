@@ -9,9 +9,18 @@ function AlbumCard({ id, imageUrl, title, lastModified }) {
   const { t } = useTranslation();
   const handleClick = () => {
     navigate(`/historique/${id}`);
-  }
+  };
+
   return (
-    <div className="album-card" onClick={handleClick} style={{cursor: 'pointer'}}>
+    <div
+      className="album-card"
+      onClick={handleClick}
+      style={{ cursor: 'pointer' }}
+      tabIndex="0"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') handleClick();
+      }}
+    >
       <img src={imageUrl} alt={title} className="album-image" />
       <div className="album-info">
         <p className="album-title">{title}</p>
