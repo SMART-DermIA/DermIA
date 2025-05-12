@@ -17,5 +17,5 @@ def analyze_image():
 
     return jsonify({
         "message": "Image reçue avec succès",
-        "filename": filename
+        "filename": image.filename
     }), 200

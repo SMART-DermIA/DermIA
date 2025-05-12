@@ -4,3 +4,4 @@ Flask-Bcrypt
 Flask-JWT-Extended
 Flask-Cors
 psycopg2-binary
+pillow

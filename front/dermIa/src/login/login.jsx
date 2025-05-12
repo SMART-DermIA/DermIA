@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useAuth } from "../AuthContext";
 import "./login.css";
 
 export default function Login({ closePopup, openRegisterPopup }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { login } = useAuth();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const API_BASE_URL =
     import.meta.env.VITE_API_URL ||
@@ -31,7 +34,8 @@ export default function Login({ closePopup, openRegisterPopup }) {
       if (response.ok) {
         if (data.access_token && data.user) {
           login(data.user, data.access_token);
-          toast.success("Connexion réussie !");
+          setSuccess(t("login.success"));
+          toast.success(t("login.success"));
           closePopup();
           navigate("/userAccueil");
         } else {
@@ -39,52 +43,55 @@ export default function Login({ closePopup, openRegisterPopup }) {
           toast.error("Réponse inattendue du serveur.");
         }
       } else {
-        toast.error(data.error || "Erreur de connexion.");
+        setError(data.error || t("login.error"));
+        toast.error(data.error || t("login.error"));
       }
     } catch (err) {
-      console.error("Erreur réseau ou serveur :", err);
-      toast.error("Erreur réseau ou serveur.");
+      console.error(t("login.networkError"), err);
+      setError(t("login.networkError"));
+      toast.error(t("login.networkError"));
     }
   };
 
   return (
     <div className="login-card">
       <img src="/logo.png" alt="Logo" className="login-logo" />
-      <h1>Bienvenue sur DERM'IA !</h1>
+      <h1>{t("login.welcome")}</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="username">Identifiant</label>
+          <label htmlFor="username">{t("login.email")}</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Identifiant"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={t("login.emailPlaceholder")}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Mot de passe</label>
+          <label htmlFor="password">{t("login.password")}</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Mot de passe"
+            placeholder={t("login.passwordPlaceholder")}
             required
           />
         </div>
         <button type="submit" className="submit-button">
-          Se connecter
+          {t("login.submit")}
         </button>
       </form>
       <p className="terms">
-        En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA…
+        En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA et
+        reconnaissez avoir lu notre politique de confidentialité. 
       </p>
       <p className="register-link">
-        Vous n’êtes pas encore sur DERM’IA ?{" "}
-        <span className="link" onClick={openRegisterPopup}>
-          Inscrivez-vous
+        {t("login.noAccount")}{" "}
+        <span className="link" onClick={handleRegisterLinkClick}>
+          {t("login.register")}
         </span>
       </p>
     </div>

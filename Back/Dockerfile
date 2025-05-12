@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
+ENV PYTHONPATH=/app
 
 # Copier les fichiers requirements pour installer les dépendances
 COPY requirements.txt .
@@ -22,4 +23,4 @@ COPY . .
 EXPOSE 8000
 
 # Démarrer l'application Flask
-CMD ["python", "app.py"]
+CMD ["python", "run.py"]

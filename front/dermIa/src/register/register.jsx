@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "./register.css";
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function Register({ closePopup, openLoginPopup }) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     identifier: "",
     age: "",
@@ -54,10 +56,10 @@ function Register({ closePopup, openLoginPopup }) {
         closePopup();
         openLoginPopup();
       } else {
-        alert(data.error || "Erreur d'inscription");
+        alert(data.error || t("register.error"));
       }
     } catch (err) {
-      alert("Erreur réseau ou serveur");
+      alert(t("register.networkError"));
     }
   };
 
@@ -73,38 +75,38 @@ function Register({ closePopup, openLoginPopup }) {
         alt="DermIA Logo"
         className="register-logo"
       />
-      <h1>Bienvenue sur DERM’IA !</h1>
-      <p>Détectez la dangerosité de vos grains de beauté en un clin d'œil.</p>
+      <h1>{t("register.welcome")}</h1>
+      <p>{t("register.subtitle")}</p>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="identifier">Identifiant</label>
+        <label htmlFor="identifier">{t("register.identifier")}</label>
         <input
           type="text"
           id="identifier"
           name="identifier"
-          placeholder="Identifiant"
+          placeholder={t("register.identifierPlaceholder")}
           value={formData.identifier}
           onChange={handleChange}
           required
         />
 
-        <label htmlFor="age">Age</label>
+        <label htmlFor="age">{t("register.age")}</label>
         <input
           type="number"
           id="age"
           name="age"
-          placeholder="Age"
+          placeholder={t("register.agePlaceholder")}
           value={formData.age}
           onChange={handleChange}
           required
         />
 
-        <label htmlFor="password">Mot de passe</label>
+        <label htmlFor="password">{t("register.password")}</label>
         <div className="password-input-container">
           <input
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
-            placeholder="Créer un mot de passe"
+            placeholder={t("register.passwordPlaceholder")}
             value={formData.password}
             onChange={handleChange}
             required
@@ -163,17 +165,14 @@ function Register({ closePopup, openLoginPopup }) {
         </button>
 
         <button type="submit" className="submit-button">
-          Continuer
+          {t("register.submit")}
         </button>
       </form>
-      <p className="terms">
-        En poursuivant, vous acceptez les conditions d'utilisation de DERM’IA et
-        reconnaissez avoir lu notre politique de confidentialité.
-      </p>
+      <p className="terms">{t("register.terms")}</p>
       <p className="login-link">
-        Déjà membre ?{" "}
+        {t("register.alreadyMember")}{" "}
         <span className="link" onClick={handleLoginLinkClick}>
-          Se connecter
+          {t("register.login")}
         </span>
       </p>
     </div>

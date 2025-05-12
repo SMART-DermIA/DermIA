@@ -1,1 +1,44 @@
+.primary-button {
+	background-color: #660033;
+	color: #fff;
+	padding: 0.8em 1.5em;
+	border: none;
+	border-radius: 1em;
+	font-weight: bold;
+	cursor: pointer;
+}
 
+.secondary-button {
+	background-color: #F0CFDF;
+	color: #660033;
+	padding: 0.8em 1.5em;
+	border: none;
+	border-radius: 1em;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.secondary-button:hover {
+	background-color: #bbb;
+}
+
+.delete-button {
+	background-color: #E8140D;
+	color: white;
+	padding: 0.8em 1.5em;
+	border: none;
+	border-radius: 1em;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.delete-button:hover {
+	background-color: #C8100A;
+	transition: background-color 0.2s ease;
+}
+
+.button-group {
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+}

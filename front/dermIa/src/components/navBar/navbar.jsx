@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
@@ -7,7 +8,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { FiSettings, FiLogOut } from "react-icons/fi";
 import { useAuth } from "../../AuthContext";
 
-export default function Navbar() {
+export default function Navbar({ passPopupHandlers }) {
+  const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
@@ -18,14 +20,18 @@ export default function Navbar() {
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
+    i18n.changeLanguage(lang.toLowerCase());
+    localStorage.setItem("language", lang);
   };
 
-  const handleLoginClick = () => {
+  const openLoginPopup = () => {
     setShowLoginPopup(true);
+    setShowRegisterPopup(false);
   };
 
-  const handleRegisterClick = () => {
+  const openRegisterPopup = () => {
     setShowRegisterPopup(true);
+    setShowLoginPopup(false);
   };
 
   const closeLoginPopup = () => {
@@ -34,10 +40,6 @@ export default function Navbar() {
 
   const closeRegisterPopup = () => {
     setShowRegisterPopup(false);
-  };
-
-  const openLoginPopup = () => {
-    setShowLoginPopup(true);
   };
 
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -61,6 +63,25 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("language") || "EN";
+    setLanguage(savedLanguage);
+    i18n.changeLanguage(savedLanguage.toLowerCase());
+  }, []);
+
+  useEffect(() => {
+    if (passPopupHandlers) {
+      passPopupHandlers({
+        openLoginPopup,
+        openRegisterPopup,
+        closeLoginPopup,
+        closeRegisterPopup,
+        showLoginPopup,
+        showRegisterPopup,
+      });
+    }
+  }, [passPopupHandlers, showLoginPopup, showRegisterPopup]);
 
   return (
     <>
@@ -92,24 +113,22 @@ export default function Navbar() {
             <ul className="navbar-nav ms-auto">
               {user ? (
                 <>
-                  <li className="nav-item nav-elem">
-                    <Link
-                      to="/userAccueil"
-                      className={`nav-elem ${
-                        location.pathname === "/userAccueil" ? "active" : ""
-                      }`}
-                    >
-                      Accueil
+                  <li
+                    className={`nav-item nav-elem ${
+                      location.pathname === "/userAccueil" ? "active" : ""
+                    }`}
+                  >
+                    <Link to="/userAccueil" className="nav-elem">
+                      {t("navbar.home")}
                     </Link>
                   </li>
-                  <li className="nav-item nav-elem">
-                    <Link
-                      to="/historique"
-                      className={`nav-elem ${
-                        location.pathname === "/historique" ? "active" : ""
-                      }`}
-                    >
-                      Historique
+                  <li
+                    className={`nav-item nav-elem ${
+                      location.pathname === "/historique" ? "active" : ""
+                    }`}
+                  >
+                    <Link to="/historique" className="nav-elem">
+                      {t("navbar.history")}
                     </Link>
                   </li>
                   <div className="nav-center"></div>
@@ -119,7 +138,7 @@ export default function Navbar() {
                       className="nav-link nav-link-secondary"
                       onClick={logout}
                     >
-                      Se déconnecter
+                      {t("navbar.logout")}
                     </Link>
                   </li>
                 </>
@@ -128,17 +147,17 @@ export default function Navbar() {
                   <li className="nav-item">
                     <button
                       className="nav-link nav-link-primary"
-                      onClick={handleLoginClick}
+                      onClick={openLoginPopup}
                     >
-                      Se connecter
+                      {t("navbar.login")}
                     </button>
                   </li>
                   <li className="nav-item">
                     <button
                       className="nav-link nav-link-secondary"
-                      onClick={handleRegisterClick}
+                      onClick={openRegisterPopup}
                     >
-                      S'inscrire
+                      {t("navbar.register")}
                     </button>
                   </li>
                 </>
