@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./home.css";
 import Navbar from "../components/navBar/navbar";
 import Footer from "../components/footer/footer";
-import Register from "../register/register";
-
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiStats } from "react-icons/bi";
