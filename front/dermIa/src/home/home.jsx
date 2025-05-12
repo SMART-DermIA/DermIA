@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./home.css";
 import Navbar from "../components/navBar/navbar";
 import Footer from "../components/footer/footer";
-import Register from "../register/register";
-
+import { useAuth } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiStats } from "react-icons/bi";
@@ -16,6 +16,14 @@ const Home = () => {
   const API_BASE_URL =
     import.meta.env.VITE_API_URL ||
     window.location.origin.replace(":5173", ":8000");
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/userAccueil", { replace: true });
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/`)
