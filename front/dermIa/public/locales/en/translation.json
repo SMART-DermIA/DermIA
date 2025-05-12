@@ -4,7 +4,8 @@
     "register": "Sign up",
     "logout": "Logout",
     "home": "Home",
-    "history": "History"
+    "history": "History",
+    "settings": "Settings"
   },
   "home": {
     "title": "Detect the danger of your moles at a glance.",
@@ -59,9 +60,7 @@
   "historique": {
     "title": "Your albums",
     "subtitle": "Track the evolution of each of your moles",
-    "newAnalysis": "New analysis",
-    "viewList": "List",
-    "viewMap": "Map"
+    "newAnalysis": "New analysis"
   },
   "login": {
     "welcome": "Welcome to DERM'IA!",
@@ -93,5 +92,34 @@
     "login": "Log in",
     "error": "Registration failed.",
     "networkError": "Network or server error."
+  },
+
+  "settings": {
+    "title": "Settings",
+    "doctor": "General Practitioner",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "edit": "Edit",
+    "addDoctor": "Add a doctor",
+    "save": "Save",
+    "cancel": "Cancel",
+    "account": "My account",
+    "username": "Username",
+    "deleteAccount": "Delete my account"
+  },
+  "toast": {
+    "doctorAdded": "Doctor added successfully",
+    "doctorUpdated": "Doctor updated successfully",
+    "errorUpdatingDoctor": "Error while updating",
+    "accountDeleted": "Account deleted successfully.",
+    "userNotFound": "User not found.",
+    "networkError": "Network or server error, see console for details"
+  },
+  "confirm": {
+    "deleteAccount": "Are you sure you want to delete your account? This action is irreversible."
+  },
+  "userAccueil": {
+    "welcome": "Welcome"
   }
 }

@@ -4,15 +4,19 @@ import "./album.css";
 import PictureCard from "../components/picture-card/picture_card";
 import { MdOutlineFileDownload, MdShare } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
+import ApexChart from "../components/chart";
+import { useTranslation } from "react-i18next";
 
 export default function Album() {
+	const { t } = useTranslation();
+
 	return (
 		<div>
 			<Navbar />
 			<div className="container-fluid">
-				<h1 className="album-title">Album : Album title</h1>
-				<h3 className="album-subtitle">Créé le [date] | Dernier mise à jour : [date]</h3>
-				<h3 className="album-subtitle-2">Dernier taux de dangerosité : 90 % (risque élevé)</h3>
+				<h1 className="album-title">{t('album.album')} Album title</h1>
+				<h3 className="album-subtitle">{t('album.creation')} [date] | {t('album.lastModified')} [date]</h3>
+				<h3 className="album-subtitle-2">{t('album.dernierDangerosite')} 90 % (risque élevé)</h3>
 				<div className="album-scroll">
 					<PictureCard image={"/image1.png"} date="2023-10-01" dangerosite="0" />
 					<PictureCard image={"/image2.png"} date="2023-10-01" dangerosite="0" />
@@ -26,8 +30,11 @@ export default function Album() {
 			</div>
 			<div className="album-stats">
 				<div className="container-fluid">
-				<h1 className="album-title">Statistiques d'évolution</h1>
-				<p>Ce graphique montre l'évolution des paramètres analysés (taille, couleur, asymétrie, etc.) sur les photos</p>
+				<h1 className="album-title">{t('album.statTitle')}</h1>
+				<p>{t('album.statDescription')}</p>
+				<div className="album-chart" style={{ display: "flex", justifyContent: "center", alignItems: "center"  }}>
+					<ApexChart />
+				</div>
 				</div>
 			</div>
 			<div className="container-fluid album-buttons">
@@ -36,11 +43,11 @@ export default function Album() {
 						<div className="button-group">
 							<button className="secondary-button">
 								<MdOutlineFileDownload size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-								Télécharger l'album
+								{t('album.buttonTelecharger')}
 							</button>
 							<button className="primary-button">
 							<MdShare size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-								Partager à votre médecin traitant
+								{t('album.buttonPartager')}
 							</button>
 						</div>
 					</div>
@@ -48,7 +55,7 @@ export default function Album() {
 						<div className="button-group">
 							<button className="delete-button">
 								<FaRegTrashAlt size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-								Supprimer l'album
+								{t('album.buttonSupprimer')}
 							</button>
 						</div>
 					</div>

@@ -4,7 +4,8 @@
     "register": "S'inscrire",
     "logout": "Se déconnecter",
     "home": "Accueil",
-    "history": "Historique"
+    "history": "Historique",
+    "settings": "Paramètres"
   },
   "home": {
     "title": "Détectez la dangerosité de vos grains de beauté en un clin d’œil.",
@@ -59,9 +60,7 @@
   "historique": {
     "title": "Vos albums",
     "subtitle": "Suivez l'évolution de chacun de vos grains de beauté",
-    "newAnalysis": "Nouvelle analyse",
-    "viewList": "Liste",
-    "viewMap": "Carte"
+    "newAnalysis": "Nouvelle analyse"
   },
   "login": {
     "welcome": "Bienvenue sur DERM'IA !",
@@ -93,5 +92,33 @@
     "login": "Se connecter",
     "error": "Erreur d'inscription.",
     "networkError": "Erreur réseau ou serveur."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "doctor": "Médecin traitant",
+    "name": "Nom",
+    "phone": "Téléphone",
+    "email": "Email",
+    "edit": "Modifier",
+    "addDoctor": "Ajouter un médecin traitant",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "account": "Mon compte",
+    "username": "Nom d'utilisateur",
+    "deleteAccount": "Supprimer mon compte"
+  },
+  "toast": {
+    "doctorAdded": "Médecin ajouté avec succès",
+    "doctorUpdated": "Médecin modifié avec succès",
+    "errorUpdatingDoctor": "Erreur lors de la mise à jour",
+    "accountDeleted": "Compte supprimé avec succès.",
+    "userNotFound": "Utilisateur non trouvé.",
+    "networkError": "Erreur réseau ou serveur, voir la console pour plus de détails"
+  },
+  "confirm": {
+    "deleteAccount": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
+  },
+  "userAccueil": {
+    "welcome": "Bienvenue"
   }
 }

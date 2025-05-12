@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import Navbar from "../components/navBar/navbar";
 import AlbumCard from "../components/album-card/album_card";
 import BodyMap from "../components/BodyMap/BodyMap";
@@ -7,35 +7,34 @@ import { LuScanSearch } from "react-icons/lu";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../AuthContext";
 import "./historique.css";
+import { getUsersAlbums } from "../services/AlbumService.js";
+import { createAsyncReducer } from "../reducers/asyncReducer.js";
+
+const { asyncReducer: albumsReducer, initialState } = createAsyncReducer([]);
 
 const Historique = () => {
   const { t } = useTranslation();
-  const { user } = useAuth();
-  const API_BASE_URL =
-    import.meta.env.VITE_API_URL ||
-    window.location.origin.replace(":5173", ":8000");
+  const [state, dispatch] = useReducer(albumsReducer, initialState);
 
-  const [albums, setAlbums] = useState([]);
-  const [viewMode, setViewMode] = useState("list"); // "list" ou "map"
-
-  // Charger les albums de l'utilisateur
+  // Get a user's albums
   useEffect(() => {
-    const fetchAlbums = async () => {
-      const token = localStorage.getItem("token");
-      try {
-        const resp = await fetch(`${API_BASE_URL}/user/albums`, {
-          headers: { Authorization: `Bearer ${token}` },
+    // Begin async fetch
+    dispatch({ type: "FETCH_START" });
+    // Get albums
+    getUsersAlbums()
+      .then((albums) =>
+        // Finish async fetch with success
+        dispatch({ type: "FETCH_SUCCESS", payload: albums })
+      )
+      .catch((err) => {
+        // Finish async fetch with error
+        dispatch({
+          type: "FETCH_ERROR",
+          payload: "Could not load recent posts.",
         });
-        if (resp.ok) {
-          const data = await resp.json();
-          setAlbums(data);
-        }
-      } catch (err) {
-        console.error("Erreur chargement des albums :", err);
-      }
-    };
-    if (user) fetchAlbums();
-  }, [API_BASE_URL, user]);
+        console.error(err);
+      });
+  }, []);
 
   return (
     <div>
@@ -57,43 +56,23 @@ const Historique = () => {
           </div>
         </div>
 
-        {/* Toggle Vue Liste / Carte */}
-        <div className="historique-toggle">
-          <button
-            className={viewMode === "list" ? "active" : ""}
-            onClick={() => setViewMode("list")}
-          >
-            {t("historique.viewList")}
-          </button>
-          <button
-            className={viewMode === "map" ? "active" : ""}
-            onClick={() => setViewMode("map")}
-          >
-            {t("historique.viewMap")}
-          </button>
-        </div>
-
-        {viewMode === "map" ? (
-          <BodyMap
-            albums={albums.map((a) => ({
-              id: a.id,
-              title: a.title,
-              x: a.x,
-              y: a.y,
-              view: a.view,
-              date: a.date,
-            }))}
-            onCreateAlbum={null} // lecture seule
-          />
+        {state.error ? (
+          <div className="historique-albums">
+            <p>{state.error}</p>
+          </div>
+        ) : state.loading ? (
+          <div className="historique-albums">
+            <p>{state.error}</p>
+          </div>
         ) : (
           <div className="historique-albums">
-            {albums.map((album) => (
+            {state.data.map((album, i) => (
               <AlbumCard
-                key={album.id}
+                key={i}
                 id={album.id}
-                imageUrl={album.coverUrl || "/placeholder.png"}
+                imageUrl={album.last_photo}
                 title={album.title}
-                lastModified={new Date(album.date).toLocaleDateString()}
+                lastModified={album.last_updated}
               />
             ))}
           </div>
