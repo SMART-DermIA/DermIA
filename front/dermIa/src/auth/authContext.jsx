@@ -23,21 +23,54 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
-  // Login function
   const login = async (username, password) => {
-    await axios.post(`${API_BASE_URL}/auth/login`, {
-      username,
-      password
-    }, {
-      withCredentials: true
-    });
+    try {
+      // Attempt to log in
+      const res1 = await axios.post(`${API_BASE_URL}/auth/login`, {
+        username,
+        password
+      }, {
+        withCredentials: true
+      });
 
-    // Fetch user info again after login
-    const res = await axios.get(`${API_BASE_URL}/auth/me`, {
-      withCredentials: true
-    });
+      // Confirm login succeeded
+      if (res1.status !== 200) {
+        return { success: false, status: res1.status, message: "Login failed" };
+      }
 
-    setUser(res.data);
+      // Attempt to fetch user data
+      const res2 = await axios.get(`${API_BASE_URL}/auth/me`, {
+        withCredentials: true
+      });
+
+      setUser(res2.data);
+      return { success: true, status: 200 };
+
+    } catch (err) {
+      // Handle various error shapes
+      if (err.response) {
+        // Server responded with error
+        return {
+          success: false,
+          status: err.response.status,
+          message: err.response.data?.error || "Server error during login"
+        };
+      } else if (err.request) {
+        // Request made but no response
+        return {
+          success: false,
+          status: 503,
+          message: "No response from server"
+        };
+      } else {
+        // Something else triggered the error
+        return {
+          success: false,
+          status: 500,
+          message: "Unexpected error"
+        };
+      }
+    }
   };
 
   // Logout function

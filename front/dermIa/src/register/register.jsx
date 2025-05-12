@@ -3,7 +3,7 @@ import "./register.css";
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
+import { registerUser } from "../services/UserService.js";
 
 function Register({ closePopup, openLoginPopup }) {
   const { t } = useTranslation();
@@ -19,8 +19,6 @@ function Register({ closePopup, openLoginPopup }) {
   const [showDoctorForm, setShowDoctorForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -28,26 +26,15 @@ function Register({ closePopup, openLoginPopup }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const result = await registerUser(formData);
 
-    try {
-      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
-        username: formData.identifier,
-        password: formData.password,
-        age: formData.age,
-        doctor_name: formData.doctor_name || undefined,
-        doctor_phone: formData.doctor_phone || undefined,
-        doctor_email: formData.doctor_email || undefined,
-      }, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    if (!result.success) {
+      toast.error(result.message);
+      console.error(`Registration failed: ${result.message} (Status ${result.status})`);
+    } else {
       toast.success("Inscription réussie !");
       closePopup();
       openLoginPopup();
-    } catch (err) {
-      alert(data.error || t("register.error"));
     }
   };
 

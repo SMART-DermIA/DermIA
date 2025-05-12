@@ -60,7 +60,7 @@ def login():
     resp = jsonify({"msg": "Login successful"})
     set_access_cookies(resp, access_token)
 
-    return resp
+    return resp, 200
 
 @auth_bp.route('/logout', methods=['POST'])
 @jwt_required()

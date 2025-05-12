@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./settings.css";
 import Navbar from "../components/navBar/navbar";
-import { useAuth } from "../AuthContext";
+import {useAuth} from "../auth/authContext.jsx";
+import axios from "axios";
+import {submitDoctorInfo} from "../services/UserService.js";
 
 export default function Settings() {
-  const navigate = useNavigate();
   const API_BASE_URL =
     import.meta.env.VITE_API_URL ||
     window.location.origin.replace(":5173", ":8000");
@@ -59,47 +59,20 @@ export default function Settings() {
 
   const handleMedecinFormSubmit = async (e) => {
     e.preventDefault();
-    const endpoint =
-      medecinFormMode === "add" ? "add_medecin" : "update_medecin";
-    console.log(medecinFormMode);
-    const method = medecinFormMode === "add" ? "POST" : "PUT";
+    const result = await submitDoctorInfo(medecinFormMode, formData);
 
-    const token = localStorage.getItem("token");
-
-    const payload = {
-      doctor_name: formData.name,
-      doctor_phone: formData.phone,
-      doctor_email: formData.email,
-    };
-
-    try {
-      const resp = await fetch(`${API_BASE_URL}/user/${endpoint}`, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
+    if (result.success) {
+      toast.success(`Médecin ${medecinFormMode === "add" ? "ajouté" : "modifié"} avec succès`);
+      const doctor = result.data.doctor;
+      setMedecin({
+        name: doctor.name,
+        phone: doctor.phone,
+        email: doctor.email,
       });
-      const data = await resp.json();
-      if (resp.ok) {
-        toast.success(
-          `Médecin ${
-            medecinFormMode === "add" ? "ajouté" : "modifié"
-          } avec succès`
-        );
-        setMedecin({
-          name: data.doctor.name,
-          phone: data.doctor.phone,
-          email: data.doctor.email,
-        });
-        setShowMedecinForm(false);
-      } else {
-        toast.error(data.error || "Erreur lors de la mise à jour");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("Erreur réseau ou serveur");
+      setShowMedecinForm(false);
+    } else {
+      toast.error(result.message || "Erreur lors de la mise à jour");
+      console.error("Doctor submission failed:", result.message);
     }
   };
 
@@ -112,22 +85,21 @@ export default function Settings() {
       return;
     }
     try {
-      const token = localStorage.getItem("token");
-      const resp = await fetch(`${API_BASE_URL}/auth/delete_account`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+      const resp = await axios.delete(`${API_BASE_URL}/auth/delete_account`, {
+        withCredentials: true,
       });
-      const data = await resp.json();
-      if (resp.ok) {
-        toast.success("Compte supprimé avec succès.");
-        logout();
-        navigate("/");
-      } else {
-        toast.error(data.error || "Erreur lors de la suppression");
+
+      switch (resp.status) {
+        case 200:
+          toast.success("Compte supprimé avec succès.");
+          logout();
+          break;
+        case 404:
+          toast.error("User not found.");
       }
     } catch (err) {
+      toast.error("Erreur réseau ou serveur, see console for more details");
       console.error(err);
-      toast.error("Erreur réseau ou serveur");
     }
   };
 

@@ -18,14 +18,13 @@ import NotFound from "./NotFound.jsx";
 function App() {
   return (
   <div className="App">
-    <ToastContainer>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-      />
+    <ToastContainer
+      position="top-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      closeOnClick
+      pauseOnHover
+    />
     <Router>
       <Routes>
         <Route element={ <RequireGuest /> }>
@@ -43,7 +42,6 @@ function App() {
         <Route path="*" element={ <NotFound /> } />
       </Routes>
     </Router>
-    </AuthProvider>
   </div>
   );
 }

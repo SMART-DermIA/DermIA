@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "./login.css";
@@ -7,29 +6,21 @@ import {useAuth} from "../auth/authContext.jsx";
 
 export default function Login({ closePopup, openRegisterPopup }) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
-  const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      login(username, password);
-      toast.success(t("login.success"));
-      setSuccess(t("login.success"));
-      closePopup();
-      navigate("/userAccueil");
+    const result = await login(username, password);
 
-    } catch (err) {
-      console.error(t("login.networkError"), err);
-      setError(t("login.networkError"));
-      toast.error(t("login.networkError"));
+    if (result.success) {
+      toast.success("Connexion réussie !");
+      closePopup();
+    } else {
+      toast.error(result.message || "Échec de la connexion.");
+      console.error(`Login failed: ${result.message} (Status ${result.status})`);
     }
   };
 
