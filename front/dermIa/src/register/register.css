@@ -1,120 +1,171 @@
+.register-popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
 
-  
+.register-card {
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  padding: 3rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  text-align: center;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.register-logo {
+  width: 100px;
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.register-card h1 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.register-card p {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.8rem;
+  line-height: 1.5;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.input-group {
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  height: 46px;
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #800020;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(128, 0, 32, 0.1);
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  cursor: pointer;
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.submit-button {
+  align-self: center;
+  width: 30%;
+  padding: 1rem;
+  background: #800020;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background: #a00028;
+}
+
+.terms {
+  font-size: 0.8rem;
+  color: #777;
+  margin: 1.5rem 0;
+  line-height: 1.4;
+}
+
+.login-link {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.link {
+  color: #800020;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #a00028;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
   .register-card {
-    background: #fff;
-    padding: 0rem 5rem;
-    width: 100%;
-    text-align: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    width: 85%;
+    max-width: 600px;
   }
   
   .register-card h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.8rem;
   }
   
-  .register-card p {
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    color: #555;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    text-align: left;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-  
-  input,
-  .password-input-container input {
-    width: 100%; 
-    height: 44px; 
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-sizing: border-box; 
-  }
-  
-  .password-input-container {
-    width: 100%; 
-    height: 44px; 
-    position: relative;
-    margin-bottom: 1.5rem;
-    
-  }
-  
-  .password-input-container input {
-    height: 100%; 
-    padding-right: 40px; 
-  }
-  
-  .password-input-container .toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
-    color: #555;
-    cursor: pointer;
+  input {
+    height: 44px;
+    font-size: 0.95rem;
   }
   
   .submit-button {
-    background-color: #800020;
-    color: #fff;
-    padding: 0.8rem;
-    border: none;
-    border-radius: 5px;
+    padding: 0.9rem;
     font-size: 1rem;
-    cursor: pointer;
-    margin: 0 auto;
-    display: block;
-    width: 137px;
   }
   
-  .submit-button:hover {
-    background-color: #a00028;
+  .toggle-password {
+    right: 12px;
+    font-size: 1.2rem;
   }
-  
-  .terms {
-    font-size: 0.8rem;
-    color: #777;
-    margin-top: 1rem;
-  }
-  
-  .login-link {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    font-weight: bold;
-  }
-  
-  .login-link a {
-    color: #800020;
-    text-decoration: none;
-  }
-  
-  .login-link a:hover {
-    text-decoration: underline;
-  }
-
-  .register-logo {
-    display: block;
-    margin: 0 auto 1rem auto;
-    max-width: 100px; 
-    height: auto;
-  }
-
-  .link {
-    color: #660033;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .link:hover {
-    color: #a00028;
-  }
+}

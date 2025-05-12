@@ -101,6 +101,7 @@
 .analyzing-box {
 	text-align: center;
 	margin-top: 2em;
+	padding: 1em;
 }
 
 .analyzing-text {
@@ -111,7 +112,7 @@
 }
 
 .spinner-icon {
-	font-size: 3rem;
+	font-size: 2.5rem;
 	color: #660033;
 	animation: spin 2s linear infinite;
 	margin: 0 auto;
@@ -129,17 +130,23 @@
 	margin-bottom: 20px;
 }
 
-.result-image {	
-	max-width: 15%;
+.result-box {
+	text-align: center;
+	margin-top: 2em;
+	padding: 1em;
+}
+
+.result-image {
+	max-width: 50%;
 	margin-bottom: 20px;
 	padding: 1em;
 	border-radius: 1em;
-	box-shadow: 0 0 10px rgba(0,0,0,0.3);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .risk-bar-container {
 	margin: 1em auto;
-	max-width: 400px;
+	max-width: 50%;
 	text-align: center;
 }
 
@@ -163,7 +170,7 @@
 }
 
 .risk-title {
-	font-size: 1.8rem;
+	font-size: 1.5rem;
 	color: darkgreen;
 	font-weight: bold;
 }
@@ -178,10 +185,11 @@
 	display: grid;
 	justify-content: center;
 	margin: 2em auto;
-	max-width: 300px;
-	font-size: 1.2em;
+	max-width: 40%;
+	font-size: 1.5rem;
 	text-align: left;
 	font-weight: 600;
+	gap: 1em;
 }
 
 .more-info-link {
@@ -189,4 +197,55 @@
 	text-decoration: underline;
 	display: block;
 	margin-bottom: 1.5em;
+	font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+	.result-image {
+		max-width: 80%;
+	}
+
+	.risk-title {
+		font-size: 1.2rem;
+	}
+
+	.criteria-grid {
+		font-size: 0.9rem;
+	}
+
+	.more-info-link {
+		font-size: 0.8rem;
+	}
+	.risk-bar-container {
+	max-width: 90%;
+	}
+
+	.risk-bar {
+	height: 20px;
+	}
+}
+
+@media (max-width: 480px) {
+	.result-image {
+		max-width: 100%;
+	}
+
+	.risk-title {
+		font-size: 1rem;
+	}
+
+	.criteria-grid {
+		font-size: 0.8rem;
+	}
+
+	.more-info-link {
+		font-size: 0.7rem;
+	}
+	.risk-bar-container {
+	max-width: 90%;
+	}
+
+	.risk-bar {
+	height: 20px;
+	}
 }

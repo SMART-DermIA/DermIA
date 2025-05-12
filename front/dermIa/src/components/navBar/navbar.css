@@ -1,5 +1,5 @@
 .navbar {
-  padding: .5em 1.5em;
+  padding: 0.5em 1.5em;
   background-color: #ffffff;
   box-shadow: 0 1px 5px rgba(102, 0, 51, 0.5);
   position: sticky;
@@ -16,35 +16,44 @@
   transform: translateY(0);
 }
 
-@media (min-width: 992px) {
-  .navbar-expand-lg .navbar-nav .nav-link {
-  padding: .8em 1.2em;
-  }
+.navbar-logo {
+  height: 100px;
+  transition: height 0.3s ease;
 }
 
 .nav-link {
   color: #ffffff;
   font-weight: 500;
-  padding: 1em;
-  margin: 1em;
+  padding: 0.8em 1.2em;
+  margin: 0 0.5em;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .custom-toggler.navbar-toggler {
   border-color: rgb(102, 0, 51);
+  padding: 0.25rem;
+  width: 44px;
+  height: 44px;
 }
 
 .custom-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath stroke='rgba(102, 0, 51, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24' /%3E%3C/svg%3E");
-
-  }
+}
 
 .nav-lang {
   font-weight: 400;
   padding: 0.5em 0.8em;
-  /*margin-left: 1em;*/
   cursor: pointer;
   color: #000;
-  text-decoration: none;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-lang.active {
@@ -54,19 +63,18 @@
 
 .nav-lang:hover {
   color: #660033;
-  text-decoration: none;
 }
 
-.nav-link-secondary, .nav-link-secondary:hover{
+.nav-link-secondary, .nav-link-secondary:hover {
   background-color: #660033;
-  border: 1px solid #000000; /* Borde negro sólido */
+  border: 1px solid #000000;
   color: #ffffff;
   border-radius: 1em;
 }
 
 .nav-link-primary, .nav-link-primary:hover {
   background-color: #ffffff;
-  border: 1px solid #660033; /* Borde negro sólido */
+  border: 1px solid #660033;
   color: #660033;
   border-radius: 1em;
 }
@@ -75,26 +83,22 @@
   color: #660033;
   font-weight: 500;
   font-size: 1.15em;
-  padding-top: 25px;
-  padding-inline: 10px;
+  padding: 0.5em 1em;
   text-decoration: none;
   border-bottom: 2px solid transparent;
-  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease, border-bottom 0.3s ease;
+  transition: all 0.3s ease;
+  display: block;
+  text-align: center;
 }
 
-
 .nav-elem.active {
-  border-bottom: 2px solid #660033; 
+  border-bottom: 2px solid #660033;
 }
 
 .nav-elem:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   color: #660033;
-  text-shadow: 2px 2px 5px rgba(102, 0, 51, 0.35); 
-}
-
-.nav-center {
-  margin-right: 260px;
+  text-shadow: 2px 2px 5px rgba(102, 0, 51, 0.35);
 }
 
 .popup-overlay {
@@ -107,17 +111,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000;
 }
 
 .popup {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  width: 40%;
+  width: 90%;
+  max-width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
   position: relative;
+  margin: 1em;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .close-popup {
@@ -128,4 +135,65 @@
   border: none;
   font-size: 1.5em;
   cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 991px) {
+  .navbar {
+    padding: 0.5em 1em;
+  }
+  
+  .navbar-logo {
+    height: 70px !important;
+  }
+
+  .navbar-collapse {
+    background-color: white;
+    padding: 1em;
+    margin-top: 1em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .nav-link {
+    margin: 0.5em 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-elem {
+    font-size: 1em;
+    padding: 0.8em;
+  }
+
+  .language-selector {
+    justify-content: center;
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid #eee;
+  }
+
+  .mobile-spacer {
+    height: 1px;
+    margin: 0.5em 0;
+    background: #eee;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-logo {
+    height: 50px !important;
+  }
+  
+  .nav-link {
+    font-size: 0.9em;
+    padding: 0.6em;
+  }
+  
+  .popup {
+    padding: 15px;
+  }
 }
