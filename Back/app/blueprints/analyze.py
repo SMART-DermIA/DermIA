@@ -9,7 +9,7 @@ from PIL import Image
 import torch
 from torchvision import transforms, models
 
-from IA.extract_criteria import extract_features_from_array
+from IA.extract_criteria import extract_features
 
 
 analyze_bp = Blueprint('analyze', __name__)
@@ -74,6 +74,7 @@ def analyze_image():
         conf = probs[pred].item()                # Confidence of predicted class
         danger = probs[1].item()                 # Probability of being malignant
 
+    label = "malignant" if pred == 1 else "benign"  # Add this line
     temp_path = "temp_image.jpg"
     img.save(temp_path)
 
