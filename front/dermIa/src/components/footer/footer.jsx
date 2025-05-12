@@ -3,13 +3,17 @@ import { useTranslation } from "react-i18next";
 import "./footer.css";
 import { Link } from "react-router-dom";
 import PrivacyPolicyPopup from "../privacyPolicy/PrivacyPolicyPopup";
+import CguPopUp from "../cgu/cguPopUp";
 
 export default function Footer() {
   const { t } = useTranslation();
   const [showPrivacyPopup, setShowPrivacyPopup] = useState(false);
+  const [showCguPopup, setShowCguPopup] = useState(false);
 
   const openPrivacyPopup = () => setShowPrivacyPopup(true);
   const closePrivacyPopup = () => setShowPrivacyPopup(false);
+  const openCguPopup = () => setShowCguPopup(true);
+  const closeCguPopup = () => setShowCguPopup(false);
 
   return (
     <>
@@ -24,7 +28,9 @@ export default function Footer() {
             <div className="col-md-3 mb-3 text-start">
               <ul className="list-unstyled">
                 <li>
-                  <Link to="/cgu" className="footer-link">{t("footer.cgu")}</Link>
+                  <button className="footer-link" onClick={openCguPopup}>
+                    {t("footer.cgu")}
+                  </button>
                 </li>
                 <li>
                   <button className="footer-link" onClick={openPrivacyPopup}>
@@ -55,7 +61,8 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-
+      
+      {showCguPopup && <CguPopUp closePopup={closeCguPopup} />}
       {showPrivacyPopup && <PrivacyPolicyPopup closePopup={closePrivacyPopup} />}
     </>
   );
