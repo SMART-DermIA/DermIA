@@ -9,6 +9,8 @@ import Album from './album/album';
 import './services/i18n'; 
 import './App.css';
 import {AuthProvider} from "./auth/authContext.jsx";
+import {RequireAuth, RequireGuest} from "./auth/guards.jsx";
+import NotFound from "./NotFound.jsx";
 
 function App() {
   return (
@@ -16,10 +18,18 @@ function App() {
     <AuthProvider>
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/userAccueil" element={<UserAccueil/>}/>
-        <Route path="/historique" element={<Historique/>}/>
-        <Route path="/historique/:id" element={<Album />}/>
+        <Route element={ <RequireGuest /> }>
+          <Route path="/" element={<HomePage/>}/>
+        </Route>
+
+        <Route element={ <RequireAuth /> }>
+          <Route path="/userAccueil" element={<UserAccueil/>}/>
+          <Route path="/historique" element={<Historique/>}/>
+          <Route path="/historique/:id" element={<Album />}/>
+        </Route>
+
+        {/* Catch-all: redirect unknown routes */}
+        <Route path="*" element={ <NotFound /> } />
       </Routes>
     </Router>
     </AuthProvider>
