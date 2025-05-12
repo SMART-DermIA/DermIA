@@ -4,23 +4,33 @@ import { useTranslation } from "react-i18next";
 import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
+import { FaUserCircle } from "react-icons/fa";
+import { FiSettings, FiLogOut } from "react-icons/fi";
 import {useAuth} from "../../auth/authContext.jsx";
 
 export default function Navbar({ passPopupHandlers }) {
-  const { logout, isLoggedIn } = useAuth()
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
 
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
+  const { isLoggedIn, user, logout } = useAuth();
   const location = useLocation();
   let lastScrollY = 0;
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     i18n.changeLanguage(lang.toLowerCase());
-    localStorage.setItem("language", lang); 
+    localStorage.setItem("language", lang);
+  };
+
+  const handleLoginClick = () => {
+    setShowLoginPopup(true);
+  };
+
+  const handleRegisterClick = () => {
+    setShowRegisterPopup(true);
   };
 
   const openLoginPopup = () => {
@@ -41,6 +51,12 @@ export default function Navbar({ passPopupHandlers }) {
     setShowRegisterPopup(false);
   };
 
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
@@ -58,7 +74,7 @@ export default function Navbar({ passPopupHandlers }) {
   }, []);
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") || "EN"; 
+    const savedLanguage = localStorage.getItem("language") || "EN";
     setLanguage(savedLanguage);
     i18n.changeLanguage(savedLanguage.toLowerCase());
   }, []);
@@ -78,10 +94,18 @@ export default function Navbar({ passPopupHandlers }) {
 
   return (
     <>
-      <nav className={`navbar navbar-expand-lg ${showNavbar ? "visible" : "hidden"}`}>
+      <nav
+        className={`navbar navbar-expand-lg ${
+          showNavbar ? "visible" : "hidden"
+        }`}
+      >
         <div className="container-fluid d-flex justify-content-between">
           <Link to={isLoggedIn ? "/userAccueil" : "/"} className="navbar-brand">
-            <img src="/logo.png" alt="DermIA Logo" style={{ height: "100px" }} />
+            <img
+              src="/logo.png"
+              alt="DermIA Logo"
+              style={{ height: "100px" }}
+            />
           </Link>
           <button
             className="navbar-toggler custom-toggler"
@@ -98,19 +122,31 @@ export default function Navbar({ passPopupHandlers }) {
             <ul className="navbar-nav ms-auto">
               {isLoggedIn ? (
                 <>
-                  <li className={`nav-item nav-elem ${location.pathname === "/userAccueil" ? "active" : ""}`}>
+                  <li
+                    className={`nav-item nav-elem ${
+                      location.pathname === "/userAccueil" ? "active" : ""
+                    }`}
+                  >
                     <Link to="/userAccueil" className="nav-elem">
                       {t("navbar.home")}
                     </Link>
                   </li>
-                  <li className={`nav-item nav-elem ${location.pathname === "/historique" ? "active" : ""}`}>
+                  <li
+                    className={`nav-item nav-elem ${
+                      location.pathname === "/historique" ? "active" : ""
+                    }`}
+                  >
                     <Link to="/historique" className="nav-elem">
                       {t("navbar.history")}
                     </Link>
                   </li>
                   <div className="nav-center"></div>
                   <li className="nav-item">
-                    <Link to="/" className="nav-link nav-link-secondary" onClick={logout}>
+                    <Link
+                      to="/"
+                      className="nav-link nav-link-secondary"
+                      onClick={logout}
+                    >
                       {t("navbar.logout")}
                     </Link>
                   </li>
@@ -118,12 +154,18 @@ export default function Navbar({ passPopupHandlers }) {
               ) : (
                 <>
                   <li className="nav-item">
-                    <button className="nav-link nav-link-primary" onClick={openLoginPopup}>
+                    <button
+                      className="nav-link nav-link-primary"
+                      onClick={openLoginPopup}
+                    >
                       {t("navbar.login")}
                     </button>
                   </li>
                   <li className="nav-item">
-                    <button className="nav-link nav-link-secondary" onClick={openRegisterPopup}>
+                    <button
+                      className="nav-link nav-link-secondary"
+                      onClick={openRegisterPopup}
+                    >
                       {t("navbar.register")}
                     </button>
                   </li>
@@ -145,6 +187,31 @@ export default function Navbar({ passPopupHandlers }) {
                 EN
               </span>
             </div>
+            {user && (
+              <li className="nav-item user-menu">
+                <FaUserCircle
+                  size={30}
+                  onClick={toggleUserMenu}
+                  style={{ cursor: "pointer" }}
+                />
+                {showUserMenu && (
+                  <div className="user-dropdown">
+                    <Link
+                      to="/settings"
+                      className="dropdown-item"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      <FiSettings style={{ marginRight: "8px" }} />
+                      Paramètres
+                    </Link>
+                    <Link to="/" className="dropdown-item" onClick={logout}>
+                      <FiLogOut style={{ marginRight: "8px" }} />
+                      Se déconnecter
+                    </Link>
+                  </div>
+                )}
+              </li>
+            )}
           </div>
         </div>
       </nav>
@@ -157,7 +224,7 @@ export default function Navbar({ passPopupHandlers }) {
             </button>
             <Login
               closePopup={closeLoginPopup}
-              openRegisterPopup={openRegisterPopup}
+              openRegisterPopup={handleRegisterClick}
             />
           </div>
         </div>

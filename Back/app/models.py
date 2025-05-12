@@ -9,6 +9,10 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     albums = db.relationship('Album', backref='user', lazy=True)
+    doctor_name  = db.Column(db.String(120), nullable=True)
+    doctor_phone = db.Column(db.String(20),  nullable=True)
+    doctor_email = db.Column(db.String(120), nullable=True)
+
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
