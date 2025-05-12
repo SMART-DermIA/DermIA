@@ -33,7 +33,18 @@ const ApexChart = () => {
 			fontSize: "16px",
 			color: '#666'
 			}
-		}
+		},
+		responsive: [{
+			breakpoint: 768,
+			options: {
+				chart: {
+					width: '100%'
+				},
+				legend: {
+					position: 'bottom'
+				}
+			}
+		}]
 	};
   const series = [
 	{
@@ -58,6 +69,10 @@ const ApexChart = () => {
 	}
   ];
 
-  return <Chart options={options} series={series} type="line" height={400} width={"100%"} />;
+  return (
+	<div className="chart-wrapper">
+		<Chart className="album-chart" options={options} series={series} type="line" height={400} width={700} />
+	</div>
+  );
 };
 export default ApexChart;
