@@ -17,20 +17,11 @@ export default function Navbar({ passPopupHandlers }) {
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
   const { isLoggedIn, user, logout } = useAuth();
   const location = useLocation();
-  let lastScrollY = 0;
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     i18n.changeLanguage(lang.toLowerCase());
     localStorage.setItem("language", lang);
-  };
-
-  const handleLoginClick = () => {
-    setShowLoginPopup(true);
-  };
-
-  const handleRegisterClick = () => {
-    setShowRegisterPopup(true);
   };
 
   const openLoginPopup = () => {
@@ -58,13 +49,29 @@ export default function Navbar({ passPopupHandlers }) {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setShowNavbar(false);
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateNavbarVisibility = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 10) {
+        setShowNavbar(true); // Always show navbar near top
+      } else if (currentScrollY > lastScrollY) {
+        setShowNavbar(false); // Scrolling down
       } else {
-        setShowNavbar(true);
+        setShowNavbar(true); // Scrolling up
       }
-      lastScrollY = window.scrollY;
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavbarVisibility);
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -77,7 +84,7 @@ export default function Navbar({ passPopupHandlers }) {
     const savedLanguage = localStorage.getItem("language") || "EN";
     setLanguage(savedLanguage);
     i18n.changeLanguage(savedLanguage.toLowerCase());
-  }, []);
+  }, [i18n]);
 
   useEffect(() => {
     if (passPopupHandlers) {
@@ -224,7 +231,7 @@ export default function Navbar({ passPopupHandlers }) {
             </button>
             <Login
               closePopup={closeLoginPopup}
-              openRegisterPopup={handleRegisterClick}
+              openRegisterPopup={openRegisterPopup}
             />
           </div>
         </div>
