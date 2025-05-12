@@ -1,11 +1,9 @@
 import React, { useEffect, useReducer } from "react";
 import Navbar from "../components/navBar/navbar";
 import AlbumCard from "../components/album-card/album_card";
-import BodyMap from "../components/BodyMap/BodyMap";
 import { Link } from "react-router-dom";
 import { LuScanSearch } from "react-icons/lu";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../AuthContext";
 import "./historique.css";
 import { getUsersAlbums } from "../services/AlbumService.js";
 import { createAsyncReducer } from "../reducers/asyncReducer.js";
