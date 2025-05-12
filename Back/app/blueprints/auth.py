@@ -58,7 +58,6 @@ def login():
 
     if not user or not bcrypt.check_password_hash(user.password, password):
         return jsonify({"error": "Invalid username or password"}), 401
-<<<<<<< HEAD:Back/auth.py
 
     access_token = create_access_token(identity=str(user.id))
     return jsonify({
@@ -89,8 +88,4 @@ def delete_account():
 
     return jsonify({"message": "Account deleted successfully"}), 200
 
-=======
-
-    access_token = create_access_token(identity=str(user.id))
->>>>>>> origin/develop:Back/app/blueprints/auth.py
 
