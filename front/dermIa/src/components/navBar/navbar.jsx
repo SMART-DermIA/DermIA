@@ -20,13 +20,12 @@ export default function Navbar({ passPopupHandlers }) {
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     i18n.changeLanguage(lang.toLowerCase());
-    localStorage.setItem("language", lang); 
+    localStorage.setItem("language", lang);
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("token");
-    n
   };
 
   const openLoginPopup = () => {
@@ -49,12 +48,14 @@ export default function Navbar({ passPopupHandlers }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
+      if (window.innerWidth > 991) { // Solo aplicar efecto en desktop
+        if (window.scrollY > lastScrollY) {
+          setShowNavbar(false);
+        } else {
+          setShowNavbar(true);
+        }
+        lastScrollY = window.scrollY;
       }
-      lastScrollY = window.scrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -68,7 +69,7 @@ export default function Navbar({ passPopupHandlers }) {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") || "EN"; 
+    const savedLanguage = localStorage.getItem("language") || "EN";
     setLanguage(savedLanguage);
     i18n.changeLanguage(savedLanguage.toLowerCase());
   }, []);
@@ -89,9 +90,9 @@ export default function Navbar({ passPopupHandlers }) {
   return (
     <>
       <nav className={`navbar navbar-expand-lg ${showNavbar ? "visible" : "hidden"}`}>
-        <div className="container-fluid d-flex justify-content-between">
+        <div className="container-fluid">
           <Link to={isAuthenticated ? "/userAccueil" : "/"} className="navbar-brand">
-            <img src="/logo.png" alt="DermIA Logo" style={{ height: "100px" }} />
+            <img src="/logo.png" alt="DermIA Logo" className="navbar-logo" />
           </Link>
           <button
             className="navbar-toggler custom-toggler"
@@ -105,85 +106,88 @@ export default function Navbar({ passPopupHandlers }) {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              {isAuthenticated ? (
-                <>
-                  <li className={`nav-item nav-elem ${location.pathname === "/userAccueil" ? "active" : ""}`}>
-                    <Link to="/userAccueil" className="nav-elem">
-                      {t("navbar.home")}
-                    </Link>
-                  </li>
-                  <li className={`nav-item nav-elem ${location.pathname === "/historique" ? "active" : ""}`}>
-                    <Link to="/historique" className="nav-elem">
-                      {t("navbar.history")}
-                    </Link>
-                  </li>
-                  <div className="nav-center"></div>
+            <div className="d-lg-flex justify-content-between w-100">
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                {isAuthenticated ? (
+                  <>
+                    <li className={`nav-item ${location.pathname === "/userAccueil" ? "active" : ""}`}>
+                      <Link to="/userAccueil" className="nav-elem">
+                        {t("navbar.home")}
+                      </Link>
+                    </li>
+                    <li className={`nav-item ${location.pathname === "/historique" ? "active" : ""}`}>
+                      <Link to="/historique" className="nav-elem">
+                        {t("navbar.history")}
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <div className="mobile-spacer"></div>
+                )}
+              </ul>
+              
+              <ul className="navbar-nav ms-auto">
+                {isAuthenticated ? (
                   <li className="nav-item">
                     <Link to="/" className="nav-link nav-link-secondary" onClick={handleLogout}>
                       {t("navbar.logout")}
                     </Link>
                   </li>
-                </>
-              ) : (
-                <>
-                  <li className="nav-item">
-                    <button className="nav-link nav-link-primary" onClick={openLoginPopup}>
-                      {t("navbar.login")}
-                    </button>
-                  </li>
-                  <li className="nav-item">
-                    <button className="nav-link nav-link-secondary" onClick={openRegisterPopup}>
-                      {t("navbar.register")}
-                    </button>
-                  </li>
-                </>
-              )}
-            </ul>
-            <div className="d-flex align-items-center">
-              <span
-                className={`nav-lang ${language === "FR" ? "active" : ""}`}
-                onClick={() => handleLanguageChange("FR")}
-              >
-                FR
-              </span>
-              <span>/</span>
-              <span
-                className={`nav-lang ${language === "EN" ? "active" : ""}`}
-                onClick={() => handleLanguageChange("EN")}
-              >
-                EN
-              </span>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <button className="nav-link nav-link-primary" onClick={openLoginPopup}>
+                        {t("navbar.login")}
+                      </button>
+                    </li>
+                    <li className="nav-item">
+                      <button className="nav-link nav-link-secondary" onClick={openRegisterPopup}>
+                        {t("navbar.register")}
+                      </button>
+                    </li>
+                  </>
+                )}
+              </ul>
+              
+              <div className="d-flex align-items-center ms-lg-3 language-selector">
+                <span
+                  className={`nav-lang ${language === "FR" ? "active" : ""}`}
+                  onClick={() => handleLanguageChange("FR")}
+                >
+                  FR
+                </span>
+                <span>/</span>
+                <span
+                  className={`nav-lang ${language === "EN" ? "active" : ""}`}
+                  onClick={() => handleLanguageChange("EN")}
+                >
+                  EN
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </nav>
 
-      {showLoginPopup && (
+      {(showLoginPopup || showRegisterPopup) && (
         <div className="popup-overlay">
           <div className="popup">
-            <button className="close-popup" onClick={closeLoginPopup}>
+            <button className="close-popup" onClick={showLoginPopup ? closeLoginPopup : closeRegisterPopup}>
               &times;
             </button>
-            <Login
-              closePopup={closeLoginPopup}
-              openRegisterPopup={openRegisterPopup}
-              setIsAuthenticated={setIsAuthenticated} 
-            />
-          </div>
-        </div>
-      )}
-
-      {showRegisterPopup && (
-        <div className="popup-overlay">
-          <div className="popup">
-            <button className="close-popup" onClick={closeRegisterPopup}>
-              &times;
-            </button>
-            <Register
-              closePopup={closeRegisterPopup}
-              openLoginPopup={openLoginPopup}
-            />
+            {showLoginPopup && (
+              <Login
+                closePopup={closeLoginPopup}
+                openRegisterPopup={openRegisterPopup}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            )}
+            {showRegisterPopup && (
+              <Register
+                closePopup={closeRegisterPopup}
+                openLoginPopup={openLoginPopup}
+              />
+            )}
           </div>
         </div>
       )}
