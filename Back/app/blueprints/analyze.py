@@ -1,10 +1,16 @@
 import io
+import sys
 import os
+import numpy as np
+
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required
 from PIL import Image
 import torch
 from torchvision import transforms, models
+
+from IA.extract_criteria import extract_features_from_array
+
 
 analyze_bp = Blueprint('analyze', __name__)
 
@@ -68,11 +74,45 @@ def analyze_image():
         conf = probs[pred].item()                # Confidence of predicted class
         danger = probs[1].item()                 # Probability of being malignant
 
-    label = "malignant" if pred == 1 else "benign"
+    temp_path = "temp_image.jpg"
+    img.save(temp_path)
 
-    # → Retourner le JSON
+    try:
+        features = extract_features(temp_path)
+        os.remove(temp_path)
+    except:
+        return jsonify({"error": "Feature extraction failed"}), 500
+
+    if features is None:
+        return jsonify({"error": "No lesion detected"}), 422
+
+    # Pondérations
+    weights = {
+        "irregularity": 0.3,
+        "asymmetry_score": 0.5,
+        "diameter": 0.2,
+        "color_variation": 0.1
+    }
+
+    # Normalisation manuelle des valeurs brutes si besoin
+    def normalize(val, min_val, max_val):
+        return np.clip((val - min_val) / (max_val - min_val), 0, 1)
+
+    scores = {
+        "irregularity": normalize(features["irregularity"], 0, 1) * 100,
+        "asymmetry_score": normalize(features["asymmetry_score"], 0, 1) * 100,
+        "diameter": normalize(features["diameter"], 0, 40) * 100,  # ex: max 40 mm
+        "color_variation": normalize(features["color_variation"], 0, 100) * 100
+    }
+
     return jsonify({
         "result": label,
-        "confidence": round(conf, 3),          # ex. 0.92
-        "danger_rate": round(danger * 100, 1)  # ex. 74.5 -> 74.5%
+        "confidence": round(conf, 3),
+        "danger_rate": round(danger * 100, 1),
+        "scores": {
+            "irregularity": round(scores["irregularity"], 1),
+            "asymmetry": round(scores["asymmetry_score"], 1),
+            "size": round(scores["diameter"], 1),
+            "color": round(scores["color_variation"], 1)
+        }
     }), 200

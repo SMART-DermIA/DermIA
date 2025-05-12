@@ -165,10 +165,10 @@ export default function ImageUpload() {
                     </div>
                 
                     <div className="criteria-grid">
-                        <div><span style={{ color: "#660033" }}>Irrégularité</span> <span>30%</span></div>
-                        <div><span style={{ color: "#660033" }}>Assymétrie</span> <span>50%</span></div>
-                        <div><span style={{ color: "#660033" }}>Taille</span> <span>20%</span></div>
-                        <div><span style={{ color: "#660033" }}>Couleur</span> <span>10%</span></div>
+                    <div><span style={{ color: "#660033" }}>Irrégularité</span> <span>{result.scores.irregularity}%</span></div>
+                    <div><span style={{ color: "#660033" }}>Assymétrie</span> <span>{result.scores.asymmetry}%</span></div>
+                    <div><span style={{ color: "#660033" }}>Taille</span> <span>{result.scores.size}%</span></div>
+                    <div><span style={{ color: "#660033" }}>Couleur</span> <span>{result.scores.color}%</span></div>
                     </div>
                 
                     <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutanés/excroissances-cutanées-bénignes/grains-de-beauté#Diagnostic_v28368748_fr" className="more-info-link">
