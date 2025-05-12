@@ -54,7 +54,7 @@ def login():
     if user:
         print(f"User found with username={user.username}: id={user.id}")
     else:
-        print(f"No user found with username={user.username}")
+        print(f"No user found with username={username}")
 
     if not user or not bcrypt.check_password_hash(user.password, password):
         return jsonify({"error": "Invalid username or password"}), 401

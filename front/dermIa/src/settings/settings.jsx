@@ -47,7 +47,7 @@ export default function Settings() {
   };
 
   const handleAddMedecin = () => {
-    setFormData({ nom: "", telephone: "", email: "" });
+    setFormData({ name: "", phone: "", email: "" });
     setMedecinFormMode("add");
     setShowMedecinForm(true);
   };
@@ -67,8 +67,8 @@ export default function Settings() {
     const token = localStorage.getItem("token");
 
     const payload = {
-      doctor_name: formData.nom,
-      doctor_phone: formData.telephone,
+      doctor_name: formData.name,
+      doctor_phone: formData.phone,
       doctor_email: formData.email,
     };
 
@@ -163,7 +163,7 @@ export default function Settings() {
               <label>
                 Nom
                 <input
-                  name="nom"
+                  name="name"
                   value={formData.name}
                   onChange={handleMedecinFormChange}
                   required
@@ -172,7 +172,7 @@ export default function Settings() {
               <label>
                 Téléphone
                 <input
-                  name="telephone"
+                  name="phone"
                   value={formData.phone}
                   onChange={handleMedecinFormChange}
                   required

@@ -24,6 +24,14 @@ export default function Navbar({ passPopupHandlers }) {
     localStorage.setItem("language", lang);
   };
 
+  const handleLoginClick = () => {
+    setShowLoginPopup(true);
+  };
+
+  const handleRegisterClick = () => {
+    setShowRegisterPopup(true);
+  };
+
   const openLoginPopup = () => {
     setShowLoginPopup(true);
     setShowRegisterPopup(false);

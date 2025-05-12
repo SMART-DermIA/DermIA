@@ -53,6 +53,11 @@ export default function Login({ closePopup, openRegisterPopup }) {
     }
   };
 
+  const handleRegisterLinkClick = () => {
+    closePopup();
+    openRegisterPopup();
+  };
+
   return (
     <div className="login-card">
       <img src="/logo.png" alt="Logo" className="login-logo" />
@@ -62,10 +67,10 @@ export default function Login({ closePopup, openRegisterPopup }) {
           <label htmlFor="username">{t("login.email")}</label>
           <input
             type="text"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={t("login.emailPlaceholder")}
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Identifiant"
             required
           />
         </div>
