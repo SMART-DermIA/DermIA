@@ -29,7 +29,21 @@
       "ctaButton": "Inscription"
     },
     "album": {
-      "lastModified": "Dernière modification"
+      "creation" : "Crée le : ",
+      "lastModified": "Dernière mise à jour : ",
+      "album": "Album : ",
+      "dernierDangerosite" : "Dernier taux de dangerosité : ",
+      "statTitle" : "Statistiques d'évolution",
+      "statDescription" : "Ce graphique montre l'évolution des paramètres analysés (taille, couleur, asymétrie, etc.) sur les photos",
+      "buttonTelecharger" : "Télécharger l'album",
+      "buttonSupprimer" : "Supprimer l'album",
+      "buttonPartager" : "Partager à votre médecin traitant",
+      "chartTitle" : "Évolution des paramètres de votre grain de beauté",
+      "irregularity" : "Irrégularité",
+      "asymmetry" : "Asymétrie",
+      "size" : "Taille",
+      "color" : "Couleur",
+      "mean" : "Moyenne"
     },
     "imgUpload": {
       "title": "Téléchargez votre image pour commencer l’analyse",
