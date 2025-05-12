@@ -1,203 +1,248 @@
 .container {
-    text-align: center;
-    padding: 50px;
-    max-width: 100%;
+    padding: 50px 20px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-.navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+.hero-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 80px;
+    flex-wrap: wrap;
+}
+
+.hero-content {
+    flex: 1 1 50%;
+    min-width: 300px;
+}
+
+.hero-image {
+    flex: 1 1 100%;
+    min-width: 300px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    max-height: 400px; 
+    object-fit: cover; 
 }
 
 .title {
-    font-size: 2.5em;
-    color: #000000;
+    font-size: 2.5rem;
+    color: #000;
     margin-bottom: 30px;
-    line-height: 1.4;
     text-align: left;
-    max-width: 50%;
+    line-height: 1.3;
 }
 
 .text {
-    font-size: 1.2em;
-    color: #000000;
+    font-size: 1.2rem;
+    color: #000;
     margin-bottom: 40px;
     text-align: left;
-    max-width: 50%;
-}
-
-.btn-container {
-    display: flex;
-    justify-content: left;
-    align-items: left
-}
-
-.image {
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-}
-
-
-.icon {
-    width: 15%;
-    height: 15%;
-    margin-bottom: 10px;
-}
-
-.button {
-    background-color: #660033;
-    color: white;
-    padding: 15px 40px;
-    font-size: 1.1em;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-bottom: 40px;
-
-}
-.line {
-    width: 100%;
-    height: 2px;
-    background-color: #660033;
-    margin-top: 30px;
-    margin-bottom: 50px;
-}
-.button:hover {
-    background-color: #660033;
-}
-
-.features-section {
-    padding-top: 40px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 4%;
+    line-height: 1.6;
 }
 
 .features-title {
-    font-size: 2em;
-    max-width: 40%;
+    font-size: 2rem;
     color: #660033;
-    margin: 0 auto 20px;
-    margin-top: 100px;
+    text-align: center;
+    margin: 80px 0 40px;
+}
+
+.features-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-bottom: 80px;
 }
 
 .feature {
-    flex: 1 1 calc(33.333% - 40px);
-    background-color: white;
+    padding: 20px;
     border-radius: 10px;
-    max-width: 33.333%;
+    text-align: center;
+}
+
+.feature-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto 20px;
+    border-radius: 8px;
 }
 
 .feature-title {
-    color: #000000;
-    font-size: 1.4em;
-    margin-bottom: 15px;
-    margin-top: 30px;
+    font-size: 1.5rem;
+    color: #000;
+    margin: 20px 0 15px;
 }
 
 .feature-text {
-    color: #7f8c8d;
+    color: #666;
     line-height: 1.6;
-    margin: 0 auto;
+    font-size: 1rem;
 }
 
-
+/* Steps Section */
 .steps-section {
+    margin: 80px 0;
+}
+
+.steps-title {
+    font-size: 2rem;
+    color: #660033;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.steps-container {
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
-    flex-wrap: wrap;
-    margin: 40px 0;
-    max-width: 90%;
-    justify-self: center;
+    position: relative;
 }
 
 .step {
-    flex: 1 1 calc(33.333% - 30px);
-    max-width: 300px;
+    flex: 1;
+    max-width: 250px;
     padding: 20px;
     text-align: center;
 }
 
-
-.steps-features-title {
-    font-size: 2em;
-    min-width: 60%;
+.step-icon {
+    font-size: 2.5rem;
     color: #660033;
-    margin: 0 auto 40px;
-    padding-left: 30%;
-    padding-right: 30%;
+    margin-bottom: 20px;
 }
 
 .step-title {
-    font-size: 1.4em;
-    color: #000000;
+    font-size: 1.3rem;
+    color: #000;
+    margin-bottom: 15px;
 }
 
-.step-divider {
-    display: none;
+.step-text {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1rem;
 }
 
-.title-final {
-    font-size: 2.5em;
+.step-divider.vertical {
+    width: 1px;
+    height: 100px;
+    background: #ddd;
+    margin-top: 60px;
+}
+
+/* CTA Section */
+.cta-section {
+    background: #f9f9f9;
+    border-radius: 15px;
+    padding: 60px 40px;
+    margin: 80px 0;
+    text-align: center;
+}
+
+.cta-title {
+    font-size: 2.2rem;
     color: #660033;
     margin-bottom: 30px;
-    line-height: 1.4;
-    text-align: left;
-    max-width: 50%;
 }
 
-@media (max-width: 768px) {
-    .container {
-        padding: 30px 20px;
-    }
-
-    .title {
-        font-size: 1em;
-    }
-
-    .features-title {
-        font-size: 1.6em;
-    }
-
-    .feature {
-        flex: 1 1 100%;
-        padding: 15px;
-        margin: 15px 0;
-    }
-
-    .feature-title {
-        font-size: 1.2em;
-    }
+.cta-content {
+    max-width: 600px;
+    margin: 0 auto;
 }
-.cta-section {
-    margin-top: 80px;
-    padding: 40px 20px;
-    display: flex;
-    margin-left: 6%;
-    margin-right: 6%;
-    
-  }
-  
-  .title-final {
-    min-width: 40%;
-  }
-  .cta-divider {
-    margin-left: 5%;
-    text-align: left;
-  }
 
-  
 .cta-text {
-    font-size: 1.2em;
-    color: #000000;
-    margin-bottom: 40px;
-    text-align: left;
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.button {
+    background: #660033;
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.backend-message {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin: 40px 0;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .hero-section {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .title {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    .text {
+        text-align: center;
+        font-size: 1rem;
+    }
+    
+    .btn-container {
+        justify-content: center;
+    }
+    
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+    
+    .step-divider.vertical {
+        display: none;
+    }
+    
+    .step {
+        max-width: 100%;
+        padding: 20px 0;
+    }
+    
+    .cta-section {
+        padding: 40px 20px;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 15px;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .features-title,
+    .steps-title {
+        font-size: 1.6rem;
+    }
+    
+    .button {
+        width: 100%;
+        padding: 15px 20px;
+    }
 }
