@@ -1,5 +1,5 @@
 .navbar {
-  padding: .5em 1.5em;
+  padding: 0.5em 1.5em;
   background-color: #ffffff;
   box-shadow: 0 1px 5px rgba(102, 0, 51, 0.5);
   position: sticky;
@@ -18,7 +18,7 @@
 
 @media (min-width: 992px) {
   .navbar-expand-lg .navbar-nav .nav-link {
-  padding: .8em 1.2em;
+    padding: 0.8em 1.2em;
   }
 }
 
@@ -35,8 +35,7 @@
 
 .custom-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath stroke='rgba(102, 0, 51, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24' /%3E%3C/svg%3E");
-
-  }
+}
 
 .nav-lang {
   font-weight: 400;
@@ -57,14 +56,16 @@
   text-decoration: none;
 }
 
-.nav-link-secondary, .nav-link-secondary:hover{
+.nav-link-secondary,
+.nav-link-secondary:hover {
   background-color: #660033;
   border: 1px solid #000000; /* Borde negro sólido */
   color: #ffffff;
   border-radius: 1em;
 }
 
-.nav-link-primary, .nav-link-primary:hover {
+.nav-link-primary,
+.nav-link-primary:hover {
   background-color: #ffffff;
   border: 1px solid #660033; /* Borde negro sólido */
   color: #660033;
@@ -79,18 +80,18 @@
   padding-inline: 10px;
   text-decoration: none;
   border-bottom: 2px solid transparent;
-  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease, border-bottom 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease,
+    border-bottom 0.3s ease;
 }
 
-
 .nav-elem.active {
-  border-bottom: 2px solid #660033; 
+  border-bottom: 2px solid #660033;
 }
 
 .nav-elem:hover {
   transform: scale(1.1);
   color: #660033;
-  text-shadow: 2px 2px 5px rgba(102, 0, 51, 0.35); 
+  text-shadow: 2px 2px 5px rgba(102, 0, 51, 0.35);
 }
 
 .nav-center {
@@ -128,4 +129,33 @@
   border: none;
   font-size: 1.5em;
   cursor: pointer;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100px; /* ajuste selon ton layout */
+  right: 20px;
+  background-color: white;
+  border: 1px solid #660033;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 8px;
 }
