@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import "./imgUpload.css";
 import { BiPhotoAlbum } from "react-icons/bi";
@@ -6,6 +6,7 @@ import { PiSpinnerGap } from "react-icons/pi";
 import { LuScanSearch } from "react-icons/lu";
 import { GrUndo } from "react-icons/gr";
 import { MdShare } from "react-icons/md";
+import { FaUserMd } from "react-icons/fa"; // Icon for the doctor button
 
 export default function ImageUpload() {
     const [upload, setUpload] = useState(true);
@@ -15,7 +16,7 @@ export default function ImageUpload() {
     const [result, setResult] = useState(null);
 
     const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
-    
+
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
         setImage(URL.createObjectURL(file));
@@ -30,14 +31,13 @@ export default function ImageUpload() {
         onDrop
     });
 
- 
-
     const handleConfirm = async () => {
         if (!image) {
             console.error("Aucune image sélectionnée");
             return;
         }
 
+        setAnalyzing(true);
         const file = await fetch(image)
             .then(r => r.blob())
             .then(blobFile => new File([blobFile], "image.png", { type: "image/png" }));
@@ -57,7 +57,7 @@ export default function ImageUpload() {
             });
 
             const result = await response.json();
-            console.log(" API replied:", result);
+            console.log("API replied:", result);
 
             if (response.ok) {
                 setResult(result);
@@ -67,20 +67,30 @@ export default function ImageUpload() {
         } catch (error) {
             console.error("Erreur réseau ou serveur :", error);
             alert("Erreur réseau ou serveur");
+        } finally {
+            setAnalyzing(false);
         }
     };
 
     const handleCancel = () => {
         setPreview(false);
         setAnalyzing(false);
-        setResult(false);
+        setResult(null);
         setUpload(true);
         setImage(null);
-    };    
+    };
+
+    useEffect(() => {
+        let timer;
+        if (analyzing) {
+            timer = setTimeout(() => {}, 1000);
+        }
+        return () => clearTimeout(timer);
+    }, [analyzing]);
 
     return (
         <div className="upload-container">
-            {(upload) && (
+            {upload && (
                 <div>
                     <h2 className="upload-title">Téléchargez votre image pour commencer l’analyse</h2>
                     <p className="upload-subtitle">
@@ -127,7 +137,7 @@ export default function ImageUpload() {
                 </div>
             )}
 
-            {result && !analyzing ? (
+            {result && !analyzing && (
                 <div className="result-box">
                     <h2 className="upload-title">Analyse terminée</h2>
                     <img src={image} alt="Analyse" className="result-image" />
@@ -135,14 +145,13 @@ export default function ImageUpload() {
                     <h3
                         className="risk-title"
                         style={{
-                            color: result.result === "malignant" ? "darkred" : "darkgreen",
-                            marginTop: "1em",
+                            color: result.result === "malignant" ? "#d32f2f" : "#2e7d32",
+                            marginTop: "1.2em",
                         }}
                     >
                         {result.result === "malignant"
                             ? "Potentiellement maligne"
-                            : "Bénigne"}{" "}
-                        – Taux de dangerosité estimé : {result.danger_rate}%
+                            : "Bénigne"} – Taux de dangerosité estimé : {result.danger_rate}% {result.danger_rate > 50 ? "(risque élevé)" : ""}
                     </h3>
 
                     <div className="risk-bar-container">
@@ -155,46 +164,73 @@ export default function ImageUpload() {
                         <p 
                             className="risk-message"
                             style={{
-                                color: result.result === "malignant" ? "darkred" : "darkgreen",
+                                color: result.danger_rate > 50 ? "#d32f2f" : "#2e7d32",
                             }}
                         >
-                              {result.danger_rate > 50
-                               ? "Attention, taux de dangerosité élevé."
-                               : "Bonne nouvelle ! Votre grain ne présente pas d’anomalie."}
+                            {result.danger_rate > 50
+                                ? "Attention : consultez un dermatologue"
+                                : "Bonne nouvelle ! Votre grain ne présente pas d’anomalie."}
                         </p>
+                        {result.danger_rate > 50 && (
+                            <div className="doctor-recommendation">
+                                <a href="https://www.doctolib.fr/dermatologue/france" target="_blank" rel="noopener noreferrer">
+                                    <button className="doctor-button">
+                                        <FaUserMd size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                                        Chercher un dermato
+                                    </button>
+                                </a>
+                            </div>
+                        )}
                     </div>
                 
-                    <div className="criteria-grid">
-                    <div><span style={{ color: "#660033" }}>Irrégularité</span> <span>{(result.scores.irregularity) * 100}</span></div>
-                    <div><span style={{ color: "#660033" }}>Assymétrie</span> <span>{(result.scores.asymmetry) * 100}</span></div>
-                    <div><span style={{ color: "#660033" }}>Taille</span> <span>{result.scores.size}</span></div>
-                    <div><span style={{ color: "#660033" }}>Couleur</span> <span>{(result.scores.color)* 10}</span></div>
+                    <div className="criteria-group">
+                        {[
+                            { name: 'Irrégularité', value: result.scores.irregularity, color: '#f39c12' },
+                            { name: 'Asymétrie', value: result.scores.asymmetry, color: '#2980b9' },
+                            { name: 'Taille', value: result.scores.size, color: '#27ae60' },
+                            { name: 'Couleur', value: result.scores.color, color: '#8e44ad' },
+                        ].map(({ name, value, color }) => (
+                            <div key={name} className="criteria-bar">
+                                <div className="criteria-label">{name}</div>
+                                <div className="bar-wrapper">
+                                    <div
+                                        className="bar-fill"
+                                        style={{
+                                            width: `${value}%`,
+                                            backgroundColor: color,
+                                        }}
+                                    >
+                                        {value}%
+                                    </div>
+                                    <div className="bar-scale">
+                                        <span>0%</span>
+                                        <span>100%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                
+
                     <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutanés/excroissances-cutanées-bénignes/grains-de-beauté#Diagnostic_v28368748_fr" className="more-info-link">
                         En savoir plus sur les grains de beauté.
                     </a>
 
-                    <div className="row">
-                        <div className="col-sm mb-3">
-                            <button className="confirm-button">
-                                <MdShare size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                Partager à votre médecin traitant
-                            </button>
-                        </div>
-                        <div className="col-sm mb-3 button-group">
-                            <button className="cancel-button" onClick={handleCancel}>
-                                <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                Annuler
-                            </button>
-                            <button className="confirm-button" onClick={handleConfirm}>
-                                <BiPhotoAlbum size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                Ajouter à un album
-                            </button>
-                        </div>
+                    <div className="button-group">
+                        <button className="confirm-button">
+                            <MdShare size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                            Partager à votre médecin traitant
+                        </button>
+                        <button className="cancel-button" onClick={handleCancel}>
+                            <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                            Annuler
+                        </button>
+                        <button className="confirm-button" onClick={handleConfirm}>
+                            <BiPhotoAlbum size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                            Ajouter à un album
+                        </button>
                     </div>
                 </div>
-            ) : null}
+            )}
         </div>
     );
 }
