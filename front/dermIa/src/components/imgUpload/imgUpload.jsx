@@ -19,8 +19,6 @@ export default function ImageUpload() {
     const [analyzing, setAnalyzing] = useState(false);
     const [result, setResult] = useState(null);
 
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
-    
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
         setImage(URL.createObjectURL(file));
@@ -47,6 +45,7 @@ export default function ImageUpload() {
             setPreview(false);
         }, 3000);
 
+    };
     const handleConfirm = async () => {
         if (!file) {
             console.error(t("imgUpload.noImageSelected"));
@@ -66,7 +65,7 @@ export default function ImageUpload() {
         console.log(t("imgUpload.fileReady"), file);
         const formData = new FormData();
         formData.append('image', file);
-
+    
         try {
             for (var pair of formData.entries()) {
                 console.log(pair[0]+ ', ' + pair[1]);
@@ -77,10 +76,9 @@ export default function ImageUpload() {
                     "Content-Type": 'multipart/form-data'
                 }
             });
-
+    
             const result = await response.json();
-            console.log(" API replied:", result);
-
+    
             if (response.ok) {
                 console.log(t("imgUpload.analysisResult"), result);
                 // Ici tu pourrais afficher les résultats à l'utilisateur
@@ -111,9 +109,9 @@ export default function ImageUpload() {
                         {t("imgUpload.subtitle")}
                     </p>
                 </div>
-            )}
+            ) : null}
 
-            {upload && (
+            {upload ? (
                 <div {...getRootProps()} className={`upload-box ${isDragActive ? "drag-active" : ""}`}>
                 <input {...getInputProps()} />
                 <img src="/iconUpload.png" className="img" />
@@ -123,7 +121,7 @@ export default function ImageUpload() {
             </div>
             ) : null}
             
-            {preview && (
+            {preview ? (
                 <div className="preview-box">
                     {!result ? (
                         <div><img src={image} alt="Aperçu" className="preview-image" />
@@ -140,16 +138,16 @@ export default function ImageUpload() {
                         </div>
                     ) : null}
                 </div>
-            )}
+            ) : null}
 
-            {analyzing && (
+            {analyzing ? (
                 <div className="analyzing-box">
                     <h2 className="upload-title">{t("imgUpload.analyzing")}</h2>
                     <PiSpinnerGap size={72} className="spinner-icon" />
                 </div>
-            )}
+            ) : null}
 
-            {result && !analyzing ? (
+            {result ? (
                 <div className="result-box">
                     <h2 className="upload-title">{t("imgUpload.analysisComplete")}</h2>
                     <img src={image} alt="Analyse" className="result-image" />
@@ -167,36 +165,24 @@ export default function ImageUpload() {
                         – Taux de dangerosité estimé : {result.danger_rate}%
                     </h3>
 
+                
+                    {/* Barre de risque */}
                     <div className="risk-bar-container">
-                        <div className="risk-bar">
-                            <div 
-                                className="risk-indicator" 
-                                style={{ left: `${result.danger_rate}%` }} 
-                            />
-                        </div>
-                        <p 
-                            className="risk-message"
-                            style={{
-                                color: result.result === "malignant" ? "darkred" : "darkgreen",
-                            }}
-                        >
-                              {result.danger_rate > 50
-                               ? "Attention, taux de dangerosité élevé."
-                               : "Bonne nouvelle ! Votre grain ne présente pas d’anomalie."}
-                        </p>
+                    <div className="risk-bar">
+                        <div className="risk-indicator" style={{ left: "15%" }} />
                     </div>
                     <p className="risk-message">
                         {t("imgUpload.noAnomaly")}
                     </p>
                     </div>
                 
+                    {/* Détails d’analyse */}
                     <div className="criteria-grid">
                     <div><span style={{ color: "#660033" }}>Irrégularité</span> <span>{(result.scores.irregularity) * 100}</span></div>
                     <div><span style={{ color: "#660033" }}>Assymétrie</span> <span>{(result.scores.asymmetry) * 100}</span></div>
                     <div><span style={{ color: "#660033" }}>Taille</span> <span>{result.scores.size}</span></div>
                     <div><span style={{ color: "#660033" }}>Couleur</span> <span>{(result.scores.color)* 10}</span></div>
                     </div>
-                
 
                     <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutanés/excroissances-cutanées-bénignes/grains-de-beauté#Diagnostic_v28368748_fr" className="more-info-link">En savoir plus sur les grains de beauté.</a>
                     <div className="row">
