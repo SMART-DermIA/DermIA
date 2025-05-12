@@ -1,8 +1,8 @@
 import React from "react";
 import Navbar from "../components/navBar/navbar";
 import ImageUpload from "../components/imgUpload/imgUpload";
-import { useAuth } from "../AuthContext";
 import "./userAccueil.css";
+import {useAuth} from "../auth/authContext.jsx";
 
 const UserAccueil = () => {
   const { user } = useAuth();

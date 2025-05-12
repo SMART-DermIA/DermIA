@@ -1,11 +1,7 @@
 from flask import Blueprint, request, jsonify
 from ..models import db, User
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import (
-    create_access_token,
-    jwt_required,
-    get_jwt_identity
-)
+from flask_jwt_extended import create_access_token, set_access_cookies, jwt_required, get_jwt_identity, unset_jwt_cookies
 
 
 bcrypt = Bcrypt()
@@ -60,15 +56,34 @@ def login():
         return jsonify({"error": "Invalid username or password"}), 401
 
     access_token = create_access_token(identity=str(user.id))
+
+    resp = jsonify({"msg": "Login successful"})
+    set_access_cookies(resp, access_token)
+
+    return resp, 200
+
+@auth_bp.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    response = jsonify({"msg": "Logout successful"})
+    unset_jwt_cookies(response)
+    return response, 200
+
+@auth_bp.route('/me', methods=['GET'])
+@jwt_required()
+def get_current_user():
+    user_id = int(get_jwt_identity())
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
     return jsonify({
-        "access_token": access_token,
-        "user": {
-            "id": user.id,
-            "username": user.username,
-            "doctor_name" : user.doctor_name,
-            "doctor_phone" : user.doctor_phone,
-            "doctor_email" : user.doctor_email,
-        }
+        "id": user.id,
+        "username": user.username,
+        "doctor_name" : user.doctor_name,
+        "doctor_phone" : user.doctor_phone,
+        "doctor_email" : user.doctor_email,
     }), 200
 
 # ====================
@@ -87,5 +102,3 @@ def delete_account():
     db.session.commit()
 
     return jsonify({"message": "Account deleted successfully"}), 200
-
-

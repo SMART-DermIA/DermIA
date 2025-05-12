@@ -7,6 +7,9 @@ import { PiSpinnerGap } from "react-icons/pi";
 import { LuScanSearch } from "react-icons/lu";
 import { GrUndo } from "react-icons/gr";
 import { MdShare } from "react-icons/md";
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
 
 export default function ImageUpload() {
     const { t } = useTranslation();
@@ -21,9 +24,6 @@ export default function ImageUpload() {
         setImage(URL.createObjectURL(file));
         setPreview(true);
         setUpload(false);
-
-    const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
-
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -67,17 +67,14 @@ export default function ImageUpload() {
         formData.append('image', file);
     
         try {
-            const token = localStorage.getItem('token');
             for (var pair of formData.entries()) {
                 console.log(pair[0]+ ', ' + pair[1]);
             }            
-            const response = await fetch(`${API_BASE_URL}/analyze`, {
-                method: "POST",
+            const response = await axios.post(`${API_BASE_URL}/analyze`, formData,{
+                withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                credentials: "include",
-                body: formData,
+                    "Content-Type": 'multipart/form-data'
+                }
             });
     
             const result = await response.json();

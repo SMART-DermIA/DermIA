@@ -6,30 +6,22 @@ import Register from "../../register/register";
 import "./navbar.css";
 import { FaUserCircle } from "react-icons/fa";
 import { FiSettings, FiLogOut } from "react-icons/fi";
-import { useAuth } from "../../AuthContext";
+import {useAuth} from "../../auth/authContext.jsx";
 
 export default function Navbar({ passPopupHandlers }) {
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
+
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
-  const { user, logout } = useAuth();
+  const { isLoggedIn, user, logout } = useAuth();
   const location = useLocation();
-  let lastScrollY = 0;
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     i18n.changeLanguage(lang.toLowerCase());
     localStorage.setItem("language", lang);
-  };
-
-  const handleLoginClick = () => {
-    setShowLoginPopup(true);
-  };
-
-  const handleRegisterClick = () => {
-    setShowRegisterPopup(true);
   };
 
   const openLoginPopup = () => {
@@ -57,13 +49,29 @@ export default function Navbar({ passPopupHandlers }) {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setShowNavbar(false);
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateNavbarVisibility = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 10) {
+        setShowNavbar(true); // Always show navbar near top
+      } else if (currentScrollY > lastScrollY) {
+        setShowNavbar(false); // Scrolling down
       } else {
-        setShowNavbar(true);
+        setShowNavbar(true); // Scrolling up
       }
-      lastScrollY = window.scrollY;
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavbarVisibility);
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -76,7 +84,7 @@ export default function Navbar({ passPopupHandlers }) {
     const savedLanguage = localStorage.getItem("language") || "EN";
     setLanguage(savedLanguage);
     i18n.changeLanguage(savedLanguage.toLowerCase());
-  }, []);
+  }, [i18n]);
 
   useEffect(() => {
     if (passPopupHandlers) {
@@ -99,7 +107,7 @@ export default function Navbar({ passPopupHandlers }) {
         }`}
       >
         <div className="container-fluid d-flex justify-content-between">
-          <Link to={user ? "/userAccueil" : "/"} className="navbar-brand">
+          <Link to={isLoggedIn ? "/userAccueil" : "/"} className="navbar-brand">
             <img
               src="/logo.png"
               alt="DermIA Logo"
@@ -119,7 +127,7 @@ export default function Navbar({ passPopupHandlers }) {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              {user ? (
+              {isLoggedIn ? (
                 <>
                   <li
                     className={`nav-item nav-elem ${
@@ -223,7 +231,7 @@ export default function Navbar({ passPopupHandlers }) {
             </button>
             <Login
               closePopup={closeLoginPopup}
-              openRegisterPopup={handleRegisterClick}
+              openRegisterPopup={openRegisterPopup}
             />
           </div>
         </div>
