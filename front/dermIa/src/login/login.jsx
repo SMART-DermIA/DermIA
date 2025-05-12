@@ -71,7 +71,7 @@ export default function Login({ closePopup, openRegisterPopup }) {
             <input
               type="text"
               id="username"
-              value={email}
+              value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder={t("login.emailPlaceholder")}
               required

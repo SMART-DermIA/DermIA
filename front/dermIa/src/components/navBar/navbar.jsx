@@ -58,15 +58,12 @@ export default function Navbar({ passPopupHandlers }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerWidth > 991) {
-        // Solo aplicar efecto en desktop
-        if (window.scrollY > lastScrollY) {
-          setShowNavbar(false);
-        } else {
-          setShowNavbar(true);
-        }
-        lastScrollY = window.scrollY;
+      if (window.scrollY > lastScrollY) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
       }
+      lastScrollY = window.scrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -218,13 +215,10 @@ export default function Navbar({ passPopupHandlers }) {
         </div>
       </nav>
 
-      {(showLoginPopup || showRegisterPopup) && (
+      {showLoginPopup && (
         <div className="popup-overlay">
           <div className="popup">
-            <button
-              className="close-popup"
-              onClick={showLoginPopup ? closeLoginPopup : closeRegisterPopup}
-            >
+            <button className="close-popup" onClick={closeLoginPopup}>
               &times;
             </button>
             <Login
