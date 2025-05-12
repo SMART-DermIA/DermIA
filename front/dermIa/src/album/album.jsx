@@ -4,6 +4,7 @@ import "./album.css";
 import PictureCard from "../components/picture-card/picture_card";
 import { MdOutlineFileDownload, MdShare } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
+import ApexChart from "../components/chart";
 
 export default function Album() {
 	return (
@@ -28,6 +29,9 @@ export default function Album() {
 				<div className="container-fluid">
 				<h1 className="album-title">Statistiques d'évolution</h1>
 				<p>Ce graphique montre l'évolution des paramètres analysés (taille, couleur, asymétrie, etc.) sur les photos</p>
+				<div className="album-chart" style={{ display: "flex", justifyContent: "center", alignItems: "center"  }}>
+					<ApexChart />
+				</div>
 				</div>
 			</div>
 			<div className="container-fluid album-buttons">
