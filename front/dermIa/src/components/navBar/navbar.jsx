@@ -6,7 +6,7 @@ import Register from "../../register/register";
 import "./navbar.css";
 import { FaUserCircle } from "react-icons/fa";
 import { FiSettings, FiLogOut } from "react-icons/fi";
-import {useAuth} from "../../auth/authContext.jsx";
+import { useAuth } from "../../auth/authContext.jsx";
 
 export default function Navbar({ passPopupHandlers }) {
   const { t, i18n } = useTranslation();
@@ -209,11 +209,11 @@ export default function Navbar({ passPopupHandlers }) {
                       onClick={() => setShowUserMenu(false)}
                     >
                       <FiSettings style={{ marginRight: "8px" }} />
-                      Paramètres
+                      {t("navbar.settings")}
                     </Link>
                     <Link to="/" className="dropdown-item" onClick={logout}>
                       <FiLogOut style={{ marginRight: "8px" }} />
-                      Se déconnecter
+                      {t("navbar.logout")}
                     </Link>
                   </div>
                 )}

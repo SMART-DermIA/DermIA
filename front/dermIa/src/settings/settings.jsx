@@ -3,15 +3,17 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./settings.css";
 import Navbar from "../components/navBar/navbar";
-import {useAuth} from "../auth/authContext.jsx";
+import { useAuth } from "../auth/authContext.jsx";
 import axios from "axios";
-import {submitDoctorInfo} from "../services/UserService.js";
+import { submitDoctorInfo } from "../services/UserService.js";
+import { useTranslation } from "react-i18next";
 
 export default function Settings() {
   const API_BASE_URL =
     import.meta.env.VITE_API_URL ||
     window.location.origin.replace(":5173", ":8000");
   const { user, logout } = useAuth();
+  const { t } = useTranslation();
 
   const [medecin, setMedecin] = useState({
     name: "",
@@ -62,7 +64,11 @@ export default function Settings() {
     const result = await submitDoctorInfo(medecinFormMode, formData);
 
     if (result.success) {
-      toast.success(`Médecin ${medecinFormMode === "add" ? "ajouté" : "modifié"} avec succès`);
+      toast.success(
+        medecinFormMode === "add"
+          ? t("toast.doctorAdded")
+          : t("toast.doctorUpdated")
+      );
       const doctor = result.data.doctor;
       setMedecin({
         name: doctor.name,
@@ -71,17 +77,13 @@ export default function Settings() {
       });
       setShowMedecinForm(false);
     } else {
-      toast.error(result.message || "Erreur lors de la mise à jour");
+      toast.error(result.message || t("toast.errorUpdatingDoctor"));
       console.error("Doctor submission failed:", result.message);
     }
   };
 
   const handleDeleteAccount = async () => {
-    if (
-      !window.confirm(
-        "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
-      )
-    ) {
+    if (!window.confirm(t("confirm.deleteAccount"))) {
       return;
     }
     try {
@@ -91,14 +93,14 @@ export default function Settings() {
 
       switch (resp.status) {
         case 200:
-          toast.success("Compte supprimé avec succès.");
+          toast.success(t("toast.accountDeleted"));
           logout();
           break;
         case 404:
-          toast.error("User not found.");
+          toast.error(t("toast.userNotFound"));
       }
     } catch (err) {
-      toast.error("Erreur réseau ou serveur, see console for more details");
+      toast.error(t("toast.networkError"));
       console.error(err);
     }
   };
@@ -107,33 +109,33 @@ export default function Settings() {
     <div>
       <Navbar />
       <div className="settings-page">
-        <h1>Paramètres</h1>
+        <h1>{t("settings.title")}</h1>
 
         <section className="section">
-          <h2>Médecin traitant</h2>
+          <h2>{t("settings.doctor")}</h2>
           {medecin.name ? (
             <div className="medecin-info">
               <p>
-                <strong>Nom : </strong> {medecin.name}
+                <strong>{t("settings.name")} : </strong> {medecin.name}
               </p>
               <p>
-                <strong>Téléphone : </strong> {medecin.phone}
+                <strong>{t("settings.phone")} : </strong> {medecin.phone}
               </p>
               <p>
-                <strong>Email : </strong> {medecin.email}
+                <strong>{t("settings.email")} : </strong> {medecin.email}
               </p>
-              <button onClick={handleEditMedecin}>Modifier</button>
+              <button onClick={handleEditMedecin}>{t("settings.edit")}</button>
             </div>
           ) : (
             <button className="add-button" onClick={handleAddMedecin}>
-              Ajouter un médecin traitant
+              {t("settings.addDoctor")}
             </button>
           )}
 
           {showMedecinForm && (
             <form className="medecin-form" onSubmit={handleMedecinFormSubmit}>
               <label>
-                Nom
+                {t("settings.name")}
                 <input
                   name="name"
                   value={formData.name}
@@ -142,7 +144,7 @@ export default function Settings() {
                 />
               </label>
               <label>
-                Téléphone
+                {t("settings.phone")}
                 <input
                   name="phone"
                   value={formData.phone}
@@ -151,7 +153,7 @@ export default function Settings() {
                 />
               </label>
               <label>
-                Email
+                {t("settings.email")}
                 <input
                   name="email"
                   value={formData.email}
@@ -160,9 +162,9 @@ export default function Settings() {
                 />
               </label>
               <div className="form-actions">
-                <button type="submit">Enregistrer</button>
+                <button type="submit">{t("settings.save")}</button>
                 <button type="button" onClick={() => setShowMedecinForm(false)}>
-                  Annuler
+                  {t("settings.cancel")}
                 </button>
               </div>
             </form>
@@ -170,14 +172,14 @@ export default function Settings() {
         </section>
 
         <section className="section">
-          <h2>Mon compte</h2>
+          <h2>{t("settings.account")}</h2>
           {user && (
             <p>
-              <strong>Username :</strong> {user.username}
+              <strong>{t("settings.username")} :</strong> {user.username}
             </p>
           )}
           <button className="danger" onClick={handleDeleteAccount}>
-            Supprimer mon compte
+            {t("settings.deleteAccount")}
           </button>
         </section>
       </div>
