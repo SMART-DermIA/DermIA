@@ -1,8 +1,11 @@
 import React from "react";
 
 import Chart from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
 const ApexChart = () => {
+	const { t } = useTranslation();
+
   	const options = {
 		chart: {
 			type: 'line',
@@ -27,11 +30,11 @@ const ApexChart = () => {
 			max: 100,
 		},
 		title: {
-			text: 'Évolution',
+			text: t('album.chartTitle'),
 			align: 'left',
 			style: {
 			fontSize: "16px",
-			color: '#666'
+			color: '#660033'
 			}
 		},
 		responsive: [{
@@ -48,23 +51,23 @@ const ApexChart = () => {
 	};
   const series = [
 	{
-		name: 'Irregularité',
+		name: t('album.irregularity'),
 		data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
 	},
 	{
-		name: 'Asymétrie',
+		name: t('album.asymmetry'),
 		data: [1, 15, 30, 36, 70, 74, 80, 84, 86, 88, 94, 98, 94, 92, 85, 93, 92, 95]
 	},
 	{
-		name: 'Taille',
+		name: t('album.size'),
 		data: [6, 15, 80, 85, 88, 90, 94, 96, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 	},
 	{
-		name: 'Couleur',
+		name: t('album.color'),
 		data: [40, 30, 20, 12, 15, 20, 30, 40, 40, 60, 67, 70, 60, 60, 65, 63, 68, 61]
 	},
 	{
-		name: 'Moyenne',
+		name: t('album.mean'),
 		data: [25, 40, 50, 66, 70, 70, 85, 70, 80, 90, 100, 90, 90, 90, 90, 90, 90, 90]
 	}
   ];

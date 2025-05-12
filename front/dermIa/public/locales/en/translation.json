@@ -29,7 +29,21 @@
       "ctaButton": "Sign up"
     },
     "album": {
-      "lastModified": "Last modified"
+      "creation" : "Created: ",
+      "lastModified": "Last update: ",
+      "album": "Album: ",
+      "dernierDangerosite" : "Last danger rate: ",
+      "statTitle" : "Evolution Statistics",
+      "statDescription" : "This graph shows the evolution of analyzed parameters (size, color, asymmetry, etc.) on the photos",
+      "buttonTelecharger" : "Download album",
+      "buttonSupprimer" : "Delete album",
+      "buttonPartager" : "Share to your treating doctor",
+      "chartTitle" : "Evolution of your mole's parameters",
+      "irregularity" : "Irregularity",
+      "asymmetry" : "Asymmetry",
+      "size" : "Size",
+      "color" : "Color",
+      "mean" : "Mean"
     },
     "imgUpload": {
       "title": "Upload your image to start the analysis",
