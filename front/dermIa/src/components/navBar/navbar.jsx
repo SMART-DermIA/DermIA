@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
+import {useAuth} from "../../auth/authContext.jsx";
 
 export default function Navbar({ passPopupHandlers }) {
+  const { logout, isLoggedIn } = useAuth()
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token")
-  );
+
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
   const location = useLocation();
@@ -21,12 +21,6 @@ export default function Navbar({ passPopupHandlers }) {
     setLanguage(lang);
     i18n.changeLanguage(lang.toLowerCase());
     localStorage.setItem("language", lang); 
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("token");
-    n
   };
 
   const openLoginPopup = () => {
@@ -64,10 +58,6 @@ export default function Navbar({ passPopupHandlers }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
-  }, [isAuthenticated]);
-
-  useEffect(() => {
     const savedLanguage = localStorage.getItem("language") || "EN"; 
     setLanguage(savedLanguage);
     i18n.changeLanguage(savedLanguage.toLowerCase());
@@ -90,7 +80,7 @@ export default function Navbar({ passPopupHandlers }) {
     <>
       <nav className={`navbar navbar-expand-lg ${showNavbar ? "visible" : "hidden"}`}>
         <div className="container-fluid d-flex justify-content-between">
-          <Link to={isAuthenticated ? "/userAccueil" : "/"} className="navbar-brand">
+          <Link to={isLoggedIn ? "/userAccueil" : "/"} className="navbar-brand">
             <img src="/logo.png" alt="DermIA Logo" style={{ height: "100px" }} />
           </Link>
           <button
@@ -106,7 +96,7 @@ export default function Navbar({ passPopupHandlers }) {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              {isAuthenticated ? (
+              {isLoggedIn ? (
                 <>
                   <li className={`nav-item nav-elem ${location.pathname === "/userAccueil" ? "active" : ""}`}>
                     <Link to="/userAccueil" className="nav-elem">
@@ -120,7 +110,7 @@ export default function Navbar({ passPopupHandlers }) {
                   </li>
                   <div className="nav-center"></div>
                   <li className="nav-item">
-                    <Link to="/" className="nav-link nav-link-secondary" onClick={handleLogout}>
+                    <Link to="/" className="nav-link nav-link-secondary" onClick={logout}>
                       {t("navbar.logout")}
                     </Link>
                   </li>
@@ -168,7 +158,6 @@ export default function Navbar({ passPopupHandlers }) {
             <Login
               closePopup={closeLoginPopup}
               openRegisterPopup={openRegisterPopup}
-              setIsAuthenticated={setIsAuthenticated} 
             />
           </div>
         </div>

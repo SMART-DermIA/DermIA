@@ -57,7 +57,7 @@ const Historique = () => {
                   ) : (
                   <div className="historique-albums">
                       {state.data.map((album, i) =>
-                        <AlbumCard key={i} id={i} imageUrl={album.img} title={album.title} lastModified={album.lastModified} />
+                        <AlbumCard key={i} id={album.id} imageUrl={album.last_photo} title={album.title} lastModified={album.last_updated} />
                       )}
                   </div>
                 )}

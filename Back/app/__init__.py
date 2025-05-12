@@ -18,8 +18,15 @@ def create_app():
     app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.jpeg', '.png', '.gif']
     app.config['UPLOAD_PATH'] = 'uploads'
 
+
+    app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+    app.config["JWT_COOKIE_SECURE"] = False  # True in production (only over HTTPS)
+    app.config["JWT_COOKIE_SAMESITE"] = "Lax"  # Or "Strict" / "None" for cross-site
+    app.config["JWT_COOKIE_CSRF_PROTECT"] = False  # Optional but recommended
+    app.config["JWT_ACCESS_COOKIE_NAME"] = "token"
+
     # Extensions
-    CORS(app, supports_credentials=True)
+    CORS(app, supports_credentials=True, origins=["http://localhost:5173", "*"])
     db.init_app(app)
     bcrypt.init_app(app)
     JWTManager(app)

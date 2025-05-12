@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./register.css";
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 function Register({ closePopup, openLoginPopup }) {
   const { t } = useTranslation();
@@ -28,28 +29,21 @@ function Register({ closePopup, openLoginPopup }) {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
-        method: "POST",
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+        username: formData.identifier,
+        password: formData.password,
+        age: formData.age,
+      }, {
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: formData.identifier,
-          password: formData.password,
-          age: formData.age,
-        }),
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        closePopup();
-        openLoginPopup();
-      } else {
-        alert(data.error || t("register.error"));
-      }
+      console.log(response.status);
+      closePopup();
+      openLoginPopup();
     } catch (err) {
-      alert(t("register.networkError"));
+      alert(t("register.networkError" + err));
     }
   };
 

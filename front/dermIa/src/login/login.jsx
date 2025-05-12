@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./login.css";
+import {useAuth} from "../auth/authContext.jsx";
 
-function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
+function Login({ closePopup, openRegisterPopup }) {
+  const { login } = useAuth();
+
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,29 +22,11 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
     setSuccess("");
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: email,
-          password: password,
-        }),
-      });
+      login(email, password);
+      setSuccess(t("login.success"));
+      closePopup();
+      navigate("/userAccueil");
 
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log(t("login.tokenReceived"), data.access_token);
-        setSuccess(t("login.success"));
-        localStorage.setItem("token", data.access_token);
-        setIsAuthenticated(true);
-        closePopup();
-        navigate("/userAccueil");
-      } else {
-        setError(data.error || t("login.error"));
-      }
     } catch (err) {
       console.error(t("login.networkError"), err);
       setError(t("login.networkError"));

@@ -8,10 +8,12 @@ import Album from './album/album';
 
 import './services/i18n'; 
 import './App.css';
+import {AuthProvider} from "./auth/authContext.jsx";
 
 function App() {
   return (
   <div className="App">
+    <AuthProvider>
     <Router>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
@@ -20,6 +22,7 @@ function App() {
         <Route path="/historique/:id" element={<Album />}/>
       </Routes>
     </Router>
+    </AuthProvider>
   </div>
   );
 }
