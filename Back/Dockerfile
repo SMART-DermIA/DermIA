@@ -15,6 +15,7 @@ COPY requirements.txt .
 # Installer les dépendances Python
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install -y netcat-openbsd && apt-get clean
 
 # Copier tout le code source dans le conteneur
 COPY . .
@@ -22,5 +23,7 @@ COPY . .
 # Exposer le port sur lequel l'app Flask va tourner
 EXPOSE 8000
 
+COPY wait-for-postgres.sh /wait-for-postgres.sh
+RUN chmod +x /wait-for-postgres.sh
 # Démarrer l'application Flask
-CMD ["python", "run.py"]
+CMD ["/wait-for-postgres.sh", "python", "run.py"]
