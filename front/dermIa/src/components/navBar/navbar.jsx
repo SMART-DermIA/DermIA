@@ -4,16 +4,17 @@ import { useTranslation } from "react-i18next";
 import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
+import { FaUserCircle } from "react-icons/fa";
+import { FiSettings, FiLogOut } from "react-icons/fi";
+import { useAuth } from "../../AuthContext";
 
 export default function Navbar({ passPopupHandlers }) {
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token")
-  );
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
+  const { user, logout } = useAuth();
   const location = useLocation();
   let lastScrollY = 0;
 
@@ -23,9 +24,12 @@ export default function Navbar({ passPopupHandlers }) {
     localStorage.setItem("language", lang);
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("token");
+  const handleLoginClick = () => {
+    setShowLoginPopup(true);
+  };
+
+  const handleRegisterClick = () => {
+    setShowRegisterPopup(true);
   };
 
   const openLoginPopup = () => {
@@ -46,9 +50,16 @@ export default function Navbar({ passPopupHandlers }) {
     setShowRegisterPopup(false);
   };
 
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerWidth > 991) { // Solo aplicar efecto en desktop
+      if (window.innerWidth > 991) {
+        // Solo aplicar efecto en desktop
         if (window.scrollY > lastScrollY) {
           setShowNavbar(false);
         } else {
@@ -63,10 +74,6 @@ export default function Navbar({ passPopupHandlers }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
-  }, [isAuthenticated]);
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem("language") || "EN";
@@ -89,10 +96,18 @@ export default function Navbar({ passPopupHandlers }) {
 
   return (
     <>
-      <nav className={`navbar navbar-expand-lg ${showNavbar ? "visible" : "hidden"}`}>
-        <div className="container-fluid">
-          <Link to={isAuthenticated ? "/userAccueil" : "/"} className="navbar-brand">
-            <img src="/logo.png" alt="DermIA Logo" className="navbar-logo" />
+      <nav
+        className={`navbar navbar-expand-lg ${
+          showNavbar ? "visible" : "hidden"
+        }`}
+      >
+        <div className="container-fluid d-flex justify-content-between">
+          <Link to={user ? "/userAccueil" : "/"} className="navbar-brand">
+            <img
+              src="/logo.png"
+              alt="DermIA Logo"
+              style={{ height: "100px" }}
+            />
           </Link>
           <button
             className="navbar-toggler custom-toggler"
@@ -106,65 +121,99 @@ export default function Navbar({ passPopupHandlers }) {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <div className="d-lg-flex justify-content-between w-100">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                {isAuthenticated ? (
-                  <>
-                    <li className={`nav-item ${location.pathname === "/userAccueil" ? "active" : ""}`}>
-                      <Link to="/userAccueil" className="nav-elem">
-                        {t("navbar.home")}
-                      </Link>
-                    </li>
-                    <li className={`nav-item ${location.pathname === "/historique" ? "active" : ""}`}>
-                      <Link to="/historique" className="nav-elem">
-                        {t("navbar.history")}
-                      </Link>
-                    </li>
-                  </>
-                ) : (
-                  <div className="mobile-spacer"></div>
-                )}
-              </ul>
-              
-              <ul className="navbar-nav ms-auto">
-                {isAuthenticated ? (
+            <ul className="navbar-nav ms-auto">
+              {user ? (
+                <>
+                  <li
+                    className={`nav-item nav-elem ${
+                      location.pathname === "/userAccueil" ? "active" : ""
+                    }`}
+                  >
+                    <Link to="/userAccueil" className="nav-elem">
+                      {t("navbar.home")}
+                    </Link>
+                  </li>
+                  <li
+                    className={`nav-item nav-elem ${
+                      location.pathname === "/historique" ? "active" : ""
+                    }`}
+                  >
+                    <Link to="/historique" className="nav-elem">
+                      {t("navbar.history")}
+                    </Link>
+                  </li>
+                  <div className="nav-center"></div>
                   <li className="nav-item">
-                    <Link to="/" className="nav-link nav-link-secondary" onClick={handleLogout}>
+                    <Link
+                      to="/"
+                      className="nav-link nav-link-secondary"
+                      onClick={logout}
+                    >
                       {t("navbar.logout")}
                     </Link>
                   </li>
-                ) : (
-                  <>
-                    <li className="nav-item">
-                      <button className="nav-link nav-link-primary" onClick={openLoginPopup}>
-                        {t("navbar.login")}
-                      </button>
-                    </li>
-                    <li className="nav-item">
-                      <button className="nav-link nav-link-secondary" onClick={openRegisterPopup}>
-                        {t("navbar.register")}
-                      </button>
-                    </li>
-                  </>
-                )}
-              </ul>
-              
-              <div className="d-flex align-items-center ms-lg-3 language-selector">
-                <span
-                  className={`nav-lang ${language === "FR" ? "active" : ""}`}
-                  onClick={() => handleLanguageChange("FR")}
-                >
-                  FR
-                </span>
-                <span>/</span>
-                <span
-                  className={`nav-lang ${language === "EN" ? "active" : ""}`}
-                  onClick={() => handleLanguageChange("EN")}
-                >
-                  EN
-                </span>
-              </div>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <button
+                      className="nav-link nav-link-primary"
+                      onClick={openLoginPopup}
+                    >
+                      {t("navbar.login")}
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className="nav-link nav-link-secondary"
+                      onClick={openRegisterPopup}
+                    >
+                      {t("navbar.register")}
+                    </button>
+                  </li>
+                </>
+              )}
+            </ul>
+            <div className="d-flex align-items-center">
+              <span
+                className={`nav-lang ${language === "FR" ? "active" : ""}`}
+                onClick={() => handleLanguageChange("FR")}
+              >
+                FR
+              </span>
+              <span>/</span>
+              <span
+                className={`nav-lang ${language === "EN" ? "active" : ""}`}
+                onClick={() => handleLanguageChange("EN")}
+              >
+                EN
+              </span>
             </div>
+            {user && (
+              <li className="nav-item user-menu">
+                <FaUserCircle
+                  size={30}
+                  onClick={toggleUserMenu}
+                  style={{ cursor: "pointer" }}
+                />
+                {showUserMenu && (
+                  <div className="user-dropdown">
+                    <Link
+                      to="/settings"
+                      className="dropdown-item"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      <FiSettings style={{ marginRight: "8px" }} />
+                      Paramètres
+                    </Link>
+                    <Link to="/" className="dropdown-item" onClick={logout}>
+                      <FiLogOut style={{ marginRight: "8px" }} />
+                      Se déconnecter
+                    </Link>
+                  </div>
+                )}
+              </li>
+            )}
           </div>
         </div>
       </nav>
@@ -172,22 +221,30 @@ export default function Navbar({ passPopupHandlers }) {
       {(showLoginPopup || showRegisterPopup) && (
         <div className="popup-overlay">
           <div className="popup">
-            <button className="close-popup" onClick={showLoginPopup ? closeLoginPopup : closeRegisterPopup}>
+            <button
+              className="close-popup"
+              onClick={showLoginPopup ? closeLoginPopup : closeRegisterPopup}
+            >
               &times;
             </button>
-            {showLoginPopup && (
-              <Login
-                closePopup={closeLoginPopup}
-                openRegisterPopup={openRegisterPopup}
-                setIsAuthenticated={setIsAuthenticated}
-              />
-            )}
-            {showRegisterPopup && (
-              <Register
-                closePopup={closeRegisterPopup}
-                openLoginPopup={openLoginPopup}
-              />
-            )}
+            <Login
+              closePopup={closeLoginPopup}
+              openRegisterPopup={handleRegisterClick}
+            />
+          </div>
+        </div>
+      )}
+
+      {showRegisterPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <button className="close-popup" onClick={closeRegisterPopup}>
+              &times;
+            </button>
+            <Register
+              closePopup={closeRegisterPopup}
+              openLoginPopup={openLoginPopup}
+            />
           </div>
         </div>
       )}

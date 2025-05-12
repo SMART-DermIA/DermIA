@@ -72,7 +72,8 @@
   border-radius: 1em;
 }
 
-.nav-link-primary, .nav-link-primary:hover {
+.nav-link-primary,
+.nav-link-primary:hover {
   background-color: #ffffff;
   border: 1px solid #660033;
   color: #660033;

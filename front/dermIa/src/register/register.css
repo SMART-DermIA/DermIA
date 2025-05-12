@@ -18,7 +18,7 @@
   max-width: 400px;
   padding: 3rem 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   text-align: center;
   position: relative;
   max-height: 90vh;
@@ -149,23 +149,44 @@ input:focus {
     width: 85%;
     max-width: 600px;
   }
-  
+
   .register-card h1 {
     font-size: 1.8rem;
   }
-  
+
   input {
     height: 44px;
     font-size: 0.95rem;
   }
-  
+
   .submit-button {
     padding: 0.9rem;
     font-size: 1rem;
   }
-  
+
   .toggle-password {
     right: 12px;
     font-size: 1.2rem;
   }
+}
+
+.toggle-doctor-btn {
+  margin: 1em 0;
+  background: none;
+  border: none;
+  color: #660033;
+  font-weight: 600;
+  cursor: pointer;
+}
+.doctor-form {
+  display: grid;
+  gap: 0.75em;
+  margin-bottom: 1em;
+}
+
+.doctor-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 0.4em;
+  width: 100%;
 }

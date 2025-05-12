@@ -4,6 +4,7 @@ from flask_cors import CORS
 
 from .blueprints.album import album_bp
 from .blueprints.analyze import analyze_bp
+from .blueprints.doctor import user_bp
 from .blueprints.auth import bcrypt, auth_bp
 from .models import db
 
@@ -28,6 +29,8 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(album_bp, url_prefix='/album')
     app.register_blueprint(analyze_bp, url_prefix='/analyze')
+    app.register_blueprint(user_bp, url_prefix='/user')
+
 
     @app.route('/')
     def home():

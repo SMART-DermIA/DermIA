@@ -1,50 +1,55 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import { useAuth } from "../AuthContext";
 import "./login.css";
 
-function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
+export default function Login({ closePopup, openRegisterPopup }) {
   const { t } = useTranslation();
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate();
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
+  const API_BASE_URL =
+    import.meta.env.VITE_API_URL ||
+    window.location.origin.replace(":5173", ":8000");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: email,
-          password: password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
+      console.log("login response payload:", data);
 
       if (response.ok) {
-        console.log(t("login.tokenReceived"), data.access_token);
-        setSuccess(t("login.success"));
-        localStorage.setItem("token", data.access_token);
-        setIsAuthenticated(true);
-        closePopup();
-        navigate("/userAccueil");
+        if (data.access_token && data.user) {
+          login(data.user, data.access_token);
+          setSuccess(t("login.success"));
+          toast.success(t("login.success"));
+          closePopup();
+          navigate("/userAccueil");
+        } else {
+          console.error("Login: payload incomplet", data);
+          toast.error("Réponse inattendue du serveur.");
+        }
       } else {
         setError(data.error || t("login.error"));
+        toast.error(data.error || t("login.error"));
       }
     } catch (err) {
       console.error(t("login.networkError"), err);
       setError(t("login.networkError"));
+      toast.error(t("login.networkError"));
     }
   };
 
@@ -62,12 +67,12 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
-            <label htmlFor="email">{t("login.email")}</label>
+            <label htmlFor="username">{t("login.email")}</label>
             <input
               type="text"
-              id="email"
+              id="username"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder={t("login.emailPlaceholder")}
               required
               autoComplete="username"
@@ -104,5 +109,3 @@ function Login({ closePopup, setIsAuthenticated, openRegisterPopup }) {
     </div>
   );
 }
-
-export default Login;
