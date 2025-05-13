@@ -16,6 +16,12 @@
 	margin-bottom: 1em;
 }
 
+.album-undo {
+	margin-top: 1em;
+	color: #660033;
+	cursor: pointer;
+}
+
 .album-scroll {
 	display: flex;
 	flex-wrap: nowrap;
