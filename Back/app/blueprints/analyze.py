@@ -8,7 +8,6 @@ from flask_jwt_extended import jwt_required
 from PIL import Image
 import torch
 from torchvision import transforms, models
-
 from IA.extract_criteria import extract_features
 
 
@@ -52,12 +51,11 @@ def analyze_image():
     if file.filename == "":
         return jsonify({"error": "No selected file"}), 422
 
-    # → Verif extension
     ext = os.path.splitext(file.filename)[1].lower()
     if ext not in current_app.config['UPLOAD_EXTENSIONS']:
         return jsonify({"error": f"Invalid extension {ext}"}), 422
 
-    # → Lire l’image avec PIL
+    # → Lire l’image avec pil
     try:
         img = Image.open(io.BytesIO(file.read())).convert("RGB")
     except Exception:
@@ -74,7 +72,7 @@ def analyze_image():
         conf = probs[pred].item()                # Confidence of predicted class
         danger = probs[1].item()                 # Probability of being malignant
 
-    label = "malignant" if pred == 1 else "benign"  # Add this line
+    label = "malignant" if pred == 1 else "benign"  
     temp_path = "temp_image.jpg"
     img.save(temp_path)
 
@@ -87,15 +85,6 @@ def analyze_image():
     if features is None:
         return jsonify({"error": "No lesion detected"}), 422
 
-    # Pondérations
-    weights = {
-        "irregularity": 0.3,
-        "asymmetry_score": 0.5,
-        "diameter": 0.2,
-        "color_variation": 0.1
-    }
-
-    # Normalisation manuelle des valeurs brutes si besoin
     def normalize(val, min_val, max_val):
         return np.clip((val - min_val) / (max_val - min_val), 0, 1)
 

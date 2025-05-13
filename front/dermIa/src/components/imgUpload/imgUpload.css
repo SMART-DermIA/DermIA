@@ -126,9 +126,8 @@
 }
 
 .analyzing-box {
-	text-align: center;
-	margin-top: 2em;
-	padding: 1em;
+    text-align: center;
+    margin-top: 2.5em;
 }
 
 .analyzing-text {
@@ -139,11 +138,11 @@
 }
 
 .spinner-icon {
-	font-size: 2.5rem;
-	color: #660033;
-	animation: spin 2s linear infinite;
-	margin: 0 auto;
-	display: block;
+    font-size: 3.5rem;
+    color: #660033;
+    animation: spin 1.5s linear infinite;
+    margin: 0 auto;
+    display: block;
 }
 
 @keyframes spin {
@@ -157,18 +156,13 @@
     margin-bottom: 25px;
 }
 
-.result-box {
-	text-align: center;
-	margin-top: 2em;
-	padding: 1em;
-}
-
 .result-image {
-	max-width: 50%;
-	margin-bottom: 20px;
-	padding: 1em;
-	border-radius: 1em;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 15%;
+    margin-bottom: 25px;
+    padding: 1.2em;
+    border-radius: 1.2em;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
 }
 
 .result-image:hover {
@@ -176,9 +170,10 @@
 }
 
 .risk-bar-container {
-	margin: 1em auto;
-	max-width: 50%;
-	text-align: center;
+    margin: 1.5em auto;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
 }
 
 .risk-bar {
@@ -204,9 +199,10 @@
 }
 
 .risk-title {
-	font-size: 1.5rem;
-	color: darkgreen;
-	font-weight: bold;
+    font-size: 1.5rem;
+    color: #2e7d32;
+    font-weight: 600;
+    margin-top: 1.2em;
 }
 
 .risk-message {
@@ -216,15 +212,8 @@
     font-size: 1rem;
 }
 
-.criteria-grid {
-	display: grid;
-	justify-content: center;
-	margin: 2em auto;
-	max-width: 40%;
-	font-size: 1.5rem;
-	text-align: left;
-	font-weight: 600;
-	gap: 1em;
+.doctor-recommendation {
+    margin-top: 1em;
 }
 
 .doctor-button {
@@ -254,106 +243,65 @@
     margin-bottom: 1em; /* Reduced spacing between bars */
 }
 
+
 .criteria-label {
-    text-align: center;
-    font-size: 0.95rem;
-    margin-bottom: 0.4em;
-    font-weight: 500;
-    color: #333;
-}
-
-.bar-wrapper {
-    position: relative;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    height: 1.5rem;
-    overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
+	text-align: center;
+	font-size: 1rem;    /* plutôt 1rem qu’0.95rem */
+	font-weight: 600;
+	color: #222;
+	margin-bottom: 0.4em;
+  }
+  
+/* Conserve la couleur d’arrière-plan dynamique, mais enlève le min-width */
 .bar-fill {
-    height: 100%;
-    transition: width 0.5s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 0.6rem;
-    color: #fff;
-    font-size: 0.85rem; /* Slightly smaller font for better fit */
-    font-weight: 600;
-    white-space: nowrap;
-    box-sizing: border-box;
-    border-radius: 10px 0 0 10px;
-    min-width: 40px; /* Ensure percentage is visible even for small values */
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* Improve readability with text shadow */
+  height: 100%;
+  transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+  border-radius: 10px 0 0 10px;
 }
 
-.bar-scale {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    font-size: 0.8rem;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.3rem;
-    color: #666;
+/* On place le texte du pourcentage de façon absolue */
+.bar-wrapper {
+  position: relative;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  height: 1.5rem;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
+
+/* La barre colorée sous-jacente */
+.bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Le texte du pourcentage */
+.bar-text {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;         /* Petit décalage à droite du bord */
+  transform: translateY(-50%);
+  color: #000;          /* noir, pour le contraste */
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.8),  /* lueur blanche derrière */
+               0 0 1px rgba(0,0,0,0.3);
+  white-space: nowrap;
+  pointer-events: none; /* le texte ne capte pas la souris */
+  z-index: 1;           /* au-dessus de la barre colorée */
+}
+
 
 .more-info-link {
-	color: #660033;
-	text-decoration: underline;
-	display: block;
-	margin-bottom: 1.5em;
-	font-size: 0.9rem;
+    color: #660033;
+    text-decoration: underline;
+    display: block;
+    margin-bottom: 2em;
+    font-size: 1rem;
+    transition: color 0.3s ease;
 }
 
-@media (max-width: 768px) {
-	.result-image {
-		max-width: 80%;
-	}
-
-	.risk-title {
-		font-size: 1.2rem;
-	}
-
-	.criteria-grid {
-		font-size: 0.9rem;
-	}
-
-	.more-info-link {
-		font-size: 0.8rem;
-	}
-	.risk-bar-container {
-	max-width: 90%;
-	}
-
-	.risk-bar {
-	height: 20px;
-	}
-}
-
-@media (max-width: 480px) {
-	.result-image {
-		max-width: 100%;
-	}
-
-	.risk-title {
-		font-size: 1rem;
-	}
-
-	.criteria-grid {
-		font-size: 0.8rem;
-	}
-
-	.more-info-link {
-		font-size: 0.7rem;
-	}
-	.risk-bar-container {
-	max-width: 90%;
-	}
-
-	.risk-bar {
-	height: 20px;
-	}
+.more-info-link:hover {
+    color: #4a0026;
 }

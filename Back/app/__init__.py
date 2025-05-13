@@ -35,7 +35,7 @@ def create_app():
     # ——— 4) ENREGISTREMENT DES BLUEPRINTS
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(album_bp, url_prefix='/album')
-    app.register_blueprint(analyze_bp, url_prefix='/analyze')
+    app.register_blueprint(analyze_bp)
     app.register_blueprint(user_bp, url_prefix='/user')
 
     @app.route('/')
