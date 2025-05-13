@@ -23,11 +23,11 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
       // Attempt to log in
       const res1 = await axios.post(`${API_BASE_URL}/auth/login`, {
-        username,
+        email,
         password
       }, {
         withCredentials: true
