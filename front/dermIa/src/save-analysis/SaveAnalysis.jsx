@@ -16,7 +16,6 @@ export default function SaveAnalysis() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
 
   useEffect(() => {
-    // Recupera la imagen del Local Storage
     const analysis_string = localStorage.getItem("analysis");
 
     if (analysis_string) {
@@ -24,7 +23,6 @@ export default function SaveAnalysis() {
       setAnalysis(retrieved_analysis);
     }
 
-    // Recupera los albums
     dispatch({ type: "FETCH_START" });
     getUsersAlbums()
         .then((albums) => dispatch({ type: "FETCH_SUCCESS", payload: albums }))
@@ -35,23 +33,35 @@ export default function SaveAnalysis() {
   }, []);
 
   const handleCreateAlbum = async () => {
-    if (!albumTitle || !image) {
+    if (!albumTitle || !analysis.image) {
       alert(t("addToAlbum.missingFields"));
       return;
     }
 
-    const storedImage = null;
-
-    const file = storedImage;
-
     const formData = new FormData();
     formData.append("title", albumTitle);
-    formData.append("image", file);
+    formData.append("result", "hoal");
+
+    const base64Data = analysis.image.split(",")[1]; 
+    const binaryData = atob(base64Data); 
+    const arrayBuffer = new Uint8Array(binaryData.length);
+
+    for (let i = 0; i < binaryData.length; i++) {
+      arrayBuffer[i] = binaryData.charCodeAt(i);
+    }
+
+    const blob = new Blob([arrayBuffer], { type: "image/jpeg" }); 
+    const fileName = analysis.fileName || "uploaded_image.jpg"; 
+    const file = new File([blob], fileName, { type: "image/jpeg" }); 
+
+    formData.append("image", file); 
 
     try {
       const newAlbum = await createAlbum(formData);
       alert(t("addToAlbum.success"));
-      dispatch({ type: "FETCH_SUCCESS", payload: [...state.data, newAlbum] });
+
+      const result = await getUsersAlbums();
+      dispatch({ type: "FETCH_SUCCESS", payload: result });
     } catch (err) {
       console.error(err);
       alert(t("addToAlbum.error"));

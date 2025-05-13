@@ -20,7 +20,7 @@ def create_album():
 
     result = request.form.get('result')
     if result is None:
-        return jsonify({"error": "No result given in body"}), 400
+       return jsonify({"error": "No result given in body"}), 400
 
     date_str = request.form.get('date')  # Expecting a string like '2025-05-09'
 

@@ -22,7 +22,7 @@ export async function getAlbum(id) {
 
 export async function createAlbum(formData) {
   try {
-    const res = await axios.post(`${API_BASE_URL}/album}`, formData, {
+    const res = await axios.post(`${API_BASE_URL}/album/new`, formData, {
       withCredentials: true,
     });
 
