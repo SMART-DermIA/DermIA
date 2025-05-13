@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "./login.css";
-import {useAuth} from "../auth/authContext.jsx";
+import { useAuth } from "../auth/authContext.jsx";
 
 export default function Login({ closePopup, openRegisterPopup }) {
   const { t } = useTranslation();
   const { login } = useAuth();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await login(username, password);
+    const result = await login(email, password);
 
     if (result.success) {
       toast.success("Connexion réussie !");
@@ -38,15 +38,15 @@ export default function Login({ closePopup, openRegisterPopup }) {
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
-            <label htmlFor="username">{t("login.email")}</label>
+            <label htmlFor="email">{t("login.email")}</label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder={t("login.emailPlaceholder")}
               required
-              autoComplete="username"
+              autoComplete="email"
             />
           </div>
 
