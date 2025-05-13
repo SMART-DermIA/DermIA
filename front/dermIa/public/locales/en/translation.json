@@ -130,13 +130,18 @@
     "alreadyMember": "Already a member?",
     "login": "Log in",
     "error": "Registration failed.",
-    "networkError": "Network or server error."
+    "networkError": "Network or server error.",
+    "email": "Email",
+    "nom": "Last name",
+    "prenom": "First name",
+    "emailPlaceholder": "Enter your email",
+    "nomPlaceholder": "Enter your last name",
+    "prenomPlaceholder": "Enter your first Name"
   },
 
   "settings": {
     "title": "Settings",
     "doctor": "General Practitioner",
-    "name": "Name",
     "phone": "Phone",
     "email": "Email",
     "edit": "Edit",
@@ -145,7 +150,9 @@
     "cancel": "Cancel",
     "account": "My account",
     "username": "Username",
-    "deleteAccount": "Delete my account"
+    "deleteAccount": "Delete my account",
+    "nom": "Last name",
+    "prenom": "First name"
   },
   "toast": {
     "doctorAdded": "Doctor added successfully",

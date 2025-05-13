@@ -94,12 +94,17 @@
     "alreadyMember": "Déjà membre ?",
     "login": "Se connecter",
     "error": "Erreur d'inscription.",
-    "networkError": "Erreur réseau ou serveur."
+    "networkError": "Erreur réseau ou serveur.",
+    "email": "Courriel",
+    "nom": "Nom",
+    "prenom": "Prénom",
+    "emailPlaceholder": "Saisir votre courriel",
+    "nomPlaceholder": "Saisir votre nom",
+    "prenomPlaceholder": "Saisir votre prénom"
   },
   "settings": {
     "title": "Paramètres",
     "doctor": "Médecin traitant",
-    "name": "Nom",
     "phone": "Téléphone",
     "email": "Email",
     "edit": "Modifier",
@@ -108,7 +113,9 @@
     "cancel": "Annuler",
     "account": "Mon compte",
     "username": "Nom d'utilisateur",
-    "deleteAccount": "Supprimer mon compte"
+    "deleteAccount": "Supprimer mon compte",
+    "nom": "Nom",
+    "prenom": "Prénom"
   },
   "toast": {
     "doctorAdded": "Médecin ajouté avec succès",
