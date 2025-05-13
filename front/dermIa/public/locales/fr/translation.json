@@ -155,6 +155,16 @@
     "section9Title": "9. Droit Applicable",
     "section9Content": "Les présentes conditions sont régies par le droit français. En cas de litige, les tribunaux compétents seront ceux du siège de l’éditeur.",
     "section10Title": "10. Contact",
-    "section10Content": "Pour toute demande liée aux CGU, veuillez contacter : contact@dermia.fr"
+    "section10Content": "Pour toute demande liée aux CGU, veuillez contacter : contact@dermia.fr"},
+  "addToAlbum": {
+    "albumTitlePlaceholder": "Entrez le titre de l'album",
+    "createAlbum": "Créer un album",
+    "selectAlbum": "Sélectionnez un album existant",
+    "selectAlbumPlaceholder": "Choisissez un album",
+    "addToExistingAlbum": "Ajouter à l'album",
+    "success": "Album créé avec succès !",
+    "addedToAlbum": "Image ajoutée à l'album avec succès !",
+    "error": "Une erreur s'est produite.",
+    "missingFields": "Veuillez fournir tous les champs requis."
   }
 }

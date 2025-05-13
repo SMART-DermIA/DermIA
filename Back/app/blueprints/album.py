@@ -10,7 +10,7 @@ from ..models import Album, db, Analysis, User
 
 album_bp = Blueprint('album', __name__)
 
-@album_bp.route('/new', methods=['POST'])
+@album_bp.route('/album', methods=['POST'])
 @jwt_required()
 def create_album():
     # Get data from request object

@@ -157,5 +157,16 @@
   },
   "userAccueil": {
     "welcome": "Welcome"
+  },
+  "addToAlbum": {
+    "albumTitlePlaceholder": "Enter album title",
+    "createAlbum": "Create Album",
+    "selectAlbum": "Select an existing album",
+    "selectAlbumPlaceholder": "Choose an album",
+    "addToExistingAlbum": "Add to Album",
+    "success": "Album created successfully!",
+    "addedToAlbum": "Image added to album successfully!",
+    "error": "An error occurred.",
+    "missingFields": "Please provide all required fields."
   }
 }

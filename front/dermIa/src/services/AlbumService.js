@@ -10,3 +10,13 @@ export async function getUsersAlbums() {
   console.log(res.data)
   return res.data.data;
 }
+
+export const createAlbum = async (formData) => {
+    const response = await axios.post(`${API_BASE_URL}/album`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true
+    });
+    return response.data;
+};
