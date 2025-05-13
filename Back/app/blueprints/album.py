@@ -96,7 +96,7 @@ def create_album():
 
 @album_bp.route('/', methods=['GET'])
 @jwt_required()
-def get_album():
+def get_albums():
     # Get current user
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
@@ -108,27 +108,91 @@ def get_album():
 
     result = []
     for album in albums:
-        # Get the most recent analysis for this album
-        latest_analysis = (
+        # Get all analyses for this album
+        analyses = (
             Analysis.query
             .filter_by(album_id=album.id)
             .order_by(Analysis.date.desc())
-            .first()
         )
+
+        latest_analysis = analyses.first()
+
+        analyses = [
+            {
+                "id": analysis.id,
+                "photo": analysis.photo,
+                "result": analysis.result,
+                "date": analysis.date.isoformat()
+            }
+            for analysis in analyses
+        ]
 
         result.append({
             "id": album.id,
             "title": album.title,
             "date": album.date.isoformat(),
-            "last_updated": latest_analysis.date.isoformat() if latest_analysis else None,
-            "last_photo": latest_analysis.photo if latest_analysis else None,
+            "analyses": analyses,
             "position_label": album.position_label,
             "position_x": album.position_x,
             "position_y": album.position_y,
-            "orientation": album.orientation
+            "orientation": album.orientation,
+            "last_updated": latest_analysis.date.isoformat() if latest_analysis else None,
+            "last_photo": latest_analysis.photo if latest_analysis else None,
         })
+
+
 
     return jsonify({
         "message": "Albums retrieved successfully",
+        "data": result
+    }), 200
+
+
+@album_bp.route('/<int:id>', methods=['GET'])
+@jwt_required()
+def get_album(id):
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    album = Album.query.filter_by(id=id, user_id=user.id).first()
+    if not album:
+        return jsonify({"error": "Album not found"}), 404
+
+    analyses_query = (
+        Analysis.query
+        .filter_by(album_id=album.id)
+        .order_by(Analysis.date.desc())
+    )
+
+    latest_analysis = analyses_query.first()
+
+    analyses = [
+        {
+            "id": analysis.id,
+            "photo": analysis.photo,
+            "result": analysis.result,
+            "date": analysis.date.isoformat()
+        }
+        for analysis in analyses_query
+    ]
+
+    result = {
+        "id": album.id,
+        "title": album.title,
+        "date": album.date.isoformat(),
+        "analyses": analyses,
+        "position_label": album.position_label,
+        "position_x": album.position_x,
+        "position_y": album.position_y,
+        "orientation": album.orientation,
+        "oldest_analysis_date": analyses[len(analyses)-1]["date"] if len(analyses) != 0 else None,
+        "newest_analysis_date": latest_analysis.date.isoformat() if latest_analysis else None,
+        "newest_analysis_photo": latest_analysis.photo if latest_analysis else None,
+    }
+
+    return jsonify({
+        "message": "Album retrieved successfully",
         "data": result
     }), 200
