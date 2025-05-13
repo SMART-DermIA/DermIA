@@ -11,10 +11,11 @@ export function AuthProvider({ children }) {
 
   // Check login status on first render
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/auth/me`, {
-      withCredentials: true,
-    })
-      .then(res => {
+    axios
+      .get(`${API_BASE_URL}/auth/me`, {
+        withCredentials: true,
+      })
+      .then((res) => {
         setUser(res.data); // or just user_id
       })
       .catch(() => {
@@ -26,12 +27,16 @@ export function AuthProvider({ children }) {
   const login = async (username, password) => {
     try {
       // Attempt to log in
-      const res1 = await axios.post(`${API_BASE_URL}/auth/login`, {
-        username,
-        password
-      }, {
-        withCredentials: true
-      });
+      const res1 = await axios.post(
+        `${API_BASE_URL}/auth/login`,
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       // Confirm login succeeded
       if (res1.status !== 200) {
@@ -40,12 +45,11 @@ export function AuthProvider({ children }) {
 
       // Attempt to fetch user data
       const res2 = await axios.get(`${API_BASE_URL}/auth/me`, {
-        withCredentials: true
+        withCredentials: true,
       });
 
       setUser(res2.data);
       return { success: true, status: 200 };
-
     } catch (err) {
       // Handle various error shapes
       if (err.response) {
@@ -53,21 +57,21 @@ export function AuthProvider({ children }) {
         return {
           success: false,
           status: err.response.status,
-          message: err.response.data?.error || "Server error during login"
+          message: err.response.data?.error || "Server error during login",
         };
       } else if (err.request) {
         // Request made but no response
         return {
           success: false,
           status: 503,
-          message: "No response from server"
+          message: "No response from server",
         };
       } else {
         // Something else triggered the error
         return {
           success: false,
           status: 500,
-          message: "Unexpected error"
+          message: "Unexpected error",
         };
       }
     }
@@ -75,14 +79,20 @@ export function AuthProvider({ children }) {
 
   // Logout function
   const logout = async () => {
-    await axios.post(`${API_BASE_URL}/auth/logout`, {}, {
-      withCredentials: true
-    });
+    await axios.post(
+      `${API_BASE_URL}/auth/logout`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, isLoggedIn: !!user }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, logout, isLoggedIn: !!user }}
+    >
       {children}
     </AuthContext.Provider>
   );

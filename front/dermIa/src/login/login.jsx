@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "./login.css";
-import {useAuth} from "../auth/authContext.jsx";
+import { useAuth } from "../auth/authContext.jsx";
 
 export default function Login({ closePopup, openRegisterPopup }) {
   const { t } = useTranslation();
@@ -13,15 +13,38 @@ export default function Login({ closePopup, openRegisterPopup }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 1) Appel à login() depuis ton AuthContext
+    //    login() doit renvoyer un objet { ok, error, access_token?, temp_token?, ... }
     const result = await login(username, password);
 
-    if (result.success) {
-      toast.success("Connexion réussie !");
-      closePopup();
-    } else {
-      toast.error(result.message || "Échec de la connexion.");
-      console.error(`Login failed: ${result.message} (Status ${result.status})`);
+    // 2) Si échec pure et simple
+    if (!result.ok) {
+      toast.error(result.error || t("login.error"));
+      return;
     }
+
+    // 3) Si on doit passer par l’Email-2FA
+    if (result["2fa_email_required"]) {
+      setTempToken(result.temp_token);
+      setStage("email2fa");
+      return;
+    }
+
+    // 4) Si on doit passer par le TOTP-2FA
+    if (result["2fa_required"]) {
+      setTempToken(result.temp_token);
+      setStage("totp2fa");
+      return;
+    }
+
+    // 5) Sinon, connexion classique : on récupère le access_token
+    //    et l’utilisateur (s’il est renvoyé par ton contexte)
+    localStorage.setItem("token", result.access_token);
+    if (result.user) {
+      setUser(result.user);
+    }
+    toast.success(t("login.success"));
+    closePopup();
   };
 
   const handleRegisterLinkClick = () => {

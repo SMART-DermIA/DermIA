@@ -5,3 +5,4 @@ Flask-JWT-Extended
 Flask-Cors
 psycopg2-binary
 pillow
+Flask-Mail>=0.9.1

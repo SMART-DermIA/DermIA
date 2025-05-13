@@ -1,16 +1,19 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from flask_mail import Mail
 
 from .blueprints.album import album_bp
 from .blueprints.analyze import analyze_bp
 from .blueprints.doctor import user_bp
 from .blueprints.auth import bcrypt, auth_bp
 from .models import db
+from .extensions import db, mail, bcrypt
 
 
 def create_app():
     app = Flask(__name__)
+     
 
     # Configuration
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@db:5432/mydb'
@@ -18,26 +21,33 @@ def create_app():
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
     app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.jpeg', '.png', '.gif']
     app.config['UPLOAD_PATH'] = 'uploads'
-
-
     app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
     app.config["JWT_COOKIE_SECURE"] = False  # True in production (only over HTTPS)
     app.config["JWT_COOKIE_SAMESITE"] = "Lax"  # Or "Strict" / "None" for cross-site
     app.config["JWT_COOKIE_CSRF_PROTECT"] = False  # Optional but recommended
     app.config["JWT_ACCESS_COOKIE_NAME"] = "token"
+    app.config.update({
+        "MAIL_SERVER":         "smtp.example.com",
+        "MAIL_PORT":           587,
+        "MAIL_USE_TLS":        True,
+        "MAIL_USERNAME":       "no-reply@dermia.com",
+        "MAIL_PASSWORD":       "mdpdermialebestdubest",
+        "MAIL_DEFAULT_SENDER": ("DermIA", "no-reply@dermia.com"),
+    })
+    
 
     # Extensions
     CORS(app, supports_credentials=True, origins=["http://localhost:5173", "*"])
     db.init_app(app)
     bcrypt.init_app(app)
     JWTManager(app)
+    mail.init_app(app)
 
     # Blueprints
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(album_bp, url_prefix='/album')
     app.register_blueprint(analyze_bp, url_prefix='/analyze')
     app.register_blueprint(user_bp, url_prefix='/user')
-
 
     @app.route('/')
     def home():

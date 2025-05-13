@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
-
-db = SQLAlchemy()
+from .extensions import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,6 +11,9 @@ class User(db.Model):
     doctor_name  = db.Column(db.String(120), nullable=True)
     doctor_phone = db.Column(db.String(20),  nullable=True)
     doctor_email = db.Column(db.String(120), nullable=True)
+    is_2fa_email_enabled = db.Column(db.Boolean, default=False)
+    twofa_email_code    = db.Column(db.String(6), nullable=True)
+    twofa_email_expiry  = db.Column(db.DateTime, nullable=True)
 
 
 class Album(db.Model):
