@@ -31,7 +31,7 @@ function App() {
           <Route path="/" element={<HomePage/>}/>
         </Route>
 
-        <Route element={ <RequireAuth /> }>
+        <Route element={ <RequireGuest /> }>
           <Route path="/userAccueil" element={<UserAccueil/>}/>
           <Route path="/historique" element={<Historique/>}/>
           <Route path="/historique/:id" element={<Album />}/>

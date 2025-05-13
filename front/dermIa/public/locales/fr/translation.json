@@ -130,5 +130,8 @@
     "section2Content": "Vos données sont utilisées pour améliorer nos services et garantir la sécurité.",
     "section3Title": "3. Partage des Données",
     "section3Content": "Nous ne partageons pas vos données avec des tiers sans votre consentement."
+  },
+  "addToAlbum": {
+    "newAlbum": "Créer un album"
   }
 }
