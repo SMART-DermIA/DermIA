@@ -2,12 +2,14 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
+// Inscription d'un nouvel utilisateur
 export async function registerUser(formData) {
   try {
     const res = await axios.post(`${API_BASE_URL}/auth/register`, {
-      username: formData.identifier,
+      email: formData.email,
       password: formData.password,
-      age: formData.age,
+      nom: formData.nom,
+      prenom: formData.prenom,
       doctor_name: formData.doctor_name || undefined,
       doctor_phone: formData.doctor_phone || undefined,
       doctor_email: formData.doctor_email || undefined,
@@ -51,6 +53,7 @@ export async function registerUser(formData) {
   }
 }
 
+// Soumission ou mise à jour des infos médecin
 export async function submitDoctorInfo(mode, formData) {
   const endpoint = mode === "add" ? "add_medecin" : "update_medecin";
   const method = mode === "add" ? "POST" : "PUT";

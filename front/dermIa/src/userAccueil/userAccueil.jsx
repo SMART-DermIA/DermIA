@@ -13,7 +13,7 @@ const UserAccueil = () => {
       <Navbar />
       {user && (
         <h1 className="titre-bienvenue">
-          {t("userAccueil.welcome")} {user.username} !{" "}
+          {t("userAccueil.welcome")} {user.prenom} !{" "}
         </h1>
       )}
       <ImageUpload />

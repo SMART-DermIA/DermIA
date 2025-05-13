@@ -7,15 +7,13 @@ import { useAuth } from "../auth/authContext.jsx";
 export default function Login({ closePopup, openRegisterPopup }) {
   const { t } = useTranslation();
   const { login } = useAuth();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 1) Appel à login() depuis ton AuthContext
-    //    login() doit renvoyer un objet { ok, error, access_token?, temp_token?, ... }
-    const result = await login(username, password);
+    const result = await login(email, password);
 
     // 2) Si échec pure et simple
     if (!result.ok) {
@@ -61,15 +59,15 @@ export default function Login({ closePopup, openRegisterPopup }) {
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
-            <label htmlFor="username">{t("login.email")}</label>
+            <label htmlFor="email">{t("login.email")}</label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder={t("login.emailPlaceholder")}
               required
-              autoComplete="username"
+              autoComplete="email"
             />
           </div>
 

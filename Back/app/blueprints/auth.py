@@ -15,19 +15,28 @@ auth_bp = Blueprint('auth', __name__) # Crée un groupe de routes pour la connex
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    username = data.get('username')
+    email = data.get('email')
     password = data.get('password')
-    age = data.get('age')
+    nom = data.get('nom')
+    prenom = data.get('prenom')
 
     doc_name = data.get('doctor_name')
     doc_phone = data.get('doctor_phone')
     doc_email = data.get('doctor_email')
 
-    if User.query.filter_by(username=username).first():
-        return jsonify({"error": "Username already exists"}), 400
+    if User.query.filter_by(email=email).first():
+        return jsonify({"error": "Email already registered"}), 400
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(username=username, password=hashed_password, age=age, doctor_name=doc_name, doctor_phone=doc_phone, doctor_email=doc_email)
+    new_user = User(
+        email=email,
+        password=hashed_password,
+        nom=nom,
+        prenom=prenom,
+        doctor_name=doc_name,
+        doctor_phone=doc_phone,
+        doctor_email=doc_email
+    )
     db.session.add(new_user)
     db.session.commit()
 
@@ -36,14 +45,23 @@ def register():
 # --- 1) LOGIN avec email-2FA conditionnel ---
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    data = request.get_json() or {}
-    username = data.get('username')
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"error": "No input data provided"}), 400
+
+    email = data.get('email')
     password = data.get('password')
 
-    if not username or not password:
-        return jsonify({"error": "Username et mot de passe requis"}), 400
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(email=email).first()
+    if user:
+        print(f"User found with email={user.email}: id={user.id}")
+    else:
+        print(f"No user found with email={email}")
+
     if not user or not bcrypt.check_password_hash(user.password, password):
         return jsonify({"error": "Identifiants invalides"}), 401
 
@@ -145,15 +163,14 @@ def get_current_user():
 
     return jsonify({
         "id": user.id,
-        "username": user.username,
-        "doctor_name" : user.doctor_name,
-        "doctor_phone" : user.doctor_phone,
-        "doctor_email" : user.doctor_email,
+        "email": user.email,
+        "nom": user.nom,
+        "prenom": user.prenom,
+        "doctor_name": user.doctor_name,
+        "doctor_phone": user.doctor_phone,
+        "doctor_email": user.doctor_email,
     }), 200
 
-# ====================
-# Routes de gestion de compte
-# ====================
 @auth_bp.route('/delete_account', methods=['DELETE'])
 @jwt_required()
 def delete_account():

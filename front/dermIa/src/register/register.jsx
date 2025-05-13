@@ -8,8 +8,9 @@ import { registerUser } from "../services/UserService.js";
 function Register({ closePopup, openLoginPopup }) {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
-    identifier: "",
-    age: "",
+    email: "",
+    nom: "",
+    prenom: "",
     password: "",
     doctor_name: "",
     doctor_phone: "",
@@ -52,27 +53,37 @@ function Register({ closePopup, openLoginPopup }) {
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
-            <label>{t("register.identifier")}</label>
+            <label>{t("register.email")}</label>
             <input
-              type="text"
-              name="identifier"
-              placeholder={t("register.identifierPlaceholder")}
-              value={formData.identifier}
+              type="email"
+              name="email"
+              placeholder={t("register.emailPlaceholder")}
+              value={formData.email}
               onChange={handleChange}
               required
-              autoComplete="username"
+              autoComplete="email"
             />
           </div>
 
           <div className="input-group">
-            <label>{t("register.age")}</label>
+            <label>{t("register.nom")}</label>
             <input
-              type="number"
-              name="age"
-              min="1"
-              max="120"
-              placeholder={t("register.agePlaceholder")}
-              value={formData.age}
+              type="text"
+              name="nom"
+              placeholder={t("register.nomPlaceholder")}
+              value={formData.nom}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>{t("register.prenom")}</label>
+            <input
+              type="text"
+              name="prenom"
+              placeholder={t("register.prenomPlaceholder")}
+              value={formData.prenom}
               onChange={handleChange}
               required
             />
@@ -108,6 +119,7 @@ function Register({ closePopup, openLoginPopup }) {
               </button>
             </div>
           </div>
+
           {showDoctorForm && (
             <div className="doctor-form">
               <label>
@@ -139,6 +151,7 @@ function Register({ closePopup, openLoginPopup }) {
               </label>
             </div>
           )}
+
           <button
             type="button"
             className="toggle-doctor-btn"
@@ -148,6 +161,7 @@ function Register({ closePopup, openLoginPopup }) {
               ? "Masquer médecin traitant (optionnel)"
               : "Ajouter médecin traitant (optionnel)"}
           </button>
+
           <button type="submit" className="submit-button">
             {t("register.submit")}
           </button>
