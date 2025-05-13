@@ -93,3 +93,42 @@ def create_album():
         "message": f"Album created with id={new_album.id}",
         "album_id": new_album.id
     }), 200
+
+@album_bp.route('/', methods=['GET'])
+@jwt_required()
+def get_album():
+    # Get current user
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Get all albums belonging to the user
+    albums = Album.query.filter_by(user_id=user.id).all()
+
+    result = []
+    for album in albums:
+        # Get the most recent analysis for this album
+        latest_analysis = (
+            Analysis.query
+            .filter_by(album_id=album.id)
+            .order_by(Analysis.date.desc())
+            .first()
+        )
+
+        result.append({
+            "id": album.id,
+            "title": album.title,
+            "date": album.date.isoformat(),
+            "last_updated": latest_analysis.date.isoformat() if latest_analysis else None,
+            "last_photo": latest_analysis.photo if latest_analysis else None,
+            "position_label": album.position_label,
+            "position_x": album.position_x,
+            "position_y": album.position_y,
+            "orientation": album.orientation
+        })
+
+    return jsonify({
+        "message": "Albums retrieved successfully",
+        "data": result
+    }), 200

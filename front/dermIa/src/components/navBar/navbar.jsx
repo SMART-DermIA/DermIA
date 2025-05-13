@@ -1,35 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Login from "../../login/login";
 import Register from "../../register/register";
 import "./navbar.css";
+import { FaUserCircle } from "react-icons/fa";
+import { FiSettings, FiLogOut } from "react-icons/fi";
+import { useAuth } from "../../auth/authContext.jsx";
 
-export default function Navbar() {
+export default function Navbar({ passPopupHandlers }) {
+  const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("FR");
   const [showNavbar, setShowNavbar] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    JSON.parse(localStorage.getItem("isAuthenticated")) || false
-  );
+
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
+  const { isLoggedIn, user, logout } = useAuth();
   const location = useLocation();
-  let lastScrollY = 0;
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
+    i18n.changeLanguage(lang.toLowerCase());
+    localStorage.setItem("language", lang);
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("isAuthenticated");
-  };
-
-  const handleLoginClick = () => {
+  const openLoginPopup = () => {
     setShowLoginPopup(true);
+    setShowRegisterPopup(false);
   };
 
-  const handleRegisterClick = () => {
+  const openRegisterPopup = () => {
     setShowRegisterPopup(true);
+    setShowLoginPopup(false);
   };
 
   const closeLoginPopup = () => {
@@ -40,18 +42,36 @@ export default function Navbar() {
     setShowRegisterPopup(false);
   };
 
-  const openLoginPopup = () => {
-    setShowLoginPopup(true);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setShowNavbar(false);
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateNavbarVisibility = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 10) {
+        setShowNavbar(true); // Always show navbar near top
+      } else if (currentScrollY > lastScrollY) {
+        setShowNavbar(false); // Scrolling down
       } else {
-        setShowNavbar(true);
+        setShowNavbar(true); // Scrolling up
       }
-      lastScrollY = window.scrollY;
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavbarVisibility);
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -61,15 +81,38 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
-  }, [isAuthenticated]);
+    const savedLanguage = localStorage.getItem("language") || "EN";
+    setLanguage(savedLanguage);
+    i18n.changeLanguage(savedLanguage.toLowerCase());
+  }, [i18n]);
+
+  useEffect(() => {
+    if (passPopupHandlers) {
+      passPopupHandlers({
+        openLoginPopup,
+        openRegisterPopup,
+        closeLoginPopup,
+        closeRegisterPopup,
+        showLoginPopup,
+        showRegisterPopup,
+      });
+    }
+  }, [passPopupHandlers, showLoginPopup, showRegisterPopup]);
 
   return (
     <>
-      <nav className={`navbar navbar-expand-lg ${showNavbar ? "visible" : "hidden"}`}>
+      <nav
+        className={`navbar navbar-expand-lg ${
+          showNavbar ? "visible" : "hidden"
+        }`}
+      >
         <div className="container-fluid d-flex justify-content-between">
-          <Link to={isAuthenticated ? "/userAccueil" : "/"} className="navbar-brand">
-            <img src="/logo.png" alt="DermIA Logo" style={{ height: "100px" }} />
+          <Link to={isLoggedIn ? "/userAccueil" : "/"} className="navbar-brand">
+            <img
+              src="/logo.png"
+              alt="DermIA Logo"
+              style={{ height: "100px" }}
+            />
           </Link>
           <button
             className="navbar-toggler custom-toggler"
@@ -84,26 +127,24 @@ export default function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              {isAuthenticated ? (
+              {isLoggedIn ? (
                 <>
-                  <li className="nav-item nav-elem">
-                    <Link
-                      to="/userAccueil"
-                      className={`nav-elem ${
-                        location.pathname === "/userAccueil" ? "active" : ""
-                      }`}
-                    >
-                      Accueil
+                  <li
+                    className={`nav-item nav-elem ${
+                      location.pathname === "/userAccueil" ? "active" : ""
+                    }`}
+                  >
+                    <Link to="/userAccueil" className="nav-elem">
+                      {t("navbar.home")}
                     </Link>
                   </li>
-                  <li className="nav-item nav-elem">
-                    <Link
-                      to="/historique"
-                      className={`nav-elem ${
-                        location.pathname === "/historique" ? "active" : ""
-                      }`}
-                    >
-                      Historique
+                  <li
+                    className={`nav-item nav-elem ${
+                      location.pathname === "/historique" ? "active" : ""
+                    }`}
+                  >
+                    <Link to="/historique" className="nav-elem">
+                      {t("navbar.history")}
                     </Link>
                   </li>
                   <div className="nav-center"></div>
@@ -111,9 +152,9 @@ export default function Navbar() {
                     <Link
                       to="/"
                       className="nav-link nav-link-secondary"
-                      onClick={handleLogout}
+                      onClick={logout}
                     >
-                      Se déconnecter
+                      {t("navbar.logout")}
                     </Link>
                   </li>
                 </>
@@ -122,17 +163,17 @@ export default function Navbar() {
                   <li className="nav-item">
                     <button
                       className="nav-link nav-link-primary"
-                      onClick={handleLoginClick}
+                      onClick={openLoginPopup}
                     >
-                      Se connecter
+                      {t("navbar.login")}
                     </button>
                   </li>
                   <li className="nav-item">
                     <button
                       className="nav-link nav-link-secondary"
-                      onClick={handleRegisterClick}
+                      onClick={openRegisterPopup}
                     >
-                      S'inscrire
+                      {t("navbar.register")}
                     </button>
                   </li>
                 </>
@@ -153,6 +194,31 @@ export default function Navbar() {
                 EN
               </span>
             </div>
+            {user && (
+              <li className="nav-item user-menu">
+                <FaUserCircle
+                  size={30}
+                  onClick={toggleUserMenu}
+                  style={{ cursor: "pointer" }}
+                />
+                {showUserMenu && (
+                  <div className="user-dropdown">
+                    <Link
+                      to="/settings"
+                      className="dropdown-item"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      <FiSettings style={{ marginRight: "8px" }} />
+                      {t("navbar.settings")}
+                    </Link>
+                    <Link to="/" className="dropdown-item" onClick={logout}>
+                      <FiLogOut style={{ marginRight: "8px" }} />
+                      {t("navbar.logout")}
+                    </Link>
+                  </div>
+                )}
+              </li>
+            )}
           </div>
         </div>
       </nav>
@@ -165,8 +231,7 @@ export default function Navbar() {
             </button>
             <Login
               closePopup={closeLoginPopup}
-              setIsAuthenticated={setIsAuthenticated}
-              openRegisterPopup={handleRegisterClick}
+              openRegisterPopup={openRegisterPopup}
             />
           </div>
         </div>
@@ -178,7 +243,10 @@ export default function Navbar() {
             <button className="close-popup" onClick={closeRegisterPopup}>
               &times;
             </button>
-            <Register closePopup={closeRegisterPopup} openLoginPopup={openLoginPopup} />
+            <Register
+              closePopup={closeRegisterPopup}
+              openLoginPopup={openLoginPopup}
+            />
           </div>
         </div>
       )}

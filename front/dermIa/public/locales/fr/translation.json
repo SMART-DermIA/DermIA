@@ -1,0 +1,160 @@
+{
+  "navbar": {
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "logout": "Se déconnecter",
+    "home": "Accueil",
+    "history": "Historique",
+    "settings": "Paramètres"
+  },
+  "home": {
+    "title": "Détectez la dangerosité de vos grains de beauté en un clin d’œil.",
+    "subtitle": "Notre IA analyse vos grains de beauté pour garantir votre sécurité et votre santé.",
+    "cta": "S’inscrire et commencer",
+    "featuresTitle": "Découvrez nos fonctionnalités innovantes pour la santé de votre peau.",
+    "feature1Title": "Suivez l'évolution de vos grains de beauté facilement et efficacement.",
+    "feature1Text": "Notre IA détecte la dangerosité de vos grains de beauté en un clin d'œil.",
+    "feature2Title": "Gérez vos grains de beauté avec notre interface intuitive et simple.",
+    "feature2Text": "Créez des albums pour suivre l'évolution de chaque grain de beauté.",
+    "feature3Title": "Utilisez la fonction drag & drop pour une expérience utilisateur fluide.",
+    "feature3Text": "Déplacez vos images de grains de beauté facilement pour une analyse rapide.",
+    "stepsTitle": "Découvrez comment utiliser notre service",
+    "step1": "Étape 1 : Créez votre compte",
+    "step1Text": "Inscrivez-vous en quelques clics pour commencer.",
+    "step2": "Étape 2 : Téléchargez vos photos",
+    "step2Text": "Glissez-déposez vos images de grains de beauté pour analyse.",
+    "step3": "Étape 3 : Suivez l'évolution",
+    "step3Text": "Organisez vos photos dans des albums pour un suivi facile.",
+    "ctaTitle": "Créez votre compte gratuitement",
+    "ctaText": "Rejoignez notre communauté et commencez à surveiller la santé de vos grains de beauté. Essayez notre service innovant sans frais dès aujourd'hui !",
+    "ctaButton": "Inscription"
+  },
+  "album": {
+    "lastModified": "Dernière modification"
+  },
+  "imgUpload": {
+    "title": "Téléchargez votre image pour commencer l’analyse",
+    "subtitle": "Notre IA analyse votre photo pour détecter d’éventuelles anomalies. Aucune donnée n’est stockée sans votre accord.",
+    "dropText": "Glissez-déposez votre image ici",
+    "orText": "ou",
+    "chooseFile": "Choisir un fichier depuis votre appareil",
+    "cancel": "Annuler",
+    "analyze": "Lancer l’analyse",
+    "analyzing": "Analyse en cours...",
+    "analysisComplete": "Analyse terminée",
+    "riskRate": "Taux de risque",
+    "noAnomaly": "Aucune anomalie détectée",
+    "irregularity": "Irrégularité",
+    "asymmetry": "Asymétrie",
+    "size": "Taille",
+    "color": "Couleur",
+    "learnMore": "En savoir plus",
+    "addToAlbum": "Ajouter à l’album",
+    "share": "Partager à votre médecin traitant"
+  },
+  "footer": {
+    "cgu": "Conditions Générales d'Utilisation",
+    "privacyPolicy": "Politique de Confidentialité",
+    "rightsReserved": "Tous droits réservés."
+  },
+  "historique": {
+    "title": "Vos albums",
+    "subtitle": "Suivez l'évolution de chacun de vos grains de beauté",
+    "newAnalysis": "Nouvelle analyse"
+  },
+  "login": {
+    "welcome": "Bienvenue sur DERM'IA !",
+    "email": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "submit": "Se connecter",
+    "terms": "En poursuivant, vous acceptez les conditions d’utilisation de DERM’IA et reconnaissez avoir lu notre politique de confidentialité.",
+    "noAccount": "Vous n’êtes pas encore sur DERM’IA ?",
+    "register": "Inscrivez-vous",
+    "tokenReceived": "Token reçu :",
+    "success": "Connexion réussie !",
+    "error": "Erreur de connexion.",
+    "networkError": "Erreur réseau ou serveur."
+  },
+  "register": {
+    "welcome": "Bienvenue sur DERM'IA !",
+    "subtitle": "Détectez la dangerosité de vos grains de beauté en un clin d'œil.",
+    "identifier": "Identifiant",
+    "identifierPlaceholder": "Entrez votre identifiant",
+    "age": "Âge",
+    "agePlaceholder": "Entrez votre âge",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Créer un mot de passe",
+    "submit": "Continuer",
+    "terms": "En poursuivant, vous acceptez les conditions d'utilisation de DERM'IA et reconnaissez avoir lu notre politique de confidentialité.",
+    "alreadyMember": "Déjà membre ?",
+    "login": "Se connecter",
+    "error": "Erreur d'inscription.",
+    "networkError": "Erreur réseau ou serveur."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "doctor": "Médecin traitant",
+    "name": "Nom",
+    "phone": "Téléphone",
+    "email": "Email",
+    "edit": "Modifier",
+    "addDoctor": "Ajouter un médecin traitant",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "account": "Mon compte",
+    "username": "Nom d'utilisateur",
+    "deleteAccount": "Supprimer mon compte"
+  },
+  "toast": {
+    "doctorAdded": "Médecin ajouté avec succès",
+    "doctorUpdated": "Médecin modifié avec succès",
+    "errorUpdatingDoctor": "Erreur lors de la mise à jour",
+    "accountDeleted": "Compte supprimé avec succès.",
+    "userNotFound": "Utilisateur non trouvé.",
+    "networkError": "Erreur réseau ou serveur, voir la console pour plus de détails"
+  },
+  "confirm": {
+    "deleteAccount": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
+  },
+  "userAccueil": {
+    "welcome": "Bienvenue"
+  },
+  "privacyPolicy": {
+    "title": "Politique de Confidentialité",
+    "intro": "Bienvenue dans la Politique de Confidentialité de DermIA. Votre vie privée est importante pour nous.",
+    "section1Title": "1. Collecte des Données",
+    "section1Content": "Nous collectons des données pour offrir de meilleurs services à nos utilisateurs.",
+    "section2Title": "2. Utilisation des Données",
+    "section2Content": "Vos données sont utilisées pour améliorer nos services et garantir la sécurité.",
+    "section3Title": "3. Partage des Données",
+    "section3Content": "Nous ne partageons pas vos données avec des tiers sans votre consentement."
+  },
+  "cgu": {
+    "title": "Conditions Générales d’Utilisation (CGU)",
+    "section1Title": "1. Présentation du Service",
+    "section1Content1": "Notre application web permet aux utilisateurs de soumettre volontairement des photographies de leurs grains de beauté afin d’obtenir une estimation du risque de malignité, générée par un algorithme d’intelligence artificielle.",
+    "section1Content2": "Ce service a pour but de sensibiliser les utilisateurs à la vigilance dermatologique. Il ne s’agit pas d’un diagnostic médical.",
+    "section2Title": "2. Définitions",
+    "section2Content1": "Utilisateur : toute personne utilisant le service.",
+    "section2Content2": "Service : l’analyse de grains de beauté par IA via notre plateforme.",
+    "section2Content3": "Résultat : estimation algorithmique non médicale transmise à l’utilisateur.",
+    "section3Title": "3. Conditions d’accès et d’utilisation",
+    "section3Content": "Le service est destiné aux personnes majeures ou aux mineurs disposant d’une autorisation parentale. Toute utilisation commerciale est strictement interdite. L’utilisateur garantit que les images transmises sont authentiques et qu’il en détient les droits.",
+    "section4Title": "4. Avertissement Médical",
+    "section4Content": "Les résultats fournis sont des évaluations statistiques générées par un modèle d’IA. Aucune garantie n’est donnée quant à leur exactitude ou pertinence médicale. En cas de doute, contactez immédiatement un professionnel de santé.",
+    "section5Title": "5. Propriété Intellectuelle",
+    "section5Content": "Tous les contenus (code, texte, images, algorithmes) sont la propriété exclusive de l’éditeur de l’application. Toute reproduction ou diffusion sans autorisation est interdite.",
+    "section6Title": "6. Évolution du Service",
+    "section6Content": "Nous nous réservons le droit de modifier, suspendre ou arrêter le service à tout moment. Aucun dédommagement ne pourra être exigé en cas d’interruption ou modification.",
+    "section7Title": "7. Limitation de Responsabilité",
+    "section7Content": "L’éditeur décline toute responsabilité liée à l’utilisation des résultats fournis. Les décisions prises sur la base des estimations sont sous la seule responsabilité de l’utilisateur.",
+    "section8Title": "8. Modification des CGU",
+    "section8Content": "Ces conditions peuvent être modifiées à tout moment. Il appartient à l’utilisateur de consulter régulièrement cette page. L’utilisation du service implique l’acceptation des CGU en vigueur.",
+    "section9Title": "9. Droit Applicable",
+    "section9Content": "Les présentes conditions sont régies par le droit français. En cas de litige, les tribunaux compétents seront ceux du siège de l’éditeur.",
+    "section10Title": "10. Contact",
+    "section10Content": "Pour toute demande liée aux CGU, veuillez contacter : contact@dermia.fr"
+  }
+}

@@ -6,6 +6,10 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+    volumes:
+      - ./front/dermIa:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
 
   backend:
     build:
@@ -15,14 +19,16 @@ services:
     environment:
       - DATABASE_URL=postgresql://user:password@db:5432/mydb
       - JWT_SECRET_KEY=super-secret-key
+      - DB_HOST=db
+      - DB_PORT=5432
     depends_on:
       - db
     volumes:
-      - backend_uploads:/app/uploads  # Mount uploads dir
+      - backend_uploads:/app/uploads # Mount uploads dir
 
   db:
     ports:
-      - "5432:5432"  # Make the db be accessible from outside of Docker (to visualise data)
+      - "5432:5432" # Make the db be accessible from outside of Docker (to visualise data)
     image: postgres:15
     restart: always
     environment:

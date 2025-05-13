@@ -5,10 +5,13 @@
  	border-top-right-radius: 40px;
 }
 
-.footer-link, .footer-link:hover {
+.footer-link, .footer-link:hover{
 	font-weight: 600;
 	text-decoration: none;
 	color: #660033;
+	background: none; 
+  	border: none; 
+	padding: 5px;
 }
 
 .footer-names {

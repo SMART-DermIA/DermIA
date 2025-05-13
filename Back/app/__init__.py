@@ -5,6 +5,7 @@ import os
 
 from .blueprints.album import album_bp
 from .blueprints.analyze import analyze_bp
+from .blueprints.doctor import user_bp
 from .blueprints.auth import bcrypt, auth_bp
 from .models import db
 
@@ -18,15 +19,15 @@ def create_app():
     app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.jpeg', '.png']
     app.config['UPLOAD_PATH'] = os.path.join(os.getcwd(), 'uploads')
 
-    # ——— 2) CORS
-    CORS(app,
-         origins=["http://localhost:5173"],
-         supports_credentials=True,
-         allow_headers=["Content-Type", "Authorization"],
-         allow_methods=["GET", "POST", "OPTIONS"],
-         expose_headers=["Authorization"])
 
-    # ——— 3) INIT DES EXTENSIONS
+    app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+    app.config["JWT_COOKIE_SECURE"] = False  # True in production (only over HTTPS)
+    app.config["JWT_COOKIE_SAMESITE"] = "Lax"  # Or "Strict" / "None" for cross-site
+    app.config["JWT_COOKIE_CSRF_PROTECT"] = False  # Optional but recommended
+    app.config["JWT_ACCESS_COOKIE_NAME"] = "token"
+
+    # Extensions
+    CORS(app, supports_credentials=True, origins=["http://localhost:5173", "*"])
     db.init_app(app)
     bcrypt.init_app(app)
     JWTManager(app)
@@ -34,9 +35,9 @@ def create_app():
     # ——— 4) ENREGISTREMENT DES BLUEPRINTS
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(album_bp, url_prefix='/album')
-    app.register_blueprint(analyze_bp)
+    app.register_blueprint(analyze_bp, url_prefix='/analyze')
+    app.register_blueprint(user_bp, url_prefix='/user')
 
-    # ——— 5) ROUTE RACINE
     @app.route('/')
     def home():
         return {"message": "Backend Flask is running"}

@@ -1,47 +1,75 @@
-import React from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Navbar from "../components/navBar/navbar";
 import AlbumCard from "../components/album-card/album_card";
 import { Link } from "react-router-dom";
 import { LuScanSearch } from "react-icons/lu";
+import { useTranslation } from "react-i18next";
 import "./historique.css";
+import {getUsersAlbums} from "../services/AlbumService.js";
+import {createAsyncReducer} from "../reducers/asyncReducer.js"
+import BodyMap from "../components/body-map/BodyMap";
+
+const {asyncReducer: albumsReducer, initialState} = createAsyncReducer([]);
 
 const Historique = () => {
-    return (
-        <div>
-            <Navbar />
-            <div className="historique-container">
-                <div className="historique-header">
-                    <div className="historique-header-text">
-                        <h1 className="historique-title">Vos albums</h1>
-                        <p className="historique-subtitle">Suivez l'évolution de chacun de vos grains de beauté</p>
-                    </div>
-                    <div className="historique-header-button">
-                    <Link to="/userAccueil" className="nouvelle-button" >
-                        <LuScanSearch size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                        Nouvelle analyse
-                    </Link>
-                    </div>
-                </div>
-                <div className="historique-albums">
-                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                    <AlbumCard id="1" imageUrl="/image1.png" title="Album 1" lastModified="2023-10-01" />
-                    <AlbumCard id="2" imageUrl="/image2.png" title="Album 2" lastModified="2023-10-02" />
-                    <AlbumCard id="3" imageUrl="/image3.png" title="Album 3" lastModified="2023-10-03" />
-                </div>
-            </div>
+  const { t } = useTranslation();
+  const [state, dispatch] = useReducer(albumsReducer, initialState);
+  const [showBodyMap, setShowBodyMap] = useState(false); // 👈 toggle
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_START" });
+    getUsersAlbums().then(albums =>
+      dispatch({ type: "FETCH_SUCCESS", payload: albums })
+    ).catch(err => {
+      dispatch({ type: "FETCH_ERROR", payload: "Could not load recent posts." });
+      console.error(err);
+    });
+  }, []);
+
+  return (
+    <div>
+      <Navbar />
+      <div className="historique-container">
+        <div className="historique-header">
+          <div className="historique-header-text">
+            <h1 className="historique-title">{t("historique.title")}</h1>
+            <p className="historique-subtitle">{t("historique.subtitle")}</p>
+          </div>
+
+          <div className="historique-header-button">
+            <button
+              onClick={() => setShowBodyMap(!showBodyMap)}
+              className="toggle-view-button"
+            >
+              {showBodyMap ? t("historique.viewFolders") : t("historique.viewBody")}
+            </button>
+          </div>
         </div>
-    )
-}
+
+        {state.error ? (
+          <div className="historique-albums"><p>{state.error}</p></div>
+        ) : state.loading ? (
+          <div className="historique-albums"><p>Chargement...</p></div>
+        ) : (
+          showBodyMap ? (
+            <BodyMap albums={state.data} />
+          ) : (
+            <div className="historique-albums">
+              {state.data.map((album, i) =>
+                <AlbumCard
+                  key={i}
+                  id={album.id}
+                  imageUrl={album.last_photo}
+                  title={album.title}
+                  lastModified={album.last_updated}
+                />
+              )}
+            </div>
+          )
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default Historique;

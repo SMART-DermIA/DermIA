@@ -9,6 +9,10 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     albums = db.relationship('Album', backref='user', lazy=True)
+    doctor_name  = db.Column(db.String(120), nullable=True)
+    doctor_phone = db.Column(db.String(20),  nullable=True)
+    doctor_email = db.Column(db.String(120), nullable=True)
+
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,6 +20,10 @@ class Album(db.Model):
     date = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     analyses = db.relationship('Analysis', backref='album', lazy=True)
+    position_label = db.Column(db.String(50), nullable=True)
+    position_x = db.Column(db.Float, nullable=True)
+    position_y = db.Column(db.Float, nullable=True)
+    orientation = db.Column(db.String(10), nullable=True)
 
 class Analysis(db.Model):
     id = db.Column(db.Integer, primary_key=True)
