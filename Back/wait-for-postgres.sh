@@ -1,4 +1,3 @@
-- fichier wait-for-postgres.sh
 #!/bin/sh
 set -e
 

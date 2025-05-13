@@ -140,7 +140,11 @@ def get_album():
             "title": album.title,
             "date": album.date.isoformat(),
             "last_updated": latest_analysis.date.isoformat() if latest_analysis else None,
-            "last_photo": latest_analysis.photo if latest_analysis else None
+            "last_photo": latest_analysis.photo if latest_analysis else None,
+            "position_label": album.position_label,
+            "position_x": album.position_x,
+            "position_y": album.position_y,
+            "orientation": album.orientation
         })
 
     return jsonify({

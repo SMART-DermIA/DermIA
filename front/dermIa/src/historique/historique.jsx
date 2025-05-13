@@ -1,31 +1,24 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Navbar from "../components/navBar/navbar";
 import AlbumCard from "../components/album-card/album_card";
-import { Link } from "react-router-dom";
-import { LuScanSearch } from "react-icons/lu";
 import { useTranslation } from "react-i18next";
 import "./historique.css";
 import { getUsersAlbums } from "../services/AlbumService.js";
 import { createAsyncReducer } from "../reducers/asyncReducer.js";
+import BodyMap from "../components/body-map/BodyMap";
 
 const { asyncReducer: albumsReducer, initialState } = createAsyncReducer([]);
 
 const Historique = () => {
   const { t } = useTranslation();
   const [state, dispatch] = useReducer(albumsReducer, initialState);
+  const [showBodyMap, setShowBodyMap] = useState(false); // 👈 toggle
 
-  // Get a user's albums
   useEffect(() => {
-    // Begin async fetch
     dispatch({ type: "FETCH_START" });
-    // Get albums
     getUsersAlbums()
-      .then((albums) =>
-        // Finish async fetch with success
-        dispatch({ type: "FETCH_SUCCESS", payload: albums })
-      )
+      .then((albums) => dispatch({ type: "FETCH_SUCCESS", payload: albums }))
       .catch((err) => {
-        // Finish async fetch with error
         dispatch({
           type: "FETCH_ERROR",
           payload: "Could not load recent posts.",
@@ -43,14 +36,16 @@ const Historique = () => {
             <h1 className="historique-title">{t("historique.title")}</h1>
             <p className="historique-subtitle">{t("historique.subtitle")}</p>
           </div>
+
           <div className="historique-header-button">
-            <Link to="/userAccueil" className="nouvelle-button">
-              <LuScanSearch
-                size={20}
-                style={{ marginBottom: ".2em", marginRight: ".5em" }}
-              />
-              {t("historique.newAnalysis")}
-            </Link>
+            <button
+              onClick={() => setShowBodyMap(!showBodyMap)}
+              className={`toggle-view-button ${showBodyMap ? "active" : ""}`}
+            >
+              {showBodyMap
+                ? t("historique.viewFolders")
+                : t("historique.viewBody")}
+            </button>
           </div>
         </div>
 
@@ -60,8 +55,10 @@ const Historique = () => {
           </div>
         ) : state.loading ? (
           <div className="historique-albums">
-            <p>{state.error}</p>
+            <p>Chargement...</p>
           </div>
+        ) : showBodyMap ? (
+          <BodyMap albums={state.data} />
         ) : (
           <div className="historique-albums">
             {state.data.map((album, i) => (
