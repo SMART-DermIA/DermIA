@@ -10,3 +10,12 @@ export async function getUsersAlbums() {
   console.log(res.data)
   return res.data.data;
 }
+
+export async function getAlbum(id) {
+  const res = await axios.get(`${API_BASE_URL}/album/${id}`, {
+    withCredentials: true,
+  });
+
+  console.log(res.data)
+  return res.data.data;
+}

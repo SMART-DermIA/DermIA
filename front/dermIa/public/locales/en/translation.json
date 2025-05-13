@@ -30,7 +30,10 @@
     "ctaButton": "Sign up"
   },
   "album": {
-    "lastModified": "Last modified"
+    "album": "Album",
+    "creation": "Initial analysis",
+    "lastModified": "Most recent analysis",
+    "dernierDangerosite": "Most recent severity"
   },
   "imgUpload": {
     "title": "Upload your image to start the analysis",

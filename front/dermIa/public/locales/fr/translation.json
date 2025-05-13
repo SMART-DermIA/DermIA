@@ -30,7 +30,10 @@
     "ctaButton": "Inscription"
   },
   "album": {
-    "lastModified": "Dernière modification"
+    "album": "Album",
+    "creation": "Premier analyse",
+    "lastModified": "Dernière analyse",
+    "dernierDangerosite": "Dernier dangerosité"
   },
   "imgUpload": {
     "title": "Téléchargez votre image pour commencer l’analyse",
