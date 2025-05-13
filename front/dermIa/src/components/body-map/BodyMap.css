@@ -7,7 +7,10 @@
 
 .bodymap-image-wrapper {
   position: relative;
-  width: 100%;
+  width: 400px; /* ou la largeur de ton image */
+  height: 700px; /* ou la hauteur de ton image */
+  /* ajoute un margin top si tu veux plus d’espace */
+  margin-top: 2rem;
 }
 
 .bodymap-image {
@@ -29,4 +32,38 @@
 
 .bodymap-point:hover {
   background-color: darkred;
+}
+
+.orientation-switch {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* espace entre les deux boutons */
+  margin-bottom: 1.5rem; /* espace sous les boutons */
+}
+
+/* Style commun des boutons */
+.orientation-switch button {
+  background-color: #ffffff; /* fond blanc */
+  color: #999999; /* texte gris moyen */
+  border: 1px solid #cccccc;
+  padding: 0.8em 1.5em;
+  border: none;
+  border-radius: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* État actif */
+.orientation-switch button.active,
+.orientation-switch button:hover {
+  background-color: #f0cfdf;
+  color: #660033;
+}
+
+/* Pour bien séparer les boutons de l’image */
+.bodymap-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
