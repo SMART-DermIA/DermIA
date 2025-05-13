@@ -1,0 +1,32 @@
+.bodymap-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.bodymap-image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.bodymap-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bodymap-point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+.bodymap-point:hover {
+  background-color: darkred;
+}

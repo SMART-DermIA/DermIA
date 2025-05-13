@@ -20,6 +20,10 @@ class Album(db.Model):
     date = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     analyses = db.relationship('Analysis', backref='album', lazy=True)
+    position_label = db.Column(db.String(50), nullable=True)
+    position_x = db.Column(db.Float, nullable=True)
+    position_y = db.Column(db.Float, nullable=True)
+    orientation = db.Column(db.String(10), nullable=True)
 
 class Analysis(db.Model):
     id = db.Column(db.Integer, primary_key=True)
