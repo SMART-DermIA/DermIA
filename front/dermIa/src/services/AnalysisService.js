@@ -2,27 +2,9 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
 
-export async function getUsersAlbums() {
-  const res = await axios.get(`${API_BASE_URL}/album`, {
-    withCredentials: true,
-  });
-
-  console.log(res.data)
-  return res.data.data;
-}
-
-export async function getAlbum(id) {
-  const res = await axios.get(`${API_BASE_URL}/album/${id}`, {
-    withCredentials: true,
-  });
-
-  console.log(res.data)
-  return res.data.data;
-}
-
-export async function createAlbum(formData) {
+export async function performAnalysis(formData) {
   try {
-    const res = await axios.post(`${API_BASE_URL}/album}`, formData, {
+    const res = await axios.post(`${API_BASE_URL}/analyze`, formData, {
       withCredentials: true,
     });
 
@@ -50,4 +32,13 @@ export async function createAlbum(formData) {
       message: err.response?.data?.error || err.message || "Unexpected error"
     };
   }
+}
+
+export function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }

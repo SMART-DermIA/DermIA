@@ -1,0 +1,25 @@
+/* ImageUploader.css */
+.image-uploader {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+.drop-zone {
+    border: 2px dashed #aaa;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.drop-zone:hover {
+    border-color: #555;
+}
+
+.preview-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
