@@ -240,58 +240,60 @@
 }
 
 .criteria-bar {
-    margin-bottom: 1em; /* Reduced spacing between bars */
+    margin-bottom: 1em;
 }
-
 
 .criteria-label {
-	text-align: center;
-	font-size: 1rem;    /* plutôt 1rem qu’0.95rem */
-	font-weight: 600;
-	color: #222;
-	margin-bottom: 0.4em;
-  }
-  
-/* Conserve la couleur d’arrière-plan dynamique, mais enlève le min-width */
-.bar-fill {
-  height: 100%;
-  transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
-  border-radius: 10px 0 0 10px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.4em;
 }
 
-/* On place le texte du pourcentage de façon absolue */
 .bar-wrapper {
-  position: relative;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  height: 1.5rem;
-  overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    position: relative;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    height: 1.5rem;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* La barre colorée sous-jacente */
 .bar-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    border-radius: 10px 0 0 10px;
 }
 
-/* Le texte du pourcentage */
 .bar-text {
-  position: absolute;
-  top: 50%;
-  left: 0.5rem;         /* Petit décalage à droite du bord */
-  transform: translateY(-50%);
-  color: #000;          /* noir, pour le contraste */
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-shadow: 0 1px 2px rgba(255,255,255,0.8),  /* lueur blanche derrière */
-               0 0 1px rgba(0,0,0,0.3);
-  white-space: nowrap;
-  pointer-events: none; /* le texte ne capte pas la souris */
-  z-index: 1;           /* au-dessus de la barre colorée */
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    color: #000;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8), 0 0 1px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
 }
 
+.bar-scale {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+    color: #666;
+}
 
 .more-info-link {
     color: #660033;

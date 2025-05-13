@@ -6,7 +6,7 @@ import { PiSpinnerGap } from "react-icons/pi";
 import { LuScanSearch } from "react-icons/lu";
 import { GrUndo } from "react-icons/gr";
 import { MdShare } from "react-icons/md";
-import { FaUserMd } from "react-icons/fa"; // Icon for the doctor button
+import { FaUserMd } from "react-icons/fa";
 
 export default function ImageUpload() {
     const [upload, setUpload] = useState(true);
@@ -183,7 +183,7 @@ export default function ImageUpload() {
                         )}
                     </div>
                                     
-                <div className="criteria-group">
+                    <div className="criteria-group">
                         {[
                             { name: 'Irrégularité', value: result.scores.irregularity },
                             { name: 'Asymétrie',     value: result.scores.asymmetry     },
@@ -220,11 +220,7 @@ export default function ImageUpload() {
                             </div>
                             );
                         })}
-                        </div>
-
-
-
-                    
+                    </div>
 
                     <div className="button-group">
                         <button className="confirm-button">
@@ -241,7 +237,7 @@ export default function ImageUpload() {
                         </button>
                     </div>
                     
-                    <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutanés/excroissances-cutanées-bénignes/grains-de-beauté#Diagnostic_v28368748_fr" className="more-info-link">
+                    <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutan%C3%A9s/excroissances-cutan%C3%A9es-b%C3%A9nignes/grains-de-beaut%C3%A9#Diagnostic_v28368748_fr" className="more-info-link">
                         En savoir plus sur les grains de beauté.
                     </a>
                 </div>
