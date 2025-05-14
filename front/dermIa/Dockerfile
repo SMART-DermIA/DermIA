@@ -3,6 +3,7 @@
 FROM node:18
 
 WORKDIR /app
+ENV PYTHONPATH=/app
 
 COPY package*.json ./
 RUN npm install

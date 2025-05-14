@@ -30,21 +30,10 @@
     "ctaButton": "Inscription"
   },
   "album": {
-    "creation" : "Crée le : ",
-    "lastModified": "Dernière mise à jour : ",
-    "album": "Album : ",
-    "dernierDangerosite" : "Dernier taux de dangerosité : ",
-    "statTitle" : "Statistiques d'évolution",
-    "statDescription" : "Ce graphique montre l'évolution des paramètres analysés (taille, couleur, asymétrie, etc.) sur les photos",
-    "buttonTelecharger" : "Télécharger l'album",
-    "buttonSupprimer" : "Supprimer l'album",
-    "buttonPartager" : "Partager à votre médecin traitant",
-    "chartTitle" : "Évolution des paramètres du grain de beauté",
-    "irregularity" : "Irrégularité",
-    "asymmetry" : "Asymétrie",
-    "size" : "Taille",
-    "color" : "Couleur",
-    "mean" : "Moyenne"
+    "album": "Album",
+    "creation": "Premier analyse",
+    "lastModified": "Dernière analyse",
+    "dernierDangerosite": "Dernier dangerosité"
   },
   "imgUpload": {
     "title": "Téléchargez votre image pour commencer l’analyse",
@@ -105,12 +94,17 @@
     "alreadyMember": "Déjà membre ?",
     "login": "Se connecter",
     "error": "Erreur d'inscription.",
-    "networkError": "Erreur réseau ou serveur."
+    "networkError": "Erreur réseau ou serveur.",
+    "email": "Courriel",
+    "nom": "Nom",
+    "prenom": "Prénom",
+    "emailPlaceholder": "Saisir votre courriel",
+    "nomPlaceholder": "Saisir votre nom",
+    "prenomPlaceholder": "Saisir votre prénom"
   },
   "settings": {
     "title": "Paramètres",
     "doctor": "Médecin traitant",
-    "name": "Nom",
     "phone": "Téléphone",
     "email": "Email",
     "edit": "Modifier",
@@ -119,7 +113,9 @@
     "cancel": "Annuler",
     "account": "Mon compte",
     "username": "Nom d'utilisateur",
-    "deleteAccount": "Supprimer mon compte"
+    "deleteAccount": "Supprimer mon compte",
+    "nom": "Nom",
+    "prenom": "Prénom"
   },
   "toast": {
     "doctorAdded": "Médecin ajouté avec succès",

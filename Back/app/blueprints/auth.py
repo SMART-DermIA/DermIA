@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from ..models import db, User
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, set_access_cookies, jwt_required, get_jwt_identity, unset_jwt_cookies
@@ -15,19 +15,28 @@ auth_bp = Blueprint('auth', __name__) # Crée un groupe de routes pour la connex
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    username = data.get('username')
+    email = data.get('email')
     password = data.get('password')
-    age = data.get('age')
+    nom = data.get('nom')
+    prenom = data.get('prenom')
 
     doc_name = data.get('doctor_name')
     doc_phone = data.get('doctor_phone')
     doc_email = data.get('doctor_email')
 
-    if User.query.filter_by(username=username).first():
-        return jsonify({"error": "Username already exists"}), 400
+    if User.query.filter_by(email=email).first():
+        return jsonify({"error": "Email already registered"}), 400
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(username=username, password=hashed_password, age=age, doctor_name=doc_name, doctor_phone=doc_phone, doctor_email=doc_email)
+    new_user = User(
+        email=email,
+        password=hashed_password,
+        nom=nom,
+        prenom=prenom,
+        doctor_name=doc_name,
+        doctor_phone=doc_phone,
+        doctor_email=doc_email
+    )
     db.session.add(new_user)
     db.session.commit()
 
@@ -40,24 +49,23 @@ def login():
     if not data:
         return jsonify({"error": "No input data provided"}), 400
 
-    username = data.get('username')
-    password = data.get('password')
+    email = data.get('email', '').strip().lower()
+    password = data.get('password', '')
 
-    if not username or not password:
-        return jsonify({"error": "Username and password are required"}), 400
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
 
-    user = User.query.filter_by(username=username).first()
-    if user:
-        print(f"User found with username={user.username}: id={user.id}")
-    else:
-        print(f"No user found with username={username}")
-
+    user = User.query.filter_by(email=email).first()
     if not user or not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"error": "Invalid username or password"}), 401
+        current_app.logger.debug(f"Failed login attempt for email={email}")
+        return jsonify({"error": "Invalid email or password"}), 401
 
     access_token = create_access_token(identity=str(user.id))
-
-    resp = jsonify({"msg": "Login successful"})
+    resp = jsonify({
+        "message": "Login successful",
+        "access_token": access_token,
+        "user_id": user.id
+    })
     set_access_cookies(resp, access_token)
 
     return resp, 200
@@ -80,15 +88,14 @@ def get_current_user():
 
     return jsonify({
         "id": user.id,
-        "username": user.username,
-        "doctor_name" : user.doctor_name,
-        "doctor_phone" : user.doctor_phone,
-        "doctor_email" : user.doctor_email,
+        "email": user.email,
+        "nom": user.nom,
+        "prenom": user.prenom,
+        "doctor_name": user.doctor_name,
+        "doctor_phone": user.doctor_phone,
+        "doctor_email": user.doctor_email,
     }), 200
 
-# ====================
-# Routes de gestion de compte
-# ====================
 @auth_bp.route('/delete_account', methods=['DELETE'])
 @jwt_required()
 def delete_account():

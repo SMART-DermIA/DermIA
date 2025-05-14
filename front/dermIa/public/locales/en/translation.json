@@ -30,21 +30,10 @@
     "ctaButton": "Sign up"
   },
   "album": {
-    "creation" : "Created: ",
-    "lastModified": "Last update: ",
-    "album": "Album: ",
-    "dernierDangerosite" : "Last danger rate: ",
-    "statTitle" : "Evolution Statistics",
-    "statDescription" : "This graph shows the evolution of analyzed parameters (size, color, asymmetry, etc.) on the photos",
-    "buttonTelecharger" : "Download album",
-    "buttonSupprimer" : "Delete album",
-    "buttonPartager" : "Share to your treating doctor",
-    "chartTitle" : "Evolution of the mole's parameters",
-    "irregularity" : "Irregularity",
-    "asymmetry" : "Asymmetry",
-    "size" : "Size",
-    "color" : "Color",
-    "mean" : "Mean"
+    "album": "Album",
+    "creation": "Initial analysis",
+    "lastModified": "Most recent analysis",
+    "dernierDangerosite": "Most recent severity"
   },
   "imgUpload": {
     "title": "Upload your image to start the analysis",
@@ -141,13 +130,18 @@
     "alreadyMember": "Already a member?",
     "login": "Log in",
     "error": "Registration failed.",
-    "networkError": "Network or server error."
+    "networkError": "Network or server error.",
+    "email": "Email",
+    "nom": "Last name",
+    "prenom": "First name",
+    "emailPlaceholder": "Enter your email",
+    "nomPlaceholder": "Enter your last name",
+    "prenomPlaceholder": "Enter your first Name"
   },
 
   "settings": {
     "title": "Settings",
     "doctor": "General Practitioner",
-    "name": "Name",
     "phone": "Phone",
     "email": "Email",
     "edit": "Edit",
@@ -156,7 +150,9 @@
     "cancel": "Cancel",
     "account": "My account",
     "username": "Username",
-    "deleteAccount": "Delete my account"
+    "deleteAccount": "Delete my account",
+    "nom": "Last name",
+    "prenom": "First name"
   },
   "toast": {
     "doctorAdded": "Doctor added successfully",

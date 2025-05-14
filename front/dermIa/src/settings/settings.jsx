@@ -174,9 +174,17 @@ export default function Settings() {
         <section className="section">
           <h2>{t("settings.account")}</h2>
           {user && (
-            <p>
-              <strong>{t("settings.username")} :</strong> {user.username}
-            </p>
+            <>
+              <p>
+                <strong>{t("settings.email")} :</strong> {user.email}
+              </p>
+              <p>
+                <strong>{t("settings.nom")} :</strong> {user.nom}
+              </p>
+              <p>
+                <strong>{t("settings.prenom")} :</strong> {user.prenom}
+              </p>
+            </>
           )}
           <button className="danger" onClick={handleDeleteAccount}>
             {t("settings.deleteAccount")}

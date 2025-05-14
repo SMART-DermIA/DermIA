@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useReducer} from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navBar/navbar";
 import "./album.css";
@@ -8,10 +8,37 @@ import { LuUndo2 } from "react-icons/lu";
 import { FaRegTrashAlt } from "react-icons/fa";
 import ApexChart from "../components/chart";
 import { useTranslation } from "react-i18next";
+import {getAlbum} from "../services/AlbumService.js";
+import {createAsyncReducer} from "../reducers/asyncReducer.js";
+import {useParams} from "react-router-dom";
+import NotFound from "../NotFound.jsx";
+import BodyMap from "../components/body-map/BodyMap.jsx";
+import AlbumCard from "../components/album-card/album_card.jsx";
+
+const {asyncReducer: albumReducer, initialState} = createAsyncReducer(null);
 import { generatePDF } from "../services/PdfService";
 
 export default function Album() {
+	const { id } = useParams();
+	const id_n = parseInt(id);
+
 	const { t } = useTranslation();
+	const [state, dispatch] = useReducer(albumReducer, initialState);
+
+	useEffect(() => {
+		if (!isNaN(id_n)) {
+			dispatch({type: "FETCH_START"});
+			getAlbum(id_n).then(album =>
+				dispatch({type: "FETCH_SUCCESS", payload: album})
+			).catch(err => {
+				dispatch({type: "FETCH_ERROR", payload: "Could not load album."});
+				console.error(err);
+			});
+		}
+	}, [id_n]);
+
+	if (isNaN(id_n))
+		return <NotFound />
 	const navigate = useNavigate();
 
 	const handleUndo = () => {
