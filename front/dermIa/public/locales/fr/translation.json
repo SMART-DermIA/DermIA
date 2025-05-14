@@ -55,6 +55,21 @@
     "addToAlbum": "Ajouter à l’album",
     "share": "Partager à votre médecin traitant"
   },
+  "addToAlbum": {
+    "errorLoadingAlbums": "Impossible de charger les albums récents.",
+    "missingFields": "Veuillez remplir tous les champs requis.",
+    "defaultFileName": "image_téléchargée.jpg",
+    "success": "Album créé avec succès !",
+    "error": "Une erreur s'est produite lors de la création de l'album.",
+    "addedToAlbum": "Ajouté à l'album avec succès.",
+    "waiting": "En attente...",
+    "yourAlbums": "Vos albums",
+    "createAlbum": "Créer un album",
+    "loading": "Chargement...",
+    "albumTitlePlaceholder": "Entrez le titre de l'album",
+    "confirm": "Confirmer",
+    "cancel": "Annuler"
+  },
   "footer": {
     "cgu": "Conditions Générales d'Utilisation",
     "privacyPolicy": "Politique de Confidentialité",

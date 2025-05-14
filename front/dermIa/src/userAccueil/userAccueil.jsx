@@ -61,6 +61,9 @@ const UserAccueil = () => {
   }
 
   if (analysis) return (
+    <div>
+      <Navbar />
+      <div className="upload-container">
     <div className="result-box">
       <h2 className="upload-title">Analyse terminée</h2>
       <img src={analysis.image} alt="Analyse" className="result-image" />
@@ -164,7 +167,7 @@ const UserAccueil = () => {
       <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutan%C3%A9s/excroissances-cutan%C3%A9es-b%C3%A9nignes/grains-de-beaut%C3%A9#Diagnostic_v28368748_fr" className="more-info-link">
         En savoir plus sur les grains de beauté.
       </a>
-    </div>
+    </div></div></div>
   );
 
   return (
