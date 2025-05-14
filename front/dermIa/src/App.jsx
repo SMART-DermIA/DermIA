@@ -14,6 +14,7 @@ import './App.css';
 import {AuthProvider} from "./auth/authContext.jsx";
 import {RequireAuth, RequireGuest} from "./auth/guards.jsx";
 import NotFound from "./NotFound.jsx";
+import SaveAnalysis from "./save-analysis/SaveAnalysis.jsx";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/historique" element={<Historique/>}/>
           <Route path="/historique/:id" element={<Album />}/>
           <Route path="/settings" element={<Settings />} />
+          <Route path="/save-analysis" element={<SaveAnalysis />} />
         </Route>
 
         {/* Catch-all: redirect unknown routes */}
