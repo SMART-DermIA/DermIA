@@ -7,19 +7,25 @@
 }
 
 .drop-zone {
-    border: 2px dashed #aaa;
-    padding: 40px;
-    text-align: center;
+    border: 2px dashed #660033;
+    border-radius: 1.2em;
+    padding: 3.5em 1.5em;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.drop-zone:hover {
-    border-color: #555;
-}
 
 .preview-image {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
+}
+
+.img {
+    max-width: 15%;
+    margin-bottom: 25px;
 }

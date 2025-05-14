@@ -12,6 +12,7 @@ import {MdShare} from "react-icons/md";
 import {GrUndo} from "react-icons/gr";
 import {BiPhotoAlbum} from "react-icons/bi";
 import {Link} from "react-router-dom";
+import { LuScanSearch } from "react-icons/lu";
 
 
 const UserAccueil = () => {
@@ -19,7 +20,9 @@ const UserAccueil = () => {
   const { t } = useTranslation();
 
   const [analysis, setAnalysis] = useState(null);
-
+  const [imageLoaded, setImageLoaded] = useState(false); 
+  const [resetTrigger, setResetTrigger] = useState(false); // Nuevo estado
+  
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -53,6 +56,8 @@ const UserAccueil = () => {
   function handleCancel() {
     localStorage.removeItem("analysis");
     setAnalysis(null);
+    setImageLoaded(false);
+    setResetTrigger((prev) => prev + 1); 
   }
 
   if (analysis) return (
@@ -170,11 +175,28 @@ const UserAccueil = () => {
           {t("userAccueil.welcome")} {user.prenom} !{" "}
         </h1>
       )}
-
+      <div className="upload-container">
+          <h2 className="upload-title">Téléchargez votre image pour commencer l’analyse</h2>
+          <p className="upload-subtitle">
+              Notre IA analyse votre photo pour détecter d’éventuelles anomalies.<br />
+              Aucune donnée n’est stockée sans votre accord.
+          </p>
       <form onSubmit={handleSubmit}>
-        <ImageInput name="image" id="image" />
-        <button type="submit">Analyse</button>
+        <ImageInput name="image" id="image" onImageLoad={setImageLoaded} resetTrigger={resetTrigger} />
+        {imageLoaded && (
+          <div className="button-group">
+            <button className="cancel-button" type="button" onClick={handleCancel}>
+              <GrUndo size={20} style={{ marginBottom: ".2em", marginRight: ".5em" }} />
+              Annuler
+            </button>
+            <button className="confirm-button" type="submit">
+              <LuScanSearch size={20} style={{ marginBottom: ".2em", marginRight: ".5em" }} />
+              Lancer l’analyse
+            </button>
+          </div>
+        )}
       </form>
+      </div>
 
       <ImageUpload />
     </div>
