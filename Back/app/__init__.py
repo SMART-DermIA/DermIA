@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 import os
@@ -41,6 +41,10 @@ def create_app():
     @app.route('/')
     def home():
         return {"message": "Backend Flask is running"}
+
+    @app.route('/app/uploads/<path:filename>')
+    def uploaded_file(filename):
+        return send_from_directory(app.config['UPLOAD_PATH'], filename)
 
     # ——— 6) CRÉER LES tables si besoin
     with app.app_context():
