@@ -96,3 +96,38 @@ export async function createAlbum(formData) {
     };
   }
 }
+
+export async function addAnalysisToAlbum(albumId, formData) {
+  try {
+    const res = await axios.put(`${API_BASE_URL}/album/${albumId}/analysis`, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("API replied:", res.data);
+
+    if (res.status === 200) {
+      return {
+        success: true,
+        status: res.status,
+        analysis: res.data,
+      };
+    } else {
+      return {
+        success: false,
+        status: res.status,
+        message: res.data?.error || "Unexpected response status",
+      };
+    }
+  } catch (err) {
+    console.error("API error:", err);
+
+    return {
+      success: false,
+      status: err.response?.status || 500,
+      message: err.response?.data?.error || err.message || "Unexpected error",
+    };
+  }
+}

@@ -55,6 +55,21 @@
     "addToAlbum": "Add to album",
     "share": "Share to your treating doctor"
   },
+  "addToAlbum": {
+    "errorLoadingAlbums": "Could not load recent albums.",
+    "missingFields": "Please fill in all required fields.",
+    "defaultFileName": "uploaded_image.jpg",
+    "success": "Album created successfully!",
+    "error": "An error occurred while creating the album.",
+    "addedToAlbum": "Successfully added to album.",
+    "waiting": "Waiting...",
+    "yourAlbums": "Your albums",
+    "createAlbum": "Create an album",
+    "loading": "Loading...",
+    "albumTitlePlaceholder": "Enter album title",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
   "footer": {
     "cgu": "Terms of Use",
     "privacyPolicy": "Privacy Policy",
