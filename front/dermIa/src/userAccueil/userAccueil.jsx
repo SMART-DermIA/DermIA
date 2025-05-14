@@ -201,7 +201,6 @@ const UserAccueil = () => {
       </form>
       </div>
 
-      <ImageUpload />
     </div>
   );
 };
