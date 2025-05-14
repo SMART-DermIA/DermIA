@@ -52,37 +52,20 @@ export default function Album() {
 		medecinTraitant: "Dr. Smith",
 	}
 
-	const albumData = {
-		title: "Album title",
-		creationDate: "2023-10-01",
-		lastModified: "2023-10-05",
-		dangerosite: "90%",
-		images: [
-		  { image: "/image1.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image2.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image1.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image2.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image2.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image1.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image2.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image2.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image1.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image2.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image1.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 }
-		]
-	};
+	const albumData = state.data ? {
+		title: state.data.title,
+		creationDate: new Date(state.data.oldest_analysis_date).toLocaleDateString(),
+		lastModified: new Date(state.data.newest_analysis_date).toLocaleDateString(),
+		dangerosite: state.data.newest_analysis_severity,
+		images: state.data.analyses.map(analysis => ({
+			image: analysis.photo,
+			date: new Date(analysis.date).toLocaleDateString(),
+			dangerosite: analysis.result,
+		})),
+	} : null;
 
 	const handleGeneratePDF = async () => {
+		if (!albumData) return;
 		await generatePDF(userData, albumData, ".album-chart-static");
 	}
 
@@ -90,26 +73,26 @@ export default function Album() {
 		<div>
 			<Navbar />
 			<div className="container-fluid">
-				<div className="row">
-					<div className="col-sm">
-						<h1 className="album-title">{t('album.album')} Album title</h1>
-						<h3 className="album-subtitle">{t('album.creation')} [date] | {t('album.lastModified')} [date]</h3>
-						<h3 className="album-subtitle-2">{t('album.dernierDangerosite')} 90 % (risque élevé)</h3>
-					</div>
-					<div className="col-sm d-flex justify-content-end d-none d-md-flex">
-						<LuUndo2 className="album-undo" size={48} onClick={handleUndo}/>
-					</div>
-				</div>
-				<div className="album-scroll">
-					<PictureCard image={"/image1.png"} date="2023-10-01" dangerosite="0" />
-					<PictureCard image={"/image2.png"} date="2023-10-01" dangerosite="0" />
-					<PictureCard image={"/image3.png"} date="2023-10-01" dangerosite="0" />
-					<PictureCard image={"/image1.png"} date="2023-10-01" dangerosite="1" />
-					<PictureCard image={"/image2.png"} date="2023-10-01" dangerosite="2" />
-					<PictureCard image={"/image3.png"} date="2023-10-01" dangerosite="3" />
-					<PictureCard image={"/image3.png"} date="2023-10-01" dangerosite="3" />
-					<PictureCard image={"/image3.png"} date="2023-10-01" dangerosite="3" />
-				</div>
+				{state.error ? (
+						<div className="historique-albums"><p>{state.error}</p></div>
+					) : state.loading ? (
+						<div className="historique-albums"><p>Chargement...</p></div>
+					) : (
+						<>
+							<h1 className="album-title">{t('album.album')}: {state.data.title}</h1>
+
+							<h3 className="album-subtitle">{t('album.creation')}: {new Date(state.data.oldest_analysis_date).toLocaleDateString()}</h3>
+							<h3 className="album-subtitle">{t('album.lastModified')}: {new Date(state.data.newest_analysis_date).toLocaleDateString()}</h3>
+							<h3 className="album-subtitle-2">{t('album.dernierDangerosite')}: {state.data.newest_analysis_severity} </h3>
+							<div className="album-scroll">
+								{
+									state.data.analyses.map((analysis, i) =>
+										<PictureCard key={i} image={analysis.photo} date={new Date(analysis.date).toLocaleDateString()} dangerosite={analysis.result} />
+									)
+								}
+							</div>
+						</>
+					)}
 			</div>
 			<div className="album-stats">
 				<div className="container-fluid">

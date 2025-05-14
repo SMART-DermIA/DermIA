@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, make_response, send_from_directory
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 import os
@@ -44,7 +44,9 @@ def create_app():
 
     @app.route('/app/uploads/<path:filename>')
     def uploaded_file(filename):
-        return send_from_directory(app.config['UPLOAD_PATH'], filename)
+        response = make_response(send_from_directory(app.config['UPLOAD_PATH'], filename))
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
+        return response
 
     # ——— 6) CRÉER LES tables si besoin
     with app.app_context():

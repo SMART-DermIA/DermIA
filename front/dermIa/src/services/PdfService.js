@@ -1,20 +1,10 @@
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-/*const toBase64 = async (url) => {
-  const res = await fetch(url);
-  const blob = await res.blob();
-  return await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
-  });
-};*/
-
 const cropImageToSquare = async (src) => {
 	return new Promise((resolve) => {
 		const img = new Image();
+		img.crossOrigin = "anonymous";
 		img.src = src;
 		img.onload = () => {
 			const size = Math.min(img.width, img.height); // cuadrado
@@ -142,7 +132,10 @@ export const generatePDF = async (userData, albumData, chartSelector) => {
 	const chartElement = document.querySelector(chartSelector);
 	let imgHeight = 0;
 	if (chartElement) {
-		const canvas = await html2canvas(chartElement);
+		const canvas = await html2canvas(chartElement, {
+			useCORS: true,
+			allowTaint: false
+		});
 		const chartDataUrl = canvas.toDataURL("image/png");
 
 		const imgWidth = 190;
