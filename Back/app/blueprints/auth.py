@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from ..models import db, User
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, set_access_cookies, jwt_required, get_jwt_identity, unset_jwt_cookies
@@ -49,24 +49,23 @@ def login():
     if not data:
         return jsonify({"error": "No input data provided"}), 400
 
-    email = data.get('email')
-    password = data.get('password')
+    email = data.get('email', '').strip().lower()
+    password = data.get('password', '')
 
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
 
     user = User.query.filter_by(email=email).first()
-    if user:
-        print(f"User found with email={user.email}: id={user.id}")
-    else:
-        print(f"No user found with email={email}")
-
     if not user or not bcrypt.check_password_hash(user.password, password):
+        current_app.logger.debug(f"Failed login attempt for email={email}")
         return jsonify({"error": "Invalid email or password"}), 401
 
     access_token = create_access_token(identity=str(user.id))
-
-    resp = jsonify({"msg": "Login successful"})
+    resp = jsonify({
+        "message": "Login successful",
+        "access_token": access_token,
+        "user_id": user.id
+    })
     set_access_cookies(resp, access_token)
 
     return resp, 200

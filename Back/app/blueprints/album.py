@@ -1,8 +1,10 @@
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
+import flask
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy import select
 from werkzeug.utils import secure_filename
 
 from ..backend_lib.image import process_image
@@ -51,9 +53,11 @@ def create_album():
     # Generate a file name
     original_filename = secure_filename(image.filename)
     base, ext = os.path.splitext(original_filename)
-    timestamp = datetime.utcnow().strftime('%Y%m%dT%H%M%S')
+    timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')
     filename = f"{user.id}_{timestamp}{ext}"
     save_path = os.path.join(current_app.config['UPLOAD_PATH'], filename)
+
+    print(save_path)
 
     # If file name already taken, append suffix to avoid overwriting
     counter = 1
@@ -120,7 +124,7 @@ def get_albums():
         analyses = [
             {
                 "id": analysis.id,
-                "photo": analysis.photo,
+                "photo": flask.request.host_url.strip("/") + analysis.photo,
                 "result": analysis.result,
                 "date": analysis.date.isoformat()
             }
@@ -137,7 +141,7 @@ def get_albums():
             "position_y": album.position_y,
             "orientation": album.orientation,
             "last_updated": latest_analysis.date.isoformat() if latest_analysis else None,
-            "last_photo": latest_analysis.photo if latest_analysis else None,
+            "last_photo": flask.request.host_url.strip("/") + latest_analysis.photo if latest_analysis else None,
         })
 
 
@@ -147,21 +151,22 @@ def get_albums():
         "data": result
     }), 200
 
-@album_bp.route('/<int:id>', methods=['PUT'])
+@album_bp.route('/<int:id>/analysis', methods=['PUT'])
 @jwt_required()
 def add_analysis_to_album(id: int):
     # Get data from request object
     result = request.form.get('result')
     if result is None:
         return jsonify({"error": "No result given in body"}), 400
-
     date_str = request.form.get('date')  # Expecting a string like '2025-05-09'
 
-    # Find Album
-    album = db.session.get(Album, id).query()
-
-    if not album:
-        return jsonify({"error": "Album not found"}), 404
+    # Attempt to parse date (if given)
+    date = None
+    if date_str is not None:
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
+        except:
+            return jsonify({"error": "Could not parse given date"}), 404
 
     # Get files from request object
     if 'image' not in request.files:
@@ -172,10 +177,17 @@ def add_analysis_to_album(id: int):
 
     # Get current user
     current_user_id = get_jwt_identity()
-    user = db.session.get(User, current_user_id).query()
+    user = db.session.get(User, current_user_id)
     if not user:
         return jsonify({"error": "User not found"}), 404
 
+    # Find Album (filtering by id and also current_user_id)
+    stmt = select(Album).where(Album.id == id, Album.user_id == current_user_id)
+    album = db.session.execute(stmt).scalar_one_or_none()
+    if not album:
+        return jsonify({"error": "Album not found"}), 404
+
+    # Process image
     try:
         processed = process_image(image)
         if not processed:
@@ -183,15 +195,15 @@ def add_analysis_to_album(id: int):
     except:
         return jsonify({"error": "Unexpected error formatting given image"}), 500
 
-    # Create directory to save file if not already there
+    # Create directory to save file and generate a file name
     os.makedirs(current_app.config['UPLOAD_PATH'], exist_ok=True)
-
-    # Generate a file name
     original_filename = secure_filename(image.filename)
     base, ext = os.path.splitext(original_filename)
     timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')
     filename = f"{user.id}_{timestamp}{ext}"
     save_path = os.path.join(current_app.config['UPLOAD_PATH'], filename)
+
+    print(save_path)
 
     # If file name already taken, append suffix to avoid overwriting
     counter = 1
@@ -203,20 +215,13 @@ def add_analysis_to_album(id: int):
     # Save image
     image.save(save_path)
 
-    # Attempt to parse date (if given)
-    date = None
-    if date_str is not None:
-        try:
-            date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
-        except:
-            return jsonify({"error": "Could not parse given date"}), 404
-
     new_analysis = Analysis(
-        photo=image,
+        photo=save_path,
         result=result,
         album=album  # can also use album_id=album_id
     )
     db.session.add(new_analysis)
+    db.session.commit()
     db.session.flush()
 
     return jsonify({
@@ -247,7 +252,7 @@ def get_album(id: int):
     analyses = [
         {
             "id": analysis.id,
-            "photo": analysis.photo,
+            "photo": flask.request.host_url.strip("/") + analysis.photo,
             "result": analysis.result,
             "date": analysis.date.isoformat()
         }
@@ -265,7 +270,7 @@ def get_album(id: int):
         "orientation": album.orientation,
         "oldest_analysis_date": analyses[len(analyses)-1]["date"] if len(analyses) != 0 else None,
         "newest_analysis_date": latest_analysis.date.isoformat() if latest_analysis else None,
-        "newest_analysis_photo": latest_analysis.photo if latest_analysis else None,
+        "newest_analysis_photo": flask.request.host_url.strip("/") + latest_analysis.photo if latest_analysis else None,
     }
 
     return jsonify({

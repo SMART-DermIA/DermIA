@@ -9,25 +9,25 @@ export async function getUsersAlbums() {
 
   let albums = res.data.data;
 
-  albums = albums.map(album => ({
-      id: album.id,
-      title: album.title,
-      date: album.date,
-      analyses: album.analyses.map(analysis => ({
-        id: analysis.id,
-        result: analysis.result,
-        date: analysis.date,
-        photo: API_BASE_URL + analysis.photo
-      })),
-      position_label: album.position_label,
-      position_x: album.position_x,
-      position_y: album.position_y,
-      orientation: album.orientation,
-
-      last_updated: album.last_updated,
-      last_photo: API_BASE_URL + album.last_photo
-    })
-  )
+  // albums = albums.map(album => ({
+  //     id: album.id,
+  //     title: album.title,
+  //     date: album.date,
+  //     analyses: album.analyses.map(analysis => ({
+  //       id: analysis.id,
+  //       result: analysis.result,
+  //       date: analysis.date,
+  //       photo: API_BASE_URL + analysis.photo
+  //     })),
+  //     position_label: album.position_label,
+  //     position_x: album.position_x,
+  //     position_y: album.position_y,
+  //     orientation: album.orientation,
+  //
+  //     last_updated: album.last_updated,
+  //     last_photo: API_BASE_URL + album.last_photo
+  //   })
+  // )
 
   console.log(albums)
 
@@ -41,25 +41,25 @@ export async function getAlbum(id) {
 
   let album = res.data.data;
 
-  album = {
-    id: album.id,
-    title: album.title,
-    date: album.date,
-    analyses: album.analyses.map(analysis => ({
-      id: analysis.id,
-      result: analysis.result,
-      date: analysis.date,
-      photo: API_BASE_URL + analysis.photo
-    })),
-    position_label: album.position_label,
-    position_x: album.position_x,
-    position_y: album.position_y,
-    orientation: album.orientation,
-
-    oldest_analysis_date: album.oldest_analysis_date,
-    newest_analysis_date: album.newest_analysis_date,
-    newest_analysis_photo: API_BASE_URL + album.newest_analysis_photo
-  }
+  // album = {
+  //   id: album.id,
+  //   title: album.title,
+  //   date: album.date,
+  //   analyses: album.analyses.map(analysis => ({
+  //     id: analysis.id,
+  //     result: analysis.result,
+  //     date: analysis.date,
+  //     photo: API_BASE_URL + analysis.photo
+  //   })),
+  //   position_label: album.position_label,
+  //   position_x: album.position_x,
+  //   position_y: album.position_y,
+  //   orientation: album.orientation,
+  //
+  //   oldest_analysis_date: album.oldest_analysis_date,
+  //   newest_analysis_date: album.newest_analysis_date,
+  //   newest_analysis_photo: API_BASE_URL + album.newest_analysis_photo
+  // }
 
   console.log(res.data)
   return album;
