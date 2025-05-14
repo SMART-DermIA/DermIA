@@ -164,10 +164,12 @@ def add_analysis_to_album(id: int):
     date = None
     if date_str is not None:
         try:
-            date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
-        except:
-            return jsonify({"error": "Could not parse given date"}), 404
-
+            date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%f")
+        except ValueError:
+            try:
+                date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
+            except ValueError:
+                return jsonify({"error": "Could not parse given date"}), 404
     # Get files from request object
     if 'image' not in request.files:
         return jsonify({"error": "No file given in body"}), 400

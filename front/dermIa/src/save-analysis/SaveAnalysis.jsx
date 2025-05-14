@@ -105,6 +105,7 @@ export default function SaveAnalysis() {
                 imageUrl={album.last_photo}
                 title={album.title}
                 lastModified={album.last_updated}
+                analysis={analysis} 
               />
             ))}
           </div>

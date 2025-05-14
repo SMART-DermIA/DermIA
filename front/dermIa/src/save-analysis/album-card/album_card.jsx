@@ -2,13 +2,18 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import './album_card.css';
 import { useNavigate } from 'react-router-dom';
+import { addAnalysisToAlbum } from '../../services/AlbumService'; 
 
-
-function AlbumCard({ id, imageUrl, title, lastModified }) {
+function AlbumCard({ id, imageUrl, title, lastModified, analysis }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
   const handleClick = async () => {
-    
+    if (!analysis || !analysis.image || !title || !lastModified) {
+      alert(t("addToAlbum.missingFields"));
+      return;
+    }
+
     const formData = new FormData();
     const base64Data = analysis.image.split(",")[1];
     const binaryData = atob(base64Data);
@@ -23,18 +28,21 @@ function AlbumCard({ id, imageUrl, title, lastModified }) {
     const file = new File([blob], fileName, { type: "image/jpeg" });
 
     formData.append("image", file);
-    navigate(`/historique/${id}`);
+    formData.append("result", "hoal2");
+    formData.append("date", lastModified);
+
     try {
-          const newAlbum = await createAlbum(formData);
-          alert(t("addToAlbum.success"));
-    
-          const result = await getUsersAlbums();
-          dispatch({ type: "FETCH_SUCCESS", payload: result });
-          setIsPopupOpen(false); 
-        } catch (err) {
-          console.error(err);
-          alert(t("addToAlbum.error"));
-        }
+      const response = await addAnalysisToAlbum(id, formData); 
+      if (response.success) {
+        alert(t("addToAlbum.success"));
+        navigate(`/historique/${id}`);
+      } else {
+        alert(t("addToAlbum.error"));
+      }
+    } catch (err) {
+      console.error(err);
+      alert(t("addToAlbum.error"));
+    }
   };
 
   return (
