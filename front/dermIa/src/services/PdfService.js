@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-const toBase64 = async (url) => {
+/*const toBase64 = async (url) => {
   const res = await fetch(url);
   const blob = await res.blob();
   return await new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ const toBase64 = async (url) => {
     reader.onerror = reject;
     reader.readAsDataURL(blob);
   });
-};
+};*/
 
 const cropImageToSquare = async (src) => {
 	return new Promise((resolve) => {
@@ -34,26 +34,56 @@ const cropImageToSquare = async (src) => {
 	});
 };
 
-export const generatePDF = async (userData, albumData, chartSelector) => {
-
-	const doc = new jsPDF();
-	let y = 10;
-	let x = 10;
-
+const header = async (doc,x,y, albumData) => {
 	// Title configuration
-	doc.setFont("helvetica", "bold");
+	
 	doc.line(x, y + 30, 200, y + 30);
-	const logo = await toBase64("/logo.png");
-	doc.addImage(logo, "PNG", x + 10, y, 30, 30);
+	//const logo = await toBase64("/logo.png");
+	doc.addImage("/logo.png", "PNG", x + 10, y, 30, 30);
 	doc.setFontSize(20);
+	doc.setFont("helvetica", "bold");
 	doc.text("Album Report", x + 50, y + 10);
 	doc.setFont("helvetica", "italic"); // Reset to normal font after
 	doc.setFontSize(12);
 	doc.text(`${albumData.title}`, x + 50, y + 15);
 	doc.setFontSize(8);
 	doc.setTextColor(80);
-	doc.text("Requested the " + new Date().toLocaleDateString(), x + 50, y + 19);
+	// Requested the + date (current date DD/MM/YYYY HH:MM:SS)
+	const date = new Date();
+	const formattedDate = date.toLocaleString("fr-FR", {
+		day: "2-digit",
+		month: "2-digit",
+		year: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit",
+	});
+	doc.text(`Generated the ${formattedDate}`, x + 50, y + 20);
 	doc.setTextColor(0,0,0);
+	y += 40;
+	doc.setFontSize(10);
+	doc.setFont("helvetica", "normal");
+}
+
+const footer = (doc, pageCount) => {
+	doc.setFontSize(6);
+	
+	doc.line(10, 285, 200, 285);
+	doc.text(pageCount.toString(), 195, 290);
+	doc.setFont("helvetica", "italic");
+	doc.text("Derm'IA. Tous droits réservés. Ce service a pour but de sensibiliser les utilisateurs à la vigilance dermatologique. Il ne s’agit pas d’un diagnostic médical.", 12, 290, { maxWidth: 190 });
+}
+
+
+export const generatePDF = async (userData, albumData, chartSelector) => {
+
+	const doc = new jsPDF();
+	let pageCount = 1;
+	let y = 10;
+	let x = 10;
+
+	// Header
+	header(doc, x, y, albumData);
 	y += 40;
 
 	// User metadata
@@ -107,7 +137,7 @@ export const generatePDF = async (userData, albumData, chartSelector) => {
 	x -= 80;
 
 	doc.line(x, y, 200, y);
-	y += 10;
+	y += 8;
 
 	const chartElement = document.querySelector(chartSelector);
 	let imgHeight = 0;
@@ -115,53 +145,66 @@ export const generatePDF = async (userData, albumData, chartSelector) => {
 		const canvas = await html2canvas(chartElement);
 		const chartDataUrl = canvas.toDataURL("image/png");
 
-		const imgWidth = 160;
+		const imgWidth = 190;
 		imgHeight = (canvas.height * imgWidth) / canvas.width;
-		doc.addImage(chartDataUrl, "PNG", x+15, y, imgWidth, imgHeight);
+		doc.addImage(chartDataUrl, "PNG", x, y, imgWidth, imgHeight);
 	} else {
 		doc.text("No chart available", x, y);
 	}
-	y += imgHeight + 5;
+	y += imgHeight + 8;
 	doc.line(x, y, 200, y);
-	y += 5;
+	y += 10;
 
 	doc.setFontSize(14);
 	doc.setFont("helvetica", "bold");
 
 	doc.text("Images", 105, y, { align: "center" });
 
-	doc.setFontSize(12);
+	doc.setFontSize(10);
 	doc.setFont("helvetica", "normal");
 	y += 8;
 
 	let i = 1;
 	for (const image of albumData.images) {
 		if (y > 240) {
-		doc.addPage();
-		y = 20;
+			footer(doc, pageCount);
+			doc.addPage();
+			pageCount++;
+			y = 10;
+			header(doc, x, y, albumData);
+			y += 35;
+			doc.setFontSize(10);
+			doc.setFont("helvetica", "normal");
 		}
 
 		doc.line(x, y, x + 46.5, y);
-		doc.line(x, y, x, y + 60);
-		doc.line(x + 46.5, y, x + 46.5, y + 60);
-		doc.line(x, y + 60, x + 46.5, y + 60);
+		doc.line(x, y, x, y + 56);
+		doc.line(x + 46.5, y, x + 46.5, y + 56);
+		doc.line(x, y + 56, x + 46.5, y + 56);
 
 
 		const cropped = await cropImageToSquare(image.image);
 		doc.addImage(cropped, "PNG", x + 1, y + 1, 44, 44);
-		doc.text(`${image.date}`, x + 2, y + 52);
-		doc.text(`${image.dangerosite} %`, x + 2, y + 57);
+		doc.text(`${image.date}`, x + 2, y + 49.5);
+		doc.text(`${image.dangerosite} %`, x + 2, y + 54);
 
 		if (i % 4 === 0) {
-			// Saltamos de fila
 			x = 10;
-			y += 61.25;
+			y += 57.25;
 		} else {
-			// Avanzamos a la siguiente columna
 			x += 47.75;
 		}
 		i++;
 	}
+	footer(doc, pageCount);
 
-	doc.save("album_" + Date.now().toString() + ".pdf");
+	
+	// doc save format album_YYYYMMDD_HHMMSS.pdf
+	const date = new Date();
+	const formattedDate = date.toISOString().replace(/[-:]/g, "").split(".")[0];
+	const formattedDateParts = formattedDate.split("T");
+	const datePart = formattedDateParts[0];
+	const timePart = formattedDateParts[1].replace(/:/g, "");
+	const fileName = `album_${datePart}_${timePart}.pdf`;
+	doc.save(fileName);
 };

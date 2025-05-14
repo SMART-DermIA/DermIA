@@ -49,7 +49,9 @@ export default function Album() {
 		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
 		  { image: "/image1.png", date: "2023-10-01", dangerosite: 0 },
 		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 },
-		  { image: "/image2.png", date: "2023-10-01", dangerosite: 0 }
+		  { image: "/image2.png", date: "2023-10-01", dangerosite: 0 },
+		  { image: "/image1.png", date: "2023-10-01", dangerosite: 0 },
+		  { image: "/image3.png", date: "2023-10-01", dangerosite: 0 }
 		]
 	};
 
@@ -92,7 +94,7 @@ export default function Album() {
 				<div
 				className="album-chart-static"
 				style={{
-					width: "600px",
+					width: "700px",
 					height: "400px",
 					position: "absolute",
 					top: "-9999px",
