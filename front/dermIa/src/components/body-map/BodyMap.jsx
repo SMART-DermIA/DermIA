@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useNavigate } from "react-router-dom";
 import "./BodyMap.css";
-import bodyImage from "../../assets/corps.svg"; // même image pour face/dos
+
+import bodyFrontBack from "../../assets/corps.svg";
+import bodyLeft from "../../assets/corps_gauche.svg";
+import bodyRight from "../../assets/corps_droit.svg";
 
 const BodyMap = ({ albums }) => {
   const navigate = useNavigate();
@@ -12,7 +15,6 @@ const BodyMap = ({ albums }) => {
     navigate(`/historique/${albumId}`);
   };
 
-  // Albums correspondant à la vue sélectionnée
   const visibleAlbums = albums.filter(
     (a) =>
       a.orientation === selectedOrientation &&
@@ -20,9 +22,24 @@ const BodyMap = ({ albums }) => {
       !isNaN(parseFloat(a.position_y))
   );
 
+  // Détermine quelle image utiliser selon la vue
+  const getBodyImage = () => {
+    switch (selectedOrientation) {
+      case "front":
+      case "back":
+        return bodyFrontBack;
+      case "left":
+        return bodyLeft;
+      case "right":
+        return bodyRight;
+      default:
+        return bodyFrontBack;
+    }
+  };
+
   return (
     <div className="bodymap-container">
-      {/* Boutons de bascule avant / arrière */}
+      {/* Boutons de vue */}
       <div className="orientation-switch">
         <button
           onClick={() => setSelectedOrientation("front")}
@@ -36,6 +53,18 @@ const BodyMap = ({ albums }) => {
         >
           Vue arrière
         </button>
+        <button
+          onClick={() => setSelectedOrientation("left")}
+          className={selectedOrientation === "left" ? "active" : ""}
+        >
+          Côté gauche
+        </button>
+        <button
+          onClick={() => setSelectedOrientation("right")}
+          className={selectedOrientation === "right" ? "active" : ""}
+        >
+          Côté droit
+        </button>
       </div>
 
       <TransformWrapper
@@ -48,7 +77,7 @@ const BodyMap = ({ albums }) => {
       >
         <TransformComponent>
           <div className="bodymap-image-wrapper">
-            <img src={bodyImage} alt="Corps humain" className="bodymap-image" />
+            <img src={getBodyImage()} alt="Silhouette du corps" className="bodymap-image" />
             {visibleAlbums.map((album, i) => (
               <div
                 key={i}
