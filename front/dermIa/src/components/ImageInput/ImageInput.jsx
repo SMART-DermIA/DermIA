@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './ImageInput.css';
 import { useTranslation } from 'react-i18next';
+import {ImageUpIcon} from "lucide-react";
 
 export default function ImageInput({ name, id, onImageLoad, resetTrigger }) {
   const { t } = useTranslation();
@@ -52,7 +53,7 @@ export default function ImageInput({ name, id, onImageLoad, resetTrigger }) {
   };
 
   return (
-    <div >
+    <>
       <input
         type="file"
         accept="image/*"
@@ -72,13 +73,13 @@ export default function ImageInput({ name, id, onImageLoad, resetTrigger }) {
           <img src={preview} alt="Preview" className="preview-image" />
         ) : (
           <div>
-            <img src="/iconUpload.png" className="img" alt="Icône upload" />   
+            <ImageUpIcon className="img" size="64" strokeWidth="1" />
             <p className="drop-text">{t('imgUpload.dropText')}</p>
             <p className="or-text">{t('imgUpload.orText')}</p>
             <div className="upload-button">{t('imgUpload.chooseFile')}</div>
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }

@@ -6,13 +6,19 @@ import { useTranslation } from "react-i18next";
 import ImageInput from "../components/ImageInput/ImageInput.jsx";
 import {performAnalysis, readFileAsDataURL} from "../services/AnalysisService.js";
 import { toast } from "react-toastify";
-import {FaUserMd} from "react-icons/fa";
-import {MdShare} from "react-icons/md";
 import {GrUndo} from "react-icons/gr";
 import {BiPhotoAlbum} from "react-icons/bi";
 import {Link} from "react-router-dom";
 import { LuScanSearch } from "react-icons/lu";
-import {FullscreenIcon, ImageUpscaleIcon, InfoIcon, SunIcon} from "lucide-react";
+import {
+  CircleXIcon,
+  FullscreenIcon,
+  ImageUpscaleIcon,
+  InfoIcon,
+  SendIcon,
+  SunIcon,
+  UserSearchIcon
+} from "lucide-react";
 
 
 const UserAccueil = () => {
@@ -101,7 +107,7 @@ const UserAccueil = () => {
           <div className="doctor-recommendation">
             <a href="https://www.doctolib.fr/dermatologue/france" target="_blank" rel="noopener noreferrer">
               <button className="doctor-button">
-                <FaUserMd size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+                <UserSearchIcon size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
                 Chercher un dermato
               </button>
             </a>
@@ -150,17 +156,17 @@ const UserAccueil = () => {
 
       <div className="button-group">
         <button className="confirm-button">
-          <MdShare size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-          Partager à votre médecin traitant
+          <SendIcon size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+          Partager à votre médecin
         </button>
         <button className="cancel-button" onClick={handleCancel}>
-          <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
+          <CircleXIcon size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
           Annuler
         </button>
         {/*TODO: make this a link to link to createAlbum page*/}
         <Link to={"/save-analysis"} className="confirm-button">
           <BiPhotoAlbum size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-          Sauvegarder dans un album
+          Enregistrer dans un album
         </Link>
       </div>
 
