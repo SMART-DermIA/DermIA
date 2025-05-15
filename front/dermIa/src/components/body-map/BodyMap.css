@@ -67,3 +67,8 @@
   flex-direction: column;
   align-items: center;
 }
+
+.bodymap-point.temporary {
+  background-color: blue; /* ou un autre pour distinguer */
+  opacity: 0.6;
+}

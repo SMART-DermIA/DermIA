@@ -24,7 +24,15 @@ def create_album():
     if result is None:
         return jsonify({"error": "No result given in body"}), 400
 
-    # Extract additional parameters
+    # Position data (required)
+    position_x = request.form.get('position_x', type=float)
+    position_y = request.form.get('position_y', type=float)
+    orientation = request.form.get('orientation')
+
+    if position_x is None or position_y is None or not orientation:
+        return jsonify({"error": "Position or orientation missing"}), 400
+
+    # Optional analysis metadata
     danger_rate = request.form.get('danger_rate', type=float)
     confidence = request.form.get('confidence', type=float)
     asymmetry = request.form.get('asymmetry', type=float)
@@ -54,32 +62,38 @@ def create_album():
     except:
         return jsonify({"error": "Unexpected error formatting given image"}), 500
 
-    # Create directory to save file if not already there
+    # Create directory if needed
     os.makedirs(current_app.config['UPLOAD_PATH'], exist_ok=True)
 
-    # Generate a file name
+    # Generate a safe filename
     original_filename = secure_filename(image.filename)
     base, ext = os.path.splitext(original_filename)
     timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')
     filename = f"{user.id}_{timestamp}{ext}"
     save_path = os.path.join(current_app.config['UPLOAD_PATH'], filename)
 
-    # If file name already taken, append suffix to avoid overwriting
+    # Avoid overwriting
     counter = 1
     while os.path.exists(save_path):
         filename = f"{user.id}_{timestamp}_{counter}{ext}"
         save_path = os.path.join(current_app.config['UPLOAD_PATH'], filename)
         counter += 1
 
-    # Save image
+    # Save the image
     image.save(save_path)
 
-    # Create new Album
-    new_album = Album(title=title, user_id=user.id)
+    # Create Album with position data
+    new_album = Album(
+        title=title,
+        user_id=user.id,
+        position_x=position_x,
+        position_y=position_y,
+        orientation=orientation
+    )
     db.session.add(new_album)
-    db.session.flush()
+    db.session.flush()  # Get new_album.id
 
-    # Attempt to parse date (if given)
+    # Parse optional date
     date = None
     if date_str is not None:
         try:
@@ -87,7 +101,7 @@ def create_album():
         except:
             return jsonify({"error": "Could not parse given date"}), 404
 
-    # Create new Analysis
+    # Create first analysis
     new_analysis = Analysis(
         photo=save_path,
         result=result,
@@ -107,6 +121,7 @@ def create_album():
         "message": f"Album created with id={new_album.id}",
         "album_id": new_album.id
     }), 200
+
 
 @album_bp.route('/', methods=['GET'])
 @jwt_required()

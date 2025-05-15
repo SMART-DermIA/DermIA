@@ -9,7 +9,7 @@ import bodyRight from "../../assets/corps_droit.svg";
 
 import { useTranslation } from "react-i18next";
 
-const BodyMap = ({ albums }) => {
+const BodyMap = ({ albums = [], onPositionSelect, selectedPosition  }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedOrientation, setSelectedOrientation] = useState("front");
@@ -79,7 +79,25 @@ const BodyMap = ({ albums }) => {
         doubleClick={{ disabled: true }}
       >
         <TransformComponent>
-          <div className="bodymap-image-wrapper">
+          <div
+            className="bodymap-image-wrapper"
+            onClick={(e) => {
+              // Si aucun callback n'est fourni, on ne fait rien
+              if (!onPositionSelect) return;
+
+              const rect = e.currentTarget.getBoundingClientRect();
+              const clickX = (e.clientX - rect.left) / rect.width;
+              const clickY = (e.clientY - rect.top) / rect.height;
+
+              console.log("Clique enregistré :", clickX, clickY, selectedOrientation);
+
+              onPositionSelect({
+                x: clickX,
+                y: clickY,
+                orientation: selectedOrientation
+              });
+            }}
+          >
             <img src={getBodyImage()} alt="Silhouette du corps" className="bodymap-image" />
             {visibleAlbums.map((album, i) => (
               <div
@@ -89,10 +107,23 @@ const BodyMap = ({ albums }) => {
                   left: `${parseFloat(album.position_x) * 100}%`,
                   top: `${parseFloat(album.position_y) * 100}%`,
                 }}
-                onClick={() => handleClick(album.id)}
+                onClick={(e) => {
+                  e.stopPropagation(); // 🔐 Pour éviter que le clic sur un point ne déclenche la sélection
+                  handleClick(album.id);
+                }}
                 title={album.title}
               />
             ))}
+            {selectedPosition && (
+              <div
+                className="bodymap-point temporary"
+                style={{
+                  left: `${selectedPosition.x * 100}%`,
+                  top: `${selectedPosition.y * 100}%`,
+                }}
+                title="Nouvelle position"
+              />
+            )}
           </div>
         </TransformComponent>
       </TransformWrapper>

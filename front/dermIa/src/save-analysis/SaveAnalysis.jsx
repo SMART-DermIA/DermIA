@@ -7,6 +7,8 @@ import { createAsyncReducer } from "../reducers/asyncReducer.js";
 import { toast } from "react-toastify";
 import Navbar from "../components/navBar/navbar.jsx";
 import AlbumCard from "./album-card/album_card.jsx";
+import BodyMap from "../components/body-map/BodyMap.jsx";
+
 
 const { asyncReducer: albumsReducer, initialState } = createAsyncReducer([]);
 
@@ -18,6 +20,8 @@ export default function SaveAnalysis() {
 
   const [albumTitle, setAlbumTitle] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false); // Estado para controlar el popup
+  const [position, setPosition] = useState(null); // { x, y, orientation }
+
 
   useEffect(() => {
     const analysis_string = localStorage.getItem("analysis");
@@ -45,9 +49,17 @@ export default function SaveAnalysis() {
       return;
     }
 
+    if (!position) {
+      alert(t("addToAlbum.selectPositionRequired"));
+      return;
+    }
+
     console.log("Creating album with title:", analysis);
     const formData = new FormData();
 
+    formData.append("position_x", position.x);
+    formData.append("position_y", position.y);
+    formData.append("orientation", position.orientation);
     formData.append("title", albumTitle);
     formData.append("result", analysis.result);
     formData.append("danger_rate", analysis.danger_rate);
@@ -133,6 +145,15 @@ export default function SaveAnalysis() {
           <div className="popup-overlay">
             <div className="popup-content">
               <h2>{t("addToAlbum.createAlbum")}</h2>
+
+              <BodyMap albums={[]} onPositionSelect={setPosition} selectedPosition={position} />
+
+              <p style={{ fontSize: "0.9em", marginTop: "1em" }}>
+                {position
+                  ? `${t("addToAlbum.positionSet")} (${Math.round(position.x * 100)}%, ${Math.round(position.y * 100)}%)`
+                  : t("addToAlbum.clickToSetPosition")}
+              </p>
+
               <input
                 type="text"
                 placeholder={t("addToAlbum.albumTitlePlaceholder")}
@@ -140,6 +161,7 @@ export default function SaveAnalysis() {
                 onChange={(e) => setAlbumTitle(e.target.value)}
                 className="album-title-input"
               />
+
               <div className="popup-buttons">
                 <button className="confirm-button" onClick={handleCreateAlbum}>
                   {t("addToAlbum.confirm")}
@@ -152,6 +174,7 @@ export default function SaveAnalysis() {
                 </button>
               </div>
             </div>
+
           </div>
         )}
       </div>

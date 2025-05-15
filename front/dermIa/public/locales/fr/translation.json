@@ -120,7 +120,10 @@
     "loading": "Chargement...",
     "albumTitlePlaceholder": "Entrez le titre de l'album",
     "confirm": "Confirmer",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "selectPositionRequired": "Veuillez cliquer sur le corps pour indiquer la position.",
+    "clickToSetPosition": "Cliquez sur le corps pour indiquer la position de l'album.",
+    "positionSet": "Position sélectionnée"
   },
   "footer": {
     "cgu": "Conditions Générales d'Utilisation",
