@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import Navbar from "../components/navBar/navbar";
-import ImageUpload from "../components/imgUpload/imgUpload";
 import "./userAccueil.css";
 import { useAuth } from "../auth/authContext.jsx";
 import { useTranslation } from "react-i18next";
@@ -13,6 +12,7 @@ import {GrUndo} from "react-icons/gr";
 import {BiPhotoAlbum} from "react-icons/bi";
 import {Link} from "react-router-dom";
 import { LuScanSearch } from "react-icons/lu";
+import {FullscreenIcon, ImageUpscaleIcon, InfoIcon, SunIcon} from "lucide-react";
 
 
 const UserAccueil = () => {
@@ -179,26 +179,91 @@ const UserAccueil = () => {
         </h1>
       )}
       <div className="upload-container">
-          <h2 className="upload-title">{t('imgUpload.title')}</h2>
-          <p className="upload-subtitle">
-            {t('imgUpload.subtitle1')}<br />
-            {t('imgUpload.subtitle2')}
-          </p>
-      <form onSubmit={handleSubmit}>
-        <ImageInput name="image" id="image" onImageLoad={setImageLoaded} resetTrigger={resetTrigger} />
-        {imageLoaded && (
-          <div className="button-group">
-            <button className="cancel-button" type="button" onClick={handleCancel}>
-              <GrUndo size={20} style={{ marginBottom: ".2em", marginRight: ".5em" }} />
-              {t('imgUpload.cancel')}
-            </button>
-            <button className="confirm-button" type="submit">
-              <LuScanSearch size={20} style={{ marginBottom: ".2em", marginRight: ".5em" }} />
-              {t('imgUpload.analyze')}
-            </button>
+        <h2 className="upload-title">{t('imgUpload.title')}</h2>
+        <p className="upload-subtitle">
+          {t('imgUpload.subtitle1')}<br />
+          {t('imgUpload.subtitle2')}
+        </p>
+        <form onSubmit={handleSubmit}>
+          <ImageInput name="image" id="image" onImageLoad={setImageLoaded} resetTrigger={resetTrigger} />
+          {imageLoaded && (
+            <div className="button-group">
+              <button className="cancel-button" type="button" onClick={handleCancel}>
+                <GrUndo size={20} style={{ marginBottom: ".2em", marginRight: ".5em" }} />
+                {t('imgUpload.cancel')}
+              </button>
+              <button className="confirm-button" type="submit">
+                <LuScanSearch size={20} style={{ marginBottom: ".2em", marginRight: ".5em" }} />
+                {t('imgUpload.analyze')}
+              </button>
+            </div>
+          )}
+        </form>
+
+        <section className="upload-advice">
+          <h2>{t("uploadAdvice.title")}</h2>
+
+          <span className="advice-header">
+        <ImageUpscaleIcon />
+        <h3>{t("uploadAdvice.resolutionTitle")}</h3>
+      </span>
+          <ul>
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.resolutionItem1") }} />
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.resolutionItem2") }} />
+          </ul>
+
+          <div className="suggestion-box">
+            <h4>{t("uploadAdvice.suggestionsTitle")}</h4>
+            <ul>
+              <li>{t("uploadAdvice.resolutionSuggest1")}</li>
+              <li>{t("uploadAdvice.resolutionSuggest2")}</li>
+            </ul>
           </div>
-        )}
-      </form>
+
+          <span className="advice-header">
+        <FullscreenIcon />
+        <h3>{t("uploadAdvice.framingTitle")}</h3>
+      </span>
+          <ul>
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.framingItem1") }} />
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.framingItem2") }} />
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.framingItem3") }} />
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.framingItem4") }} />
+          </ul>
+
+          <div className="suggestion-box">
+            <h4>{t("uploadAdvice.suggestionsTitle")}</h4>
+            <ul>
+              <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.framingSuggest1") }} />
+            </ul>
+          </div>
+
+          <span className="advice-header">
+        <SunIcon />
+        <h3>{t("uploadAdvice.lightingTitle")}</h3>
+      </span>
+          <ul>
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.lightingItem1") }} />
+          </ul>
+
+          <div className="suggestion-box">
+            <h4>{t("uploadAdvice.suggestionsTitle")}</h4>
+            <ul>
+              <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.lightingSuggest1") }} />
+              <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.lightingSuggest2") }} />
+            </ul>
+          </div>
+
+          <span className="advice-header">
+        <InfoIcon />
+        <h3>{t("uploadAdvice.generalTitle")}</h3>
+      </span>
+          <ul>
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.generalItem1") }} />
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.generalItem2") }} />
+            <li dangerouslySetInnerHTML={{ __html: t("uploadAdvice.generalItem3") }} />
+          </ul>
+        </section>
       </div>
 
     </div>
