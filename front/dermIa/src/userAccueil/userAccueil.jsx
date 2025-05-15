@@ -179,10 +179,10 @@ const UserAccueil = () => {
         </h1>
       )}
       <div className="upload-container">
-          <h2 className="upload-title">Téléchargez votre image pour commencer l’analyse</h2>
+          <h2 className="upload-title">{t('imgUpload.title')}</h2>
           <p className="upload-subtitle">
-              Notre IA analyse votre photo pour détecter d’éventuelles anomalies.<br />
-              Aucune donnée n’est stockée sans votre accord.
+            {t('imgUpload.subtitle1')}<br />
+            {t('imgUpload.subtitle2')}
           </p>
       <form onSubmit={handleSubmit}>
         <ImageInput name="image" id="image" onImageLoad={setImageLoaded} resetTrigger={resetTrigger} />
@@ -190,11 +190,11 @@ const UserAccueil = () => {
           <div className="button-group">
             <button className="cancel-button" type="button" onClick={handleCancel}>
               <GrUndo size={20} style={{ marginBottom: ".2em", marginRight: ".5em" }} />
-              Annuler
+              {t('imgUpload.cancel')}
             </button>
             <button className="confirm-button" type="submit">
               <LuScanSearch size={20} style={{ marginBottom: ".2em", marginRight: ".5em" }} />
-              Lancer l’analyse
+              {t('imgUpload.analyze')}
             </button>
           </div>
         )}

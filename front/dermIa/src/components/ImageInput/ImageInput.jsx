@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import './ImageInput.css';
+import { useTranslation } from 'react-i18next';
 
 export default function ImageInput({ name, id, onImageLoad, resetTrigger }) {
+  const { t } = useTranslation();
   const fileInputRef = useRef(null);
   const [preview, setPreview] = useState(null);
 
@@ -71,9 +73,9 @@ export default function ImageInput({ name, id, onImageLoad, resetTrigger }) {
         ) : (
           <div>
             <img src="/iconUpload.png" className="img" alt="Icône upload" />   
-            <p className="drop-text">Glissez-déposez votre image ici</p>
-            <p className="or-text">ou</p>
-            <div className="upload-button">Choisir un fichier depuis votre appareil</div>
+            <p className="drop-text">{t('imgUpload.dropText')}</p>
+            <p className="or-text">{t('imgUpload.orText')}</p>
+            <div className="upload-button">{t('imgUpload.chooseFile')}</div>
           </div>
         )}
       </div>
