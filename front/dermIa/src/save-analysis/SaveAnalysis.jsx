@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./SaveAnalysis.css";
+import { useNavigate } from 'react-router-dom';
 import { createAlbum, getUsersAlbums } from "../services/AlbumService.js";
 import { createAsyncReducer } from "../reducers/asyncReducer.js";
 import axios from "axios";
@@ -10,6 +11,7 @@ import AlbumCard from "./album-card/album_card.jsx";
 const { asyncReducer: albumsReducer, initialState } = createAsyncReducer([]);
 
 export default function SaveAnalysis() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [analysis, setAnalysis] = useState(null);
   const [state, dispatch] = useReducer(albumsReducer, initialState);
@@ -67,12 +69,13 @@ export default function SaveAnalysis() {
     formData.append("image", file);
 
     try {
-      const newAlbum = await createAlbum(formData);
-      alert(t("addToAlbum.success"));
-
-      const result = await getUsersAlbums();
-      dispatch({ type: "FETCH_SUCCESS", payload: result });
-      setIsPopupOpen(false);
+      const response = await createAlbum(formData);
+      if (response.success) {
+        alert(t("addToAlbum.success"));
+        navigate(`/historique/${response.analysis.album_id}`);
+      } else {
+        alert(t("addToAlbum.error"));
+      }
     } catch (err) {
       console.error(err);
       alert(t("addToAlbum.error"));
