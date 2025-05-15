@@ -3,7 +3,7 @@ import React from "react";
 import Chart from "react-apexcharts";
 import { useTranslation } from "react-i18next";
 
-const ApexChart = (dates, irregularity, asymmetry, size, color, mean) => {
+const ApexChart = ({dates, irregularity, asymmetry, size, color, mean}) => {
 	const { t } = useTranslation();
 
   	const options = {
