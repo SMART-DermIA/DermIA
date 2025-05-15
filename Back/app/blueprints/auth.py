@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app
 from ..models import db, User
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, set_access_cookies, jwt_required, get_jwt_identity, unset_jwt_cookies
+from flask_jwt_extended import create_access_token, set_access_cookies, get_jwt, jwt_required, get_jwt_identity, unset_jwt_cookies, decode_token
 
 
 bcrypt = Bcrypt()
@@ -61,10 +61,16 @@ def login():
         return jsonify({"error": "Invalid email or password"}), 401
 
     access_token = create_access_token(identity=str(user.id))
+
+    # Decode token to get expiry timestamp
+    decoded = decode_token(access_token)
+    exp = decoded['exp']  # Unix timestamp
+
     resp = jsonify({
         "message": "Login successful",
         "access_token": access_token,
-        "user_id": user.id
+        "user_id": user.id,
+        "exp": exp
     })
     set_access_cookies(resp, access_token)
 
@@ -95,6 +101,24 @@ def get_current_user():
         "doctor_phone": user.doctor_phone,
         "doctor_email": user.doctor_email,
     }), 200
+
+@auth_bp.route('/token-info', methods=['GET'])
+@jwt_required()
+def token_info():
+    try:
+        # The token is already verified by @jwt_required
+        # Get raw JWT from the request context
+        token_data = get_jwt()
+
+        exp = token_data.get("exp")
+        if not exp:
+            return jsonify({"error": "Expiry not found in token"}), 400
+
+        return jsonify({"exp": exp}), 200
+
+    except Exception as e:
+        current_app.logger.exception("Error fetching token info")
+        return jsonify({"error": "Could not parse token"}), 500
 
 @auth_bp.route('/delete_account', methods=['DELETE'])
 @jwt_required()
