@@ -31,9 +31,11 @@ function Register({ closePopup, openLoginPopup }) {
 
     if (!result.success) {
       toast.error(result.message);
-      console.error(`Registration failed: ${result.message} (Status ${result.status})`);
+      console.error(
+        `Registration failed: ${result.message} (Status ${result.status})`
+      );
     } else {
-      toast.success("Inscription réussie !");
+      toast.success(t("register.success"));
       closePopup();
       openLoginPopup();
     }

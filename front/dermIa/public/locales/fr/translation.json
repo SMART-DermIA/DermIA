@@ -133,7 +133,8 @@
     "newAnalysis": "Nouvelle analyse",
     "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet album ?",
     "deleteSuccess": "Album supprimé avec succès !",
-    "deleteError": "Échec de la suppression de l'album."
+    "deleteError": "Échec de la suppression de l'album.",
+    "loading": "Chargement..."
   },
   "login": {
     "welcome": "Bienvenue sur DERM'IA !",
@@ -164,6 +165,7 @@
     "alreadyMember": "Déjà membre ?",
     "login": "Se connecter",
     "error": "Erreur d'inscription.",
+    "success": "Inscription réussie ! ",
     "networkError": "Erreur réseau ou serveur.",
     "email": "Courriel",
     "nom": "Nom",
@@ -199,7 +201,28 @@
     "deleteAccount": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
   },
   "userAccueil": {
-    "welcome": "Bienvenue"
+    "welcome": "Bienvenue",
+    "uploadTitle": "Téléchargez votre image pour commencer l’analyse",
+    "uploadSubtitle": "Notre IA analyse votre photo pour détecter d’éventuelles anomalies. Aucune donnée n’est stockée sans votre accord.",
+    "analysisComplete": "Analyse terminée",
+    "potentiallyMalignant": "Potentiellement maligne",
+    "benign": "Bénigne",
+    "dangerRate": "Taux de dangerosité estimé : {{rate}} %",
+    "highRisk": "(risque élevé)",
+    "consulter": "Attention : consultez un dermatologue",
+    "lowRisk": "Bonne nouvelle ! Votre grain ne présente pas d’anomalie.",
+    "doctorButton": "Chercher un dermato",
+    "moreInfo": "En savoir plus sur les grains de beauté.",
+    "criteria": {
+      "irregularity": "Irrégularité",
+      "asymmetry": "Asymétrie",
+      "size": "Taille",
+      "color": "Couleur"
+    },
+    "cancel": "Annuler",
+    "scan": "Lancer l’analyse",
+    "saveAlbum": "Sauvegarder dans un album",
+    "shareDoctor": "Partager à votre médecin traitant"
   },
   "privacyPolicy": {
     "title": "Politique de Confidentialité",

@@ -41,7 +41,7 @@ export default function SaveAnalysis() {
 
   const handleCreateAlbum = async () => {
     if (!albumTitle || !analysis.image) {
-      alert(t("createAlbum.missingFields"));
+      toast.error(t("createAlbum.missingFields"));
       return;
     }
 

@@ -42,9 +42,7 @@ const Historique = () => {
               onClick={() => setShowBodyMap(!showBodyMap)}
               className={`toggle-view-button ${showBodyMap ? "active" : ""}`}
             >
-              {showBodyMap
-                ? t("album.buttonFolders")
-                : t("album.buttonBody")}
+              {showBodyMap ? t("album.buttonFolders") : t("album.buttonBody")}
             </button>
           </div>
         </div>
@@ -55,7 +53,7 @@ const Historique = () => {
           </div>
         ) : state.loading ? (
           <div className="historique-albums">
-            <p>Chargement...</p>
+            <p>{t("historique.loading")}</p>
           </div>
         ) : showBodyMap ? (
           <BodyMap albums={state.data} />

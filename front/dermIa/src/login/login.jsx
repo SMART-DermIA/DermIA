@@ -16,11 +16,13 @@ export default function Login({ closePopup, openRegisterPopup }) {
     const result = await login(email, password);
 
     if (result.success) {
-      toast.success("Connexion réussie !");
+      toast.success(t("login.success"));
       closePopup();
     } else {
-      toast.error(result.message || "Échec de la connexion.");
-      console.error(`Login failed: ${result.message} (Status ${result.status})`);
+      toast.error(result.message || t("login.error"));
+      console.error(
+        `Login failed: ${result.message} (Status ${result.status})`
+      );
     }
   };
 

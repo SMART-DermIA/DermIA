@@ -1,10 +1,13 @@
 import React from "react";
 import "./picture_card.css";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 function PictureCard({ image, date, dangerosite, analysisId, onDelete }) {
+  const { t } = useTranslation();
+
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this picture?")) {
+    if (window.confirm(t("pictureCard.confirmDelete"))) {
       console.log("Delete picture");
     }
   };

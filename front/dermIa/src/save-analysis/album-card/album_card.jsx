@@ -1,8 +1,9 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import './album_card.css';
-import { useNavigate } from 'react-router-dom';
-import { addAnalysisToAlbum } from '../../services/AlbumService'; 
+import React from "react";
+import { useTranslation } from "react-i18next";
+import "./album_card.css";
+import { useNavigate } from "react-router-dom";
+import { addAnalysisToAlbum } from "../../services/AlbumService";
+import { toast } from "react-toastify";
 
 function AlbumCard({ id, imageUrl, title, lastModified, analysis }) {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ function AlbumCard({ id, imageUrl, title, lastModified, analysis }) {
 
   const handleClick = async () => {
     if (!analysis || !analysis.image || !title || !lastModified) {
-      alert(t("addToAlbum.missingFields"));
+      toast(t("addToAlbum.missingFields"));
       return;
     }
 
@@ -29,25 +30,25 @@ function AlbumCard({ id, imageUrl, title, lastModified, analysis }) {
 
     formData.append("image", file);
     formData.append("result", analysis.result);
-    formData.append("danger_rate", analysis.danger_rate); 
+    formData.append("danger_rate", analysis.danger_rate);
     formData.append("confidence", analysis.confidence);
     formData.append("asymmetry", analysis.scores.asymmetry);
-    formData.append("color", analysis.scores.color); 
-    formData.append("irregularity", analysis.scores.irregularity); 
-    formData.append("size", analysis.scores.size); 
+    formData.append("color", analysis.scores.color);
+    formData.append("irregularity", analysis.scores.irregularity);
+    formData.append("size", analysis.scores.size);
     formData.append("date", lastModified);
 
     try {
-      const response = await addAnalysisToAlbum(id, formData); 
+      const response = await addAnalysisToAlbum(id, formData);
       if (response.success) {
-        alert(t("addToAlbum.success"));
+        toast.success(t("addToAlbum.success"));
         navigate(`/historique/${id}`);
       } else {
-        alert(t("addToAlbum.error"));
+        toast.error(t("addToAlbum.error"));
       }
     } catch (err) {
       console.error(err);
-      alert(t("addToAlbum.error"));
+      toast.error(t("addToAlbum.error"));
     }
   };
 
@@ -55,16 +56,18 @@ function AlbumCard({ id, imageUrl, title, lastModified, analysis }) {
     <div
       className="album-card"
       onClick={handleClick}
-      style={{ cursor: 'pointer' }}
+      style={{ cursor: "pointer" }}
       tabIndex="0"
       onKeyDown={(e) => {
-        if (e.key === 'Enter') handleClick();
+        if (e.key === "Enter") handleClick();
       }}
     >
       <img src={imageUrl} alt={title} className="album-image" />
       <div className="album-info">
         <p className="album-title">{title}</p>
-        <p className="album-date">{t('album.lastModified')}: {lastModified}</p>
+        <p className="album-date">
+          {t("album.lastModified")}: {lastModified}
+        </p>
       </div>
     </div>
   );

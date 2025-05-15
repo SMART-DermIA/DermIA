@@ -26,7 +26,6 @@ import {
 const UserAccueil = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
-
   const [analysis, setAnalysis] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [resetTrigger, setResetTrigger] = useState(false); // Nuevo estado
@@ -74,9 +73,10 @@ const UserAccueil = () => {
         <Navbar />
         <div className="upload-container">
           <div className="result-box">
-            <h2 className="upload-title">Analyse terminée</h2>
+            <h2 className="upload-title">
+              {t("userAccueil.analysisComplete")}
+            </h2>
             <img src={analysis.image} alt="Analyse" className="result-image" />
-
             <h3
               className="risk-title"
               style={{
@@ -85,10 +85,10 @@ const UserAccueil = () => {
               }}
             >
               {analysis.result === "malignant"
-                ? "Potentiellement maligne"
-                : "Bénigne"}{" "}
-              – Taux de dangerosité estimé : {analysis.danger_rate}%{" "}
-              {analysis.danger_rate > 50 ? "(risque élevé)" : ""}
+                ? t("userAccueil.potentiallyMalignant")
+                : t("userAccueil.benign")}{" "}
+              – {t("userAccueil.dangerRate", { rate: analysis.danger_rate })}{" "}
+              {analysis.danger_rate > 50 ? t("userAccueil.highRisk") : ""}
             </h3>
 
             <div className="risk-bar-container">
@@ -105,8 +105,8 @@ const UserAccueil = () => {
                 }}
               >
                 {analysis.danger_rate > 50
-                  ? "Attention : consultez un dermatologue"
-                  : "Bonne nouvelle ! Votre grain ne présente pas d’anomalie."}
+                  ? t("userAccueil.consulter")
+                  : t("userAccueil.lowRisk")}
               </p>
               {analysis.danger_rate > 50 && (
                 <div className="doctor-recommendation">
@@ -120,7 +120,7 @@ const UserAccueil = () => {
                         size={20}
                         style={{ marginBottom: ".2em", marginRight: ".5em" }}
                       />
-                      Chercher un dermato
+                      {t("userAccueil.doctorButton")}
                     </button>
                   </a>
                 </div>
@@ -130,16 +130,28 @@ const UserAccueil = () => {
                 className="more-info-link"
                 style={{ marginTop: "1.5em", display: "inline-block" }}
               >
-                En savoir plus sur les grains de beauté.
+                {t("userAccueil.moreInfo")}
               </a>
             </div>
 
             <div className="criteria-group">
               {[
-                { name: "Irrégularité", value: analysis.scores.irregularity },
-                { name: "Asymétrie", value: analysis.scores.asymmetry },
-                { name: "Taille", value: analysis.scores.size },
-                { name: "Couleur", value: analysis.scores.color },
+                {
+                  name: t("userAccueil.criteria.irregularity"),
+                  value: analysis.scores.irregularity,
+                },
+                {
+                  name: t("userAccueil.criteria.asymmetry"),
+                  value: analysis.scores.asymmetry,
+                },
+                {
+                  name: t("userAccueil.criteria.size"),
+                  value: analysis.scores.size,
+                },
+                {
+                  name: t("userAccueil.criteria.color"),
+                  value: analysis.scores.color,
+                },
               ].map(({ name, value }) => {
                 const pct = Math.min(Math.max(value, 0), 100);
                 const hue = 120 - (pct * 120) / 100;
@@ -179,31 +191,23 @@ const UserAccueil = () => {
                   size={20}
                   style={{ marginBottom: ".2em", marginRight: ".5em" }}
                 />
-                Partager à votre médecin
+                {t("userAccueil.shareDoctor")}
               </button>
               <button className="cancel-button" onClick={handleCancel}>
                 <CircleXIcon
                   size={20}
                   style={{ marginBottom: ".2em", marginRight: ".5em" }}
                 />
-                Annuler
+                {t("userAccueil.cancel")}
               </button>
-              {/*TODO: make this a link to link to createAlbum page*/}
               <Link to={"/save-analysis"} className="confirm-button">
                 <BiPhotoAlbum
                   size={20}
                   style={{ marginBottom: ".2em", marginRight: ".5em" }}
                 />
-                Enregistrer dans un album
+                {t("userAccueil.saveAlbum")}
               </Link>
             </div>
-
-            <a
-              href="https://www.msdmanuals.com/fr/accueil/troubles-cutan%C3%A9s/excroissances-cutan%C3%A9es-b%C3%A9nignes/grains-de-beaut%C3%A9#Diagnostic_v28368748_fr"
-              className="more-info-link"
-            >
-              En savoir plus sur les grains de beauté.
-            </a>
           </div>
         </div>
       </div>
