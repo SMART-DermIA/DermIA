@@ -136,7 +136,13 @@ def get_albums():
                 "id": analysis.id,
                 "photo": flask.request.host_url.strip("/") + analysis.photo,
                 "result": analysis.result,
-                "date": analysis.date.isoformat()
+                "date": analysis.date.isoformat(),
+                "danger_rate": analysis.danger_rate,
+                "confidence": analysis.confidence,
+                "asymmetry": analysis.asymmetry,
+                "color": analysis.color,
+                "irregularity": analysis.irregularity,
+                "size": analysis.size,
             }
             for analysis in analyses
         ]
@@ -281,7 +287,13 @@ def get_album(id: int):
             "id": analysis.id,
             "photo": flask.request.host_url.strip("/") + analysis.photo,
             "result": analysis.result,
-            "date": analysis.date.isoformat()
+            "date": analysis.date.isoformat(),
+            "danger_rate": analysis.danger_rate,
+            "confidence": analysis.confidence,
+            "asymmetry": analysis.asymmetry,
+            "color": analysis.color,
+            "irregularity": analysis.irregularity,
+            "size": analysis.size,
         }
         for analysis in analyses_query
     ]
