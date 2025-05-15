@@ -59,7 +59,7 @@
     "errorLoadingAlbums": "Could not load recent albums.",
     "missingFields": "Please fill in all required fields.",
     "defaultFileName": "uploaded_image.jpg",
-    "success": "Album created successfully!",
+    "success": "Successfully added to album!",
     "error": "An error occurred while creating the album.",
     "addedToAlbum": "Successfully added to album.",
     "waiting": "Waiting...",

@@ -44,7 +44,8 @@ export default function SaveAnalysis() {
     const formData = new FormData();
 
     formData.append("title", albumTitle);
-    formData.append("result", analysis.danger_rate); 
+    formData.append("result", analysis.result);
+    formData.append("danger_rate", analysis.danger_rate); 
     formData.append("confidence", analysis.confidence);
     formData.append("asymmetry", analysis.scores.asymmetry);
     formData.append("color", analysis.scores.color); 
