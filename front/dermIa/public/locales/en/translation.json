@@ -54,12 +54,9 @@
   },
   "album": {
     "album": "Album",
-    "analysisDetails": "Analysis Details",
     "creation": "Initial analysis",
     "lastModified": "Most recent analysis",
     "dernierDangerosite": "Most recent severity",
-    "date": "Date",
-    "dangerRate": "Danger Rate",
     "statTitle": "Evolution Statistics",
     "statDescription": "This chart shows the evolution of the analyzed parameters (size, color, asymmetry, etc.) over the photos.",
     "chartTitle": "Parameters Evolution",

@@ -48,7 +48,7 @@
 	display: inline-block;
   }
 
-.benign {
+.level-0 {
 	background: green;
 }
 
@@ -60,7 +60,7 @@
 	background: orange;
 }
 
-.malignant {
+.level-3 {
 	background: red;
 }
 

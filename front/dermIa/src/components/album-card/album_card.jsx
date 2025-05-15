@@ -24,7 +24,7 @@ function AlbumCard({ id, imageUrl, title, lastModified }) {
       <img src={imageUrl} alt={title} className="album-image" />
       <div className="album-info">
         <p className="album-title">{title}</p>
-        <p className="album-date">{t('album.lastModified')}: {new Date(lastModified).toLocaleDateString()}</p>
+        <p className="album-date">{t('album.lastModified')}: {lastModified}</p>
       </div>
     </div>
   );
