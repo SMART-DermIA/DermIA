@@ -64,6 +64,15 @@ export default function Album() {
 		})),
 	} : null;
 
+	const dates = state.data ? state.data.analyses.map(analysis => new Date(analysis.date).toLocaleDateString()) : [];
+	const danger_rates = state.data ? state.data.analyses.map(analysis => analysis.danger_rate) : [];
+	const asymmetry = state.data ? state.data.analyses.map(analysis => analysis.asymmetry) : [];
+	const irregularity = state.data ? state.data.analyses.map(analysis => analysis.irregularity) : [];
+	const color = state.data ? state.data.analyses.map(analysis => analysis.color) : [];
+	const size = state.data ? state.data.analyses.map(analysis => analysis.size) : [];
+
+	console.log("dates", dates);
+
 	const handleGeneratePDF = async () => {
 		if (!albumData) return;
 		await generatePDF(userData, albumData, ".album-chart-static");
@@ -99,7 +108,7 @@ export default function Album() {
 				<h1 className="album-title">{t('album.statTitle')}</h1>
 				<p>{t('album.statDescription')}</p>
 				<div className="album-chart" style={{ display: "flex", justifyContent: "center", alignItems: "center"  }}>
-					<ApexChart />
+					<ApexChart date={dates} irregularity={irregularity} asymmetry={asymmetry} size={size} color={color}/>
 				</div>
 				<div
 				className="album-chart-static"
