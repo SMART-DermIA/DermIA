@@ -1,74 +1,87 @@
 .album-title {
-	font-size: 1.8rem;
-	font-weight: bold;
-	color: #660033;
-	margin-bottom: 0.5em;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #660033;
+  margin-bottom: 0.5em;
 }
 
 .album-subtitle {
-	font-size: 1rem;
-	color: #666;
+  font-size: 1rem;
+  color: #666;
 }
 
 .album-subtitle-2 {
-	font-size: 1rem;
-	color: #660033;
-	margin-bottom: 1em;
+  font-size: 1rem;
+  color: #660033;
+  margin-bottom: 1em;
 }
 
 .album-undo {
-	margin-top: 1em;
-	color: #660033;
-	cursor: pointer;
+  margin-top: 1em;
+  color: #660033;
+  cursor: pointer;
 }
 
 .album-scroll {
-	display: flex;
-	flex-wrap: nowrap;
-	overflow-x: auto;
-	padding-top: 1.5rem;
-	gap: 1rem;
-	scroll-behavior: smooth;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-top: 1.5rem;
+  gap: 1rem;
+  scroll-behavior: smooth;
 }
 
 .container-fluid {
-	width: 100%;
+  width: 100%;
 }
 
 .album-stats {
-	width: 100%;
-	margin-top: 1em;
-	padding: 0.5em 0em;
-	background-color: #F0CFDF;
+  width: 100%;
+  margin-top: 1em;
+  padding: 0.5em 0em;
+  background-color: #f0cfdf;
 }
 
 .album-buttons {
-	margin-top: 1em;
-	margin-bottom: 1em;
-	gap: 1rem;
-	display: flex;
-	width: 100%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  gap: 1rem;
+  display: flex;
+  width: 100%;
 }
 
 .album-buttons .row {
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
 }
 
 .button-group {
   display: flex;
-  gap: 1rem; 
+  gap: 1rem;
 }
 
 @media (max-width: 768px) {
   .album-buttons .row {
-    flex-direction: column; 
-    gap: 1rem; 
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .button-group {
-    justify-content: center; 
+    justify-content: center;
   }
+}
+
+.delete-button {
+  transition: transform 0.2s;
+}
+
+.delete-button:hover {
+  transform: scale(1.05);
+  background-color: #ff4444 !important;
+}
+
+.delete-button:active {
+  transform: scale(0.95);
 }

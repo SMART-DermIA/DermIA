@@ -279,3 +279,83 @@ def get_album(id: int):
         "message": "Album retrieved successfully",
         "data": result
     }), 200
+
+@album_bp.route('/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_album(id: int):
+    # Récupération de l'utilisateur
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Recherche de l'album avec vérification du propriétaire
+    album = Album.query.filter_by(id=id, user_id=user.id).first()
+    if not album:
+        return jsonify({"error": "Album not found"}), 404
+
+    try:
+        # Suppression des fichiers images et des analyses
+        analyses = Analysis.query.filter_by(album_id=album.id).all()
+        for analysis in analyses:
+            if os.path.exists(analysis.photo):
+                os.remove(analysis.photo)
+            db.session.delete(analysis)
+
+        # Suppression de l'album
+        db.session.delete(album)
+        db.session.commit()
+
+        return jsonify({"message": "Album deleted successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Delete error: {str(e)}")
+        return jsonify({"error": "Deletion failed"}), 500
+
+@album_bp.route('/<int:album_id>/analysis/<int:analysis_id>', methods=['DELETE'])
+@jwt_required()
+def delete_analysis(album_id: int, analysis_id: int):
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    album = Album.query.filter_by(id=album_id, user_id=user.id).first()
+    if not album:
+        return jsonify({"error": "Album not found"}), 404
+
+    analysis = Analysis.query.filter_by(
+        id=analysis_id, album_id=album.id
+    ).first()
+    if not analysis:
+        return jsonify({"error": "Analysis not found"}), 404
+
+    try:
+        # Suppression du fichier
+        if os.path.exists(analysis.photo):
+            os.remove(analysis.photo)
+        # Suppression de l'analyse
+        db.session.delete(analysis)
+        db.session.commit()
+
+        # Vérifie s'il reste d'autres analyses pour cet album
+        remaining = Analysis.query.filter_by(album_id=album.id).count()
+        if remaining == 0:
+            # Plus aucune analyse : supprime aussi l'album
+            db.session.delete(album)
+            db.session.commit()
+            return jsonify({
+                "message": "Last image deleted → album deleted",
+                "albumDeleted": True
+            }), 200
+
+        return jsonify({
+            "message": "Analysis deleted successfully",
+            "albumDeleted": False
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Delete analysis error: {e}")
+        return jsonify({"error": "Deletion failed"}), 500

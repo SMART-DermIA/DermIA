@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin.replace(":5173", ":8000");
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  window.location.origin.replace(":5173", ":8000");
 
 export async function getUsersAlbums() {
   const res = await axios.get(`${API_BASE_URL}/album`, {
@@ -29,7 +31,7 @@ export async function getUsersAlbums() {
   //   })
   // )
 
-  console.log(albums)
+  console.log(albums);
 
   return albums;
 }
@@ -61,7 +63,7 @@ export async function getAlbum(id) {
   //   newest_analysis_photo: API_BASE_URL + album.newest_analysis_photo
   // }
 
-  console.log(res.data)
+  console.log(res.data);
   return album;
 }
 
@@ -69,41 +71,6 @@ export async function createAlbum(formData) {
   try {
     const res = await axios.post(`${API_BASE_URL}/album/new`, formData, {
       withCredentials: true,
-    });
-
-    console.log("API replied:", res.data);
-
-    if (res.status === 200) {
-      return {
-        success: true,
-        status: res.status,
-        analysis: res.data
-      };
-    } else {
-      return {
-        success: false,
-        status: res.status,
-        message: res.data?.error || "Unexpected response status"
-      };
-    }
-  } catch (err) {
-    console.error("API error:", err);
-
-    return {
-      success: false,
-      status: err.response?.status || 500,
-      message: err.response?.data?.error || err.message || "Unexpected error"
-    };
-  }
-}
-
-export async function addAnalysisToAlbum(albumId, formData) {
-  try {
-    const res = await axios.put(`${API_BASE_URL}/album/${albumId}/analysis`, formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
     });
 
     console.log("API replied:", res.data);
@@ -130,4 +97,70 @@ export async function addAnalysisToAlbum(albumId, formData) {
       message: err.response?.data?.error || err.message || "Unexpected error",
     };
   }
+}
+
+export async function addAnalysisToAlbum(albumId, formData) {
+  try {
+    const res = await axios.put(
+      `${API_BASE_URL}/album/${albumId}/analysis`,
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("API replied:", res.data);
+
+    if (res.status === 200) {
+      return {
+        success: true,
+        status: res.status,
+        analysis: res.data,
+      };
+    } else {
+      return {
+        success: false,
+        status: res.status,
+        message: res.data?.error || "Unexpected response status",
+      };
+    }
+  } catch (err) {
+    console.error("API error:", err);
+
+    return {
+      success: false,
+      status: err.response?.status || 500,
+      message: err.response?.data?.error || err.message || "Unexpected error",
+    };
+  }
+}
+
+export const deleteAlbum = async (albumId) => {
+  const response = await fetch(`${API_BASE_URL}/album/${albumId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete album");
+  }
+  return response.json();
+};
+
+export async function deleteAnalysis(albumId, analysisId) {
+  const res = await fetch(
+    `http://localhost:8000/album/${albumId}/analysis/${analysisId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "Failed to delete analysis");
+  }
+  return res.json();
 }

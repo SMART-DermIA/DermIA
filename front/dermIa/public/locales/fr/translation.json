@@ -33,7 +33,14 @@
     "album": "Album",
     "creation": "Premier analyse",
     "lastModified": "Dernière analyse",
-    "dernierDangerosite": "Dernier dangerosité"
+    "dernierDangerosite": "Dernier niveau de dangerosité",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer définitivement cet album ? Toutes les analyses associées seront perdues.",
+    "deleteSuccess": "Album supprimé avec succès !",
+    "deleteError": "Échec de la suppression de l'album",
+    "statDescription": "Voici les statistiques de votre album",
+    "buttonTelecharger": "Télécharger",
+    "buttonPartager": "Partager",
+    "buttonSupprimer": "Supprimer l'album"
   },
   "imgUpload": {
     "title": "Téléchargez votre image pour commencer l’analyse",
@@ -78,7 +85,10 @@
   "historique": {
     "title": "Vos albums",
     "subtitle": "Suivez l'évolution de chacun de vos grains de beauté",
-    "newAnalysis": "Nouvelle analyse"
+    "newAnalysis": "Nouvelle analyse",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet album ?",
+    "deleteSuccess": "Album supprimé avec succès !",
+    "deleteError": "Échec de la suppression de l'album."
   },
   "login": {
     "welcome": "Bienvenue sur DERM'IA !",
@@ -181,5 +191,10 @@
     "section9Content": "Les présentes conditions sont régies par le droit français. En cas de litige, les tribunaux compétents seront ceux du siège de l’éditeur.",
     "section10Title": "10. Contact",
     "section10Content": "Pour toute demande liée aux CGU, veuillez contacter : contact@dermia.fr"
+  },
+  "pictureCard": {
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette image ?",
+    "deleteSuccess": "Image supprimée avec succès !",
+    "deleteError": "Erreur lors de la suppression de l'image."
   }
 }

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import "./SaveAnalysis.css";
 import { createAlbum, getUsersAlbums } from "../services/AlbumService.js";
 import { createAsyncReducer } from "../reducers/asyncReducer.js";
-import axios from "axios";
+import { toast } from "react-toastify";
 import Navbar from "../components/navBar/navbar.jsx";
 import AlbumCard from "./album-card/album_card.jsx";
 
@@ -29,7 +29,10 @@ export default function SaveAnalysis() {
     getUsersAlbums()
       .then((albums) => dispatch({ type: "FETCH_SUCCESS", payload: albums }))
       .catch((err) => {
-        dispatch({ type: "FETCH_ERROR", payload: "Could not load recent posts." });
+        dispatch({
+          type: "FETCH_ERROR",
+          payload: "Could not load recent posts.",
+        });
         console.error(err);
       });
   }, []);
@@ -60,14 +63,13 @@ export default function SaveAnalysis() {
 
     try {
       const newAlbum = await createAlbum(formData);
-      alert(t("addToAlbum.success"));
-
+      toast.success(t("addToAlbum.success"));
       const result = await getUsersAlbums();
       dispatch({ type: "FETCH_SUCCESS", payload: result });
-      setIsPopupOpen(false); 
+      setIsPopupOpen(false);
     } catch (err) {
       console.error(err);
-      alert(t("addToAlbum.error"));
+      toast.error(t("addToAlbum.error"));
     }
   };
 
@@ -82,7 +84,10 @@ export default function SaveAnalysis() {
             <h1 className="albums-title">Vos albums</h1>
           </div>
           <div className="albums-header-button">
-            <button className="nouvelle-button" onClick={() => setIsPopupOpen(true)}>
+            <button
+              className="nouvelle-button"
+              onClick={() => setIsPopupOpen(true)}
+            >
               {t("addToAlbum.createAlbum")}
             </button>
           </div>
@@ -105,7 +110,7 @@ export default function SaveAnalysis() {
                 imageUrl={album.last_photo}
                 title={album.title}
                 lastModified={album.last_updated}
-                analysis={analysis} 
+                analysis={analysis}
               />
             ))}
           </div>
@@ -127,7 +132,10 @@ export default function SaveAnalysis() {
                 <button className="confirm-button" onClick={handleCreateAlbum}>
                   {t("addToAlbum.confirm")}
                 </button>
-                <button className="cancel-button" onClick={() => setIsPopupOpen(false)}>
+                <button
+                  className="cancel-button"
+                  onClick={() => setIsPopupOpen(false)}
+                >
                   {t("addToAlbum.cancel")}
                 </button>
               </div>
