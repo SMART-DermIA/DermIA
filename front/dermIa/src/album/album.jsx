@@ -173,7 +173,7 @@ export default function Album() {
           </div>
         ) : (
           <>
-          	<div className="row">
+            <div className="row">
               <div className="col-sm">
                 <h1 className="album-title">
                   {t("album.album")}: {state.data.title}
@@ -181,11 +181,15 @@ export default function Album() {
 
                 <h3 className="album-subtitle">
                   {t("album.creation")}:{" "}
-                  {new Date(state.data.oldest_analysis_date).toLocaleDateString()}
+                  {new Date(
+                    state.data.oldest_analysis_date
+                  ).toLocaleDateString()}
                 </h3>
                 <h3 className="album-subtitle">
                   {t("album.lastModified")}:{" "}
-                  {new Date(state.data.newest_analysis_date).toLocaleDateString()}
+                  {new Date(
+                    state.data.newest_analysis_date
+                  ).toLocaleDateString()}
                 </h3>
                 <h3 className="album-subtitle-2">
                   {t("album.dernierDangerosite")}:{" "}
@@ -193,7 +197,11 @@ export default function Album() {
                 </h3>
               </div>
               <div className="col-sm d-flex justify-content-end d-none d-md-flex">
-                <LuUndo2 className="album-undo" size={48} onClick={handleUndo}/>
+                <LuUndo2
+                  className="album-undo"
+                  size={48}
+                  onClick={handleUndo}
+                />
               </div>
             </div>
             <div className="album-scroll">
@@ -205,7 +213,7 @@ export default function Album() {
                   dangerosite={analysis.result}
                   analysisId={analysis.id}
                   onDelete={handleDeleteClick}
-				          onClick={() => handlePictureClick(analysis)}
+                  onClick={() => handlePictureClick(analysis)}
                 />
               ))}
             </div>
@@ -213,25 +221,38 @@ export default function Album() {
         )}
       </div>
 
-	  {isPopupOpen && selectedAnalysis && (
-                <div className="popup-overlay">
-                    <div className="popup-content">
-                        <button className="close-popup" onClick={handleClosePopup}>
-                            &times;
-                        </button>
-                        <h3>{t("album.analysisDetails")}</h3>
-                        <ul>
-                            <li>{t("album.date")}: {new Date(selectedAnalysis.date).toLocaleDateString()}</li>
-                            <li>{t("album.dangerRate")}: {selectedAnalysis.danger_rate}</li>
-                            <li>{t("album.asymmetry")}: {selectedAnalysis.asymmetry}</li>
-                            <li>{t("album.irregularity")}: {selectedAnalysis.irregularity}</li>
-                            <li>{t("album.color")}: {selectedAnalysis.color}</li>
-                            <li>{t("album.size")}: {selectedAnalysis.size}</li>
-                        </ul>
-                    </div>
-                </div>
-            )}
-			
+      {isPopupOpen && selectedAnalysis && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <button className="close-popup" onClick={handleClosePopup}>
+              &times;
+            </button>
+            <h3>{t("album.analysisDetails")}</h3>
+            <ul>
+              <li>
+                {t("album.date")}:{" "}
+                {new Date(selectedAnalysis.date).toLocaleDateString()}
+              </li>
+              <li>
+                {t("album.dangerRate")}: {selectedAnalysis.danger_rate}
+              </li>
+              <li>
+                {t("album.asymmetry")}: {selectedAnalysis.asymmetry}
+              </li>
+              <li>
+                {t("album.irregularity")}: {selectedAnalysis.irregularity}
+              </li>
+              <li>
+                {t("album.color")}: {selectedAnalysis.color}
+              </li>
+              <li>
+                {t("album.size")}: {selectedAnalysis.size}
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
+
       <div className="album-stats">
         <div className="container-fluid">
           <h1 className="album-title">{t("album.statTitle")}</h1>
@@ -244,7 +265,14 @@ export default function Album() {
               alignItems: "center",
             }}
           >
-            <ApexChart dates={dates} irregularity={irregularity} asymmetry={asymmetry} size={size} color={color} mean={danger_rates} />
+            <ApexChart
+              dates={dates}
+              irregularity={irregularity}
+              asymmetry={asymmetry}
+              size={size}
+              color={color}
+              mean={danger_rates}
+            />
           </div>
           <div
             className="album-chart-static"
@@ -256,7 +284,14 @@ export default function Album() {
               left: "-9999px",
             }}
           >
-            <ApexChart dates={dates} irregularity={irregularity} asymmetry={asymmetry} size={size} color={color} mean={danger_rates} />
+            <ApexChart
+              dates={dates}
+              irregularity={irregularity}
+              asymmetry={asymmetry}
+              size={size}
+              color={color}
+              mean={danger_rates}
+            />
           </div>
         </div>
       </div>

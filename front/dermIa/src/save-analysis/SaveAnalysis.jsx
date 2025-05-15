@@ -9,7 +9,6 @@ import Navbar from "../components/navBar/navbar.jsx";
 import AlbumCard from "./album-card/album_card.jsx";
 import BodyMap from "../components/body-map/BodyMap.jsx";
 
-
 const { asyncReducer: albumsReducer, initialState } = createAsyncReducer([]);
 
 export default function SaveAnalysis() {
@@ -21,7 +20,6 @@ export default function SaveAnalysis() {
   const [albumTitle, setAlbumTitle] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false); // Estado para controlar el popup
   const [position, setPosition] = useState(null); // { x, y, orientation }
-
 
   useEffect(() => {
     const analysis_string = localStorage.getItem("analysis");
@@ -88,6 +86,7 @@ export default function SaveAnalysis() {
       if (response.success) {
         toast.success(t("addToAlbum.success"));
         navigate(`/historique/${response.analysis.album_id}`);
+        localStorage.removeItem("analysis");
       } else {
         toast.error(t("addToAlbum.error"));
       }
@@ -97,7 +96,7 @@ export default function SaveAnalysis() {
     }
   };
 
-  if (!analysis) return <div>Waiting</div>;
+  if (!analysis) return <div>{t("addToAlbum.waiting")}</div>;
 
   return (
     <div>
@@ -146,11 +145,17 @@ export default function SaveAnalysis() {
             <div className="popup-content">
               <h2>{t("addToAlbum.createAlbum")}</h2>
 
-              <BodyMap albums={[]} onPositionSelect={setPosition} selectedPosition={position} />
+              <BodyMap
+                albums={[]}
+                onPositionSelect={setPosition}
+                selectedPosition={position}
+              />
 
               <p style={{ fontSize: "0.9em", marginTop: "1em" }}>
                 {position
-                  ? `${t("addToAlbum.positionSet")} (${Math.round(position.x * 100)}%, ${Math.round(position.y * 100)}%)`
+                  ? `${t("addToAlbum.positionSet")} (${Math.round(
+                      position.x * 100
+                    )}%, ${Math.round(position.y * 100)}%)`
                   : t("addToAlbum.clickToSetPosition")}
               </p>
 
@@ -174,7 +179,6 @@ export default function SaveAnalysis() {
                 </button>
               </div>
             </div>
-
           </div>
         )}
       </div>

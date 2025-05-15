@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/navBar/navbar";
 import "./userAccueil.css";
 import { useAuth } from "../auth/authContext.jsx";
@@ -31,6 +31,19 @@ const UserAccueil = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [resetTrigger, setResetTrigger] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // 1. Au montage on récupère ce qui a été sauvegardé
+  useEffect(() => {
+    const saved = localStorage.getItem("analysis");
+    if (saved) {
+      try {
+        setAnalysis(JSON.parse(saved));
+        setImageLoaded(true);
+      } catch (e) {
+        console.error("Impossible de parser l'analyse sauvegardée", e);
+      }
+    }
+  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -78,8 +91,8 @@ const UserAccueil = () => {
         <Navbar />
         <div className="loading-container">
           <div className="analyzing-box">
-              <h2 className="upload-title">{t("imgUpload.analyzing")}</h2>
-              <PiSpinnerGap size={72} className="spinner-icon" />
+            <h2 className="upload-title">{t("imgUpload.analyzing")}</h2>
+            <PiSpinnerGap size={72} className="spinner-icon" />
           </div>
         </div>
       </div>
