@@ -7,6 +7,7 @@ import { MdOutlineFileDownload, MdShare } from "react-icons/md";
 import { LuUndo2 } from "react-icons/lu";
 import { FaRegTrashAlt } from "react-icons/fa";
 import ApexChart from "../components/chart";
+import { useAuth } from "../auth/authContext.jsx";
 import { useTranslation } from "react-i18next";
 import {
   getAlbum,
@@ -25,6 +26,7 @@ export default function Album() {
   const { id } = useParams();
   const id_n = parseInt(id);
 
+  const { user } = useAuth();
   const { t } = useTranslation();
   const [state, dispatch] = useReducer(albumReducer, initialState);
   const [selectedAnalysis, setSelectedAnalysis] = useState(null);
@@ -59,9 +61,9 @@ export default function Album() {
   };
 
   const userData = {
-    userName: "John Doe",
-    age: "30",
-    medecinTraitant: "Dr. Smith",
+    userName: user.prenom + " " + user.nom,
+    email: user.email,
+    medecinTraitant: user.doctor_name,
   };
 
   const albumData = state.data
@@ -171,22 +173,29 @@ export default function Album() {
           </div>
         ) : (
           <>
-            <h1 className="album-title">
-              {t("album.album")}: {state.data.title}
-            </h1>
+          	<div className="row">
+              <div className="col-sm">
+                <h1 className="album-title">
+                  {t("album.album")}: {state.data.title}
+                </h1>
 
-            <h3 className="album-subtitle">
-              {t("album.creation")}:{" "}
-              {new Date(state.data.oldest_analysis_date).toLocaleDateString()}
-            </h3>
-            <h3 className="album-subtitle">
-              {t("album.lastModified")}:{" "}
-              {new Date(state.data.newest_analysis_date).toLocaleDateString()}
-            </h3>
-            <h3 className="album-subtitle-2">
-              {t("album.dernierDangerosite")}:{" "}
-              {state.data.newest_analysis_severity}{" "}
-            </h3>
+                <h3 className="album-subtitle">
+                  {t("album.creation")}:{" "}
+                  {new Date(state.data.oldest_analysis_date).toLocaleDateString()}
+                </h3>
+                <h3 className="album-subtitle">
+                  {t("album.lastModified")}:{" "}
+                  {new Date(state.data.newest_analysis_date).toLocaleDateString()}
+                </h3>
+                <h3 className="album-subtitle-2">
+                  {t("album.dernierDangerosite")}:{" "}
+                  {state.data.newest_analysis_danger_rate}{" "}
+                </h3>
+              </div>
+              <div className="col-sm d-flex justify-content-end d-none d-md-flex">
+                <LuUndo2 className="album-undo" size={48} onClick={handleUndo}/>
+              </div>
+            </div>
             <div className="album-scroll">
               {state.data.analyses.map((analysis) => (
                 <PictureCard
@@ -196,12 +205,33 @@ export default function Album() {
                   dangerosite={analysis.result}
                   analysisId={analysis.id}
                   onDelete={handleDeleteClick}
+				          onClick={() => handlePictureClick(analysis)}
                 />
               ))}
             </div>
           </>
         )}
       </div>
+
+	  {isPopupOpen && selectedAnalysis && (
+                <div className="popup-overlay">
+                    <div className="popup-content">
+                        <button className="close-popup" onClick={handleClosePopup}>
+                            &times;
+                        </button>
+                        <h3>{t("album.analysisDetails")}</h3>
+                        <ul>
+                            <li>{t("album.date")}: {new Date(selectedAnalysis.date).toLocaleDateString()}</li>
+                            <li>{t("album.dangerRate")}: {selectedAnalysis.danger_rate}</li>
+                            <li>{t("album.asymmetry")}: {selectedAnalysis.asymmetry}</li>
+                            <li>{t("album.irregularity")}: {selectedAnalysis.irregularity}</li>
+                            <li>{t("album.color")}: {selectedAnalysis.color}</li>
+                            <li>{t("album.size")}: {selectedAnalysis.size}</li>
+                        </ul>
+                    </div>
+                </div>
+            )}
+			
       <div className="album-stats">
         <div className="container-fluid">
           <h1 className="album-title">{t("album.statTitle")}</h1>
@@ -214,7 +244,7 @@ export default function Album() {
               alignItems: "center",
             }}
           >
-            <ApexChart />
+            <ApexChart dates={dates} irregularity={irregularity} asymmetry={asymmetry} size={size} color={color} mean={danger_rates} />
           </div>
           <div
             className="album-chart-static"
@@ -226,7 +256,7 @@ export default function Album() {
               left: "-9999px",
             }}
           >
-            <ApexChart />
+            <ApexChart dates={dates} irregularity={irregularity} asymmetry={asymmetry} size={size} color={color} mean={danger_rates} />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import "./picture_card.css";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
-function PictureCard({ image, date, dangerosite, analysisId, onDelete }) {
+function PictureCard({ image, date, dangerosite, analysisId, onDelete, onClick}) {
   const { t } = useTranslation();
 
   const handleDelete = () => {
@@ -12,7 +12,7 @@ function PictureCard({ image, date, dangerosite, analysisId, onDelete }) {
     }
   };
   return (
-    <div className="card">
+    <div className="card" onClick={onClick} style={{ cursor: "pointer" }}>
       <div className="photo-header">
         <FaRegTrashAlt
           className="delete-icon"
@@ -22,7 +22,7 @@ function PictureCard({ image, date, dangerosite, analysisId, onDelete }) {
       <img src={image} alt="Image" className="photo" />
       <div className="photo-body">
         <p className="photo-date mb-0">{date}</p>
-        <span className={`dot level-${dangerosite}`}> </span>
+        <span className={`dot ${dangerosite}`}> </span>
       </div>
     </div>
   );

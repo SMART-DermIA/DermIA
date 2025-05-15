@@ -86,17 +86,20 @@ export const generatePDF = async (userData, albumData, chartSelector) => {
 	y += 5;
 
 	doc.setFont("helvetica", "bold");
-	doc.text(`Age`, x, y);
+	doc.text(`Email`, x, y);
 	doc.text(":", x + 15, y);
 	doc.setFont("helvetica", "normal");
-	doc.text(`${userData.age}`, x + 20, y);
+	doc.text(`${userData.email}`, x + 20, y);
 	y += 5;
 
+	if (userData.medecinTraitant) {
 	doc.setFont("helvetica", "bold");
 	doc.text(`Doctor`, x, y);
 	doc.text(":", x + 15, y);
 	doc.setFont("helvetica", "normal");
 	doc.text(`${userData.medecinTraitant}`, x + 20, y);
+	y += 5;
+	}
 
 	y -= 10;
 	x += 80;

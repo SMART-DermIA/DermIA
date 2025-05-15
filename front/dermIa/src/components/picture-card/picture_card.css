@@ -9,6 +9,8 @@
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	background-color: white;
 	padding: 0 .3em;
+	margin: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .photo-header {
@@ -62,6 +64,14 @@
 
 .malignant {
 	background: red;
+}
+
+
+.card:hover,
+.card:focus {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  outline: none;
 }
 
 @media (max-width: 768px) {
