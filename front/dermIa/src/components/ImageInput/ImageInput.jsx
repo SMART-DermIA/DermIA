@@ -56,7 +56,7 @@ export default function ImageInput({ name, id, onImageLoad, resetTrigger }) {
     <>
       <input
         type="file"
-        accept="image/*"
+        accept=".jpeg, .jpg, .png"
         name={name}
         id={id}
         ref={fileInputRef}
