@@ -43,8 +43,8 @@ const Historique = () => {
               className={`toggle-view-button ${showBodyMap ? "active" : ""}`}
             >
               {showBodyMap
-                ? t("historique.viewFolders")
-                : t("historique.viewBody")}
+                ? t("album.buttonFolders")
+                : t("album.buttonBody")}
             </button>
           </div>
         </div>

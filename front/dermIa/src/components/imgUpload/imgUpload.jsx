@@ -7,8 +7,10 @@ import { LuScanSearch } from "react-icons/lu";
 import { GrUndo } from "react-icons/gr";
 import { MdShare } from "react-icons/md";
 import { FaUserMd } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export default function ImageUpload() {
+    const { t } = useTranslation();
     const [upload, setUpload] = useState(true);
     const [preview, setPreview] = useState(false);
     const [image, setImage] = useState(null);
@@ -92,10 +94,9 @@ export default function ImageUpload() {
         <div className="upload-container">
             {upload && (
                 <div>
-                    <h2 className="upload-title">Téléchargez votre image pour commencer l’analyse</h2>
+                    <h2 className="upload-title">{t('imgUpload.title')}</h2>
                     <p className="upload-subtitle">
-                        Notre IA analyse votre photo pour détecter d’éventuelles anomalies.<br />
-                        Aucune donnée n’est stockée sans votre accord.
+                        {t('imgUpload.subtitle')}
                     </p>
                 </div>
             )}
@@ -104,9 +105,9 @@ export default function ImageUpload() {
                 <div {...getRootProps()} className={`upload-box ${isDragActive ? "drag-active" : ""}`}>
                     <input {...getInputProps()} />
                     <img src="/iconUpload.png" className="img" alt="Icône upload" />
-                    <p className="drop-text">Glissez-déposez votre image ici</p>
-                    <p className="or-text">ou</p>
-                    <div className="upload-button">Choisir un fichier depuis votre appareil</div>
+                    <p className="drop-text">{t('imgUpload.dropText')}</p>
+                    <p className="or-text">{t('imgUpload.orText')}</p>
+                    <div className="upload-button">{t('imgUpload.chooseFile')}</div>
                 </div>
             )}
             
@@ -118,11 +119,11 @@ export default function ImageUpload() {
                             <div className="button-group">
                                 <button className="cancel-button" onClick={handleCancel}>
                                     <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                    Annuler
+                                    {t('imgUpload.cancel')}
                                 </button>
                                 <button className="confirm-button" onClick={handleConfirm}>
                                     <LuScanSearch size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                    Lancer l’analyse
+                                    {t('imgUpload.analyze')}
                                 </button>
                             </div>
                         </div>
@@ -132,14 +133,14 @@ export default function ImageUpload() {
 
             {analyzing && (
                 <div className="analyzing-box">
-                    <h2 className="upload-title">Analyse en cours...</h2>
+                    <h2 className="upload-title">{t('imgUpload.analyzing')}</h2>
                     <PiSpinnerGap size={72} className="spinner-icon" />
                 </div>
             )}
 
             {result && !analyzing && (
                 <div className="result-box">
-                    <h2 className="upload-title">Analyse terminée</h2>
+                    <h2 className="upload-title">{t('imgUpload.analysisComplete')}</h2>
                     <img src={image} alt="Analyse" className="result-image" />
                 
                     <h3
@@ -150,8 +151,8 @@ export default function ImageUpload() {
                         }}
                     >
                         {result.result === "malignant"
-                            ? "Potentiellement maligne"
-                            : "Bénigne"} – Taux de dangerosité estimé : {result.danger_rate}% {result.danger_rate > 50 ? "(risque élevé)" : ""}
+                            ? t('imgUpload.malignant')
+                            : t('imgUpload.benign')} - {t('imgUpload.riskRate')} : {result.danger_rate}% {result.danger_rate > 50 ? `(t('imgUpload.highDanger'))` : ""}
                     </h3>
 
                     <div className="risk-bar-container">
@@ -168,15 +169,15 @@ export default function ImageUpload() {
                             }}
                         >
                             {result.danger_rate > 50
-                                ? "Attention : consultez un dermatologue"
-                                : "Bonne nouvelle ! Votre grain ne présente pas d’anomalie."}
+                                ? t('imgUpload.highDangerRate')
+                                : t('imgUpload.lowDangerRate')}
                         </p>
                         {result.danger_rate > 50 && (
                             <div className="doctor-recommendation">
                                 <a href="https://www.doctolib.fr/dermatologue/france" target="_blank" rel="noopener noreferrer">
                                     <button className="doctor-button">
                                         <FaUserMd size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                                        Chercher un dermato
+                                        {t('imgUpload.findDoctor')}
                                     </button>
                                 </a>
                             </div>
@@ -185,10 +186,10 @@ export default function ImageUpload() {
                                     
                     <div className="criteria-group">
                         {[
-                            { name: 'Irrégularité', value: result.scores.irregularity },
-                            { name: 'Asymétrie',     value: result.scores.asymmetry     },
-                            { name: 'Taille',        value: result.scores.size          },
-                            { name: 'Couleur',       value: result.scores.color         },
+                            { name: t('imgUpload.irregularity') ,   value: result.scores.irregularity },
+                            { name: t('imgUpload.asymmetry'),       value: result.scores.asymmetry     },
+                            { name: t('imgUpload.size'),            value: result.scores.size          },
+                            { name: t('imgUpload.color'),           value: result.scores.color         },
                         ].map(({ name, value }) => {
                             const pct = Math.min(Math.max(value, 0), 100);
                             const hue = 120 - (pct * 120) / 100;
@@ -225,20 +226,20 @@ export default function ImageUpload() {
                     <div className="button-group">
                         <button className="confirm-button">
                             <MdShare size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                            Partager à votre médecin traitant
+                            {t('imgUpload.share')}
                         </button>
                         <button className="cancel-button" onClick={handleCancel}>
                             <GrUndo size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                            Annuler
+                            {t('imgUpload.cancel')}
                         </button>
                         <button className="confirm-button" onClick={handleConfirm}>
                             <BiPhotoAlbum size={20} style={{ marginBottom: '.2em', marginRight: '.5em' }} />
-                            Ajouter à un album
+                            {t('imgUpload.addToAlbum')}
                         </button>
                     </div>
                     
                     <a href="https://www.msdmanuals.com/fr/accueil/troubles-cutan%C3%A9s/excroissances-cutan%C3%A9es-b%C3%A9nignes/grains-de-beaut%C3%A9#Diagnostic_v28368748_fr" className="more-info-link">
-                        En savoir plus sur les grains de beauté.
+                        {t('imgUpload.learnMore')}
                     </a>
                 </div>
             )}

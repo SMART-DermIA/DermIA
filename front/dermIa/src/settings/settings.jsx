@@ -116,7 +116,7 @@ export default function Settings() {
           {medecin.name ? (
             <div className="medecin-info">
               <p>
-                <strong>{t("settings.name")} : </strong> {medecin.name}
+                <strong>{t("settings.doctor")} : </strong> {medecin.name}
               </p>
               <p>
                 <strong>{t("settings.phone")} : </strong> {medecin.phone}
@@ -135,7 +135,7 @@ export default function Settings() {
           {showMedecinForm && (
             <form className="medecin-form" onSubmit={handleMedecinFormSubmit}>
               <label>
-                {t("settings.name")}
+                {t("settings.doctor")}
                 <input
                   name="name"
                   value={formData.name}

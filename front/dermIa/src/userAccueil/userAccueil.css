@@ -53,9 +53,8 @@
 }
 .upload-container {
   text-align: center;
-  padding: 5em 1em;
+  padding: 1em;
   font-family: "Poppins", sans-serif;
-  background-color: #f9f9f9;
 }
 
 .upload-title {
@@ -73,20 +72,73 @@
   line-height: 1.5;
 }
 
-.more-info-link {
-  display: inline-block;
-  margin-top: 1.5em;
-}
+.upload-advice {
+  justify-self: center;
+  text-align: left;
+  max-width: 1000px;
+  margin: 2em auto;
+  padding: 1em;
 
-.share-button {
-  background-color: #f0cfdf; /* ton rouge/doctolib */
-  color: black;
-  padding: 0.9em 1.6em;
-  border: none;
-  border-radius: 1.2em;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  text-decoration: none;
-  outline: none;
+  .advice-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 2em 0 0.5em;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 1.8em;
+    margin-bottom: 0;
+    font-size: 1em;
+    line-height: 1.6;
+  }
+
+  li {
+    padding-left: 0.25rem;
+  }
+
+  .suggestion-box {
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #fbf2fb;
+    color: #590559;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.6em;
+  }
+
+  h3 {
+    font-size: 1.4em;
+    margin: 2px 0 0;
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: 1em;
+    margin: 2px 0 0;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+  .more-info-link {
+    display: inline-block;
+    margin-top: 1.5em;
+  }
+  .share-button {
+    background-color: #f0cfdf; /* ton rouge/doctolib */
+    color: black;
+    padding: 0.9em 1.6em;
+    border: none;
+    border-radius: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    outline: none;
+  }
 }

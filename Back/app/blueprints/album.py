@@ -22,12 +22,19 @@ def create_album():
 
     result = request.form.get('result')
     if result is None:
-       return jsonify({"error": "No result given in body"}), 400
+        return jsonify({"error": "No result given in body"}), 400
+
+    # Extract additional parameters
+    danger_rate = request.form.get('danger_rate', type=float)
+    confidence = request.form.get('confidence', type=float)
+    asymmetry = request.form.get('asymmetry', type=float)
+    color = request.form.get('color', type=float)
+    irregularity = request.form.get('irregularity', type=float)
+    size = request.form.get('size', type=float)
 
     date_str = request.form.get('date')  # Expecting a string like '2025-05-09'
 
     # Get files from request object
-    print(request.files)
     if 'image' not in request.files:
         return jsonify({"error": "No file given in body"}), 400
     image = request.files['image']
@@ -57,8 +64,6 @@ def create_album():
     filename = f"{user.id}_{timestamp}{ext}"
     save_path = os.path.join(current_app.config['UPLOAD_PATH'], filename)
 
-    print(save_path)
-
     # If file name already taken, append suffix to avoid overwriting
     counter = 1
     while os.path.exists(save_path):
@@ -87,11 +92,16 @@ def create_album():
         photo=save_path,
         result=result,
         album_id=new_album.id,
-        date=date
+        date=date,
+        danger_rate=danger_rate,
+        confidence=confidence,
+        asymmetry=asymmetry,
+        color=color,
+        irregularity=irregularity,
+        size=size
     )
     db.session.add(new_analysis)
     db.session.commit()
-    db.session.flush()
 
     return jsonify({
         "message": f"Album created with id={new_album.id}",
@@ -126,7 +136,13 @@ def get_albums():
                 "id": analysis.id,
                 "photo": flask.request.host_url.strip("/") + analysis.photo,
                 "result": analysis.result,
-                "date": analysis.date.isoformat()
+                "date": analysis.date.isoformat(),
+                "danger_rate": analysis.danger_rate,
+                "confidence": analysis.confidence,
+                "asymmetry": analysis.asymmetry,
+                "color": analysis.color,
+                "irregularity": analysis.irregularity,
+                "size": analysis.size,
             }
             for analysis in analyses
         ]
@@ -158,6 +174,15 @@ def add_analysis_to_album(id: int):
     result = request.form.get('result')
     if result is None:
         return jsonify({"error": "No result given in body"}), 400
+
+    # Extract additional parameters
+    danger_rate = request.form.get('danger_rate', type=float)
+    confidence = request.form.get('confidence', type=float)
+    asymmetry = request.form.get('asymmetry', type=float)
+    color = request.form.get('color', type=float)
+    irregularity = request.form.get('irregularity', type=float)
+    size = request.form.get('size', type=float)
+
     date_str = request.form.get('date')  # Expecting a string like '2025-05-09'
 
     # Attempt to parse date (if given)
@@ -170,6 +195,7 @@ def add_analysis_to_album(id: int):
                 date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
             except ValueError:
                 return jsonify({"error": "Could not parse given date"}), 404
+
     # Get files from request object
     if 'image' not in request.files:
         return jsonify({"error": "No file given in body"}), 400
@@ -205,8 +231,6 @@ def add_analysis_to_album(id: int):
     filename = f"{user.id}_{timestamp}{ext}"
     save_path = os.path.join(current_app.config['UPLOAD_PATH'], filename)
 
-    print(save_path)
-
     # If file name already taken, append suffix to avoid overwriting
     counter = 1
     while os.path.exists(save_path):
@@ -217,14 +241,21 @@ def add_analysis_to_album(id: int):
     # Save image
     image.save(save_path)
 
+    # Create new Analysis
     new_analysis = Analysis(
         photo=save_path,
         result=result,
-        album=album  # can also use album_id=album_id
+        album=album,
+        date=date,
+        danger_rate=danger_rate,
+        confidence=confidence,
+        asymmetry=asymmetry,
+        color=color,
+        irregularity=irregularity,
+        size=size
     )
     db.session.add(new_analysis)
     db.session.commit()
-    db.session.flush()
 
     return jsonify({
         "message": f"Analysis added with id={new_analysis.id}",
@@ -256,7 +287,13 @@ def get_album(id: int):
             "id": analysis.id,
             "photo": flask.request.host_url.strip("/") + analysis.photo,
             "result": analysis.result,
-            "date": analysis.date.isoformat()
+            "date": analysis.date.isoformat(),
+            "danger_rate": analysis.danger_rate,
+            "confidence": analysis.confidence,
+            "asymmetry": analysis.asymmetry,
+            "color": analysis.color,
+            "irregularity": analysis.irregularity,
+            "size": analysis.size,
         }
         for analysis in analyses_query
     ]

@@ -28,7 +28,13 @@ function AlbumCard({ id, imageUrl, title, lastModified, analysis }) {
     const file = new File([blob], fileName, { type: "image/jpeg" });
 
     formData.append("image", file);
-    formData.append("result", "hoal2");
+    formData.append("result", analysis.result);
+    formData.append("danger_rate", analysis.danger_rate); 
+    formData.append("confidence", analysis.confidence);
+    formData.append("asymmetry", analysis.scores.asymmetry);
+    formData.append("color", analysis.scores.color); 
+    formData.append("irregularity", analysis.scores.irregularity); 
+    formData.append("size", analysis.scores.size); 
     formData.append("date", lastModified);
 
     try {

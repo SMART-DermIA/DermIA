@@ -7,7 +7,10 @@ import bodyFrontBack from "../../assets/corps.svg";
 import bodyLeft from "../../assets/corps_gauche.svg";
 import bodyRight from "../../assets/corps_droit.svg";
 
+import { useTranslation } from "react-i18next";
+
 const BodyMap = ({ albums }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedOrientation, setSelectedOrientation] = useState("front");
 
@@ -45,25 +48,25 @@ const BodyMap = ({ albums }) => {
           onClick={() => setSelectedOrientation("front")}
           className={selectedOrientation === "front" ? "active" : ""}
         >
-          Vue avant
+          {t('album.personBody.viewArriere')}
         </button>
         <button
           onClick={() => setSelectedOrientation("back")}
           className={selectedOrientation === "back" ? "active" : ""}
         >
-          Vue arrière
+          {t('album.personBody.viewAvant')}
         </button>
         <button
           onClick={() => setSelectedOrientation("left")}
           className={selectedOrientation === "left" ? "active" : ""}
         >
-          Côté gauche
+          {t('album.personBody.viewGauche')}
         </button>
         <button
           onClick={() => setSelectedOrientation("right")}
           className={selectedOrientation === "right" ? "active" : ""}
         >
-          Côté droit
+          {t('album.personBody.viewDroite')}
         </button>
       </div>
 
