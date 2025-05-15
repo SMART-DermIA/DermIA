@@ -33,11 +33,31 @@
     "album": "Album",
     "creation": "Initial analysis",
     "lastModified": "Most recent analysis",
-    "dernierDangerosite": "Most recent severity"
+    "dernierDangerosite": "Most recent severity",
+    "statTitle": "Evolution Statistics",
+    "statDescription": "This chart shows the evolution of the analyzed parameters (size, color, asymmetry, etc.) over the photos.",
+    "chartTitle": "Parameters Evolution",
+    "irregularity": "Irregularity",
+    "asymmetry": "Asymmetry",
+    "size": "Size",
+    "color": "Color",
+    "mean": "Mean",
+    "buttonTelecharger": "Download the album",
+    "buttonSupprimer": "Delete the album",
+    "buttonPartager": "Share with your treating doctor",
+    "buttonFolders": "View as folder",
+    "buttonBody": "View as body map",
+    "personBody": {
+      "viewArriere": "Back view",
+      "viewAvant": "Front view",
+      "viewDroite": "Right view",
+      "viewGauche": "Left view"
+    }
   },
   "imgUpload": {
     "title": "Upload your image to start the analysis",
-    "subtitle": "Our AI analyzes your photo to detect potential anomalies. No data is stored without your consent.",
+    "subtitle1": "Our AI analyzes your photo to detect potential anomalies. No data is stored without your consent.",
+    "subtitle2": "No data is stored without your consent.",
     "dropText": "Drag and drop your image here",
     "orText": "or",
     "chooseFile": "Choose a file from your device",
@@ -53,7 +73,13 @@
     "color": "Color",
     "learnMore": "Learn more",
     "addToAlbum": "Add to album",
-    "share": "Share to your treating doctor"
+    "share": "Share to your treating doctor",
+    "findDoctor": "Find a dermatologist",
+    "highDangerRate": "Warning: consult a dermatologist",
+    "lowDangerRate" : "Good news! Your mole shows no anomalies.",
+    "malignant": "Potentially malignant",
+    "benign": "Benign",
+    "highDanger": "high risk"
   },
   "addToAlbum": {
     "errorLoadingAlbums": "Could not load recent albums.",
@@ -156,7 +182,7 @@
 
   "settings": {
     "title": "Settings",
-    "doctor": "General Practitioner",
+    "doctor": "General Practitioner (GP)",
     "phone": "Phone",
     "email": "Email",
     "edit": "Edit",

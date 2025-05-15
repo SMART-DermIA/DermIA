@@ -33,11 +33,31 @@
     "album": "Album",
     "creation": "Premier analyse",
     "lastModified": "Dernière analyse",
-    "dernierDangerosite": "Dernier dangerosité"
+    "dernierDangerosite": "Dernier dangerosité",
+    "statTitle": "Statistiques d'évolution",
+    "statDescription": "Ce graphique montre l'évolution des paramètres analysés (taille, couleur, asymétrie, etc.) sur les photos.",
+    "chartTitle": "Évolution des paramètres",
+    "irregularity": "Irrégularité",
+    "asymmetry": "Asymétrie",
+    "size": "Taille",
+    "color": "Couleur",
+    "mean": "Moyenne",
+    "buttonTelecharger": "Télécharger l'album",
+    "buttonSupprimer": "Supprimer l'album",
+    "buttonPartager": "Partager à votre médecin traitant",
+    "buttonFolders": "Voir en tant que dossier",
+    "buttonBody": "Voir en tant que bonhomme",
+    "personBody": {
+      "viewArriere": "Vue arrière",
+      "viewAvant": "Vue avant",
+      "viewDroite": "Vue droite",
+      "viewGauche": "Vue gauche"
+    }
   },
   "imgUpload": {
     "title": "Téléchargez votre image pour commencer l’analyse",
-    "subtitle": "Notre IA analyse votre photo pour détecter d’éventuelles anomalies. Aucune donnée n’est stockée sans votre accord.",
+    "subtitle1": "Notre IA analyse votre photo pour détecter d’éventuelles anomalies.",
+    "subtitle2": "Aucune donnée n’est stockée sans votre accord.",
     "dropText": "Glissez-déposez votre image ici",
     "orText": "ou",
     "chooseFile": "Choisir un fichier depuis votre appareil",
@@ -53,7 +73,13 @@
     "color": "Couleur",
     "learnMore": "En savoir plus",
     "addToAlbum": "Ajouter à l’album",
-    "share": "Partager à votre médecin traitant"
+    "share": "Partager à votre médecin traitant",
+    "findDoctor": "Chercher un dermato",
+    "highDangerRate": "Attention : consultez un dermatologue",
+    "lowDangerRate" : "Bonne nouvelle ! Votre grain ne présente pas d'anomalie.",
+    "malignant": "Potentiellement maligne",
+    "benign": "Bénigne",
+    "highDanger": "risque élevé"
   },
   "addToAlbum": {
     "errorLoadingAlbums": "Impossible de charger les albums récents.",
