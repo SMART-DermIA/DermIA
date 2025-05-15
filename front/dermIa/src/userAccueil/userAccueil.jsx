@@ -4,6 +4,7 @@ import "./userAccueil.css";
 import { useAuth } from "../auth/authContext.jsx";
 import { useTranslation } from "react-i18next";
 import ImageInput from "../components/ImageInput/ImageInput.jsx";
+import { PiSpinnerGap } from "react-icons/pi";
 import {
   performAnalysis,
   readFileAsDataURL,
@@ -28,10 +29,12 @@ const UserAccueil = () => {
   const { t } = useTranslation();
   const [analysis, setAnalysis] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [resetTrigger, setResetTrigger] = useState(false); // Nuevo estado
+  const [resetTrigger, setResetTrigger] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setIsLoading(true);
     try {
       const formData = new FormData(event.target);
 
@@ -57,6 +60,8 @@ const UserAccueil = () => {
     } catch (err) {
       console.error("Unexpected error:", err);
       toast.error("An unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -65,6 +70,20 @@ const UserAccueil = () => {
     setAnalysis(null);
     setImageLoaded(false);
     setResetTrigger((prev) => prev + 1);
+  }
+
+  if (isLoading) {
+    return (
+      <div>
+        <Navbar />
+        <div className="loading-container">
+          <div className="analyzing-box">
+              <h2 className="upload-title">{t("imgUpload.analyzing")}</h2>
+              <PiSpinnerGap size={72} className="spinner-icon" />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (analysis)

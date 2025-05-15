@@ -413,3 +413,33 @@
     text-decoration: underline;
   }
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+}
+.analyzing-box {
+	text-align: center;
+	margin-top: 2em;
+}
+.loading-container h2 {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.spinner-icon {
+    font-size: 3.5rem;
+    color: #660033;
+    animation: spin 1.5s linear infinite;
+    margin: 0 auto;
+    display: block;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
