@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navBar/navbar";
 import "./album.css";
@@ -27,6 +27,13 @@ export default function Album() {
 
   const { t } = useTranslation();
   const [state, dispatch] = useReducer(albumReducer, initialState);
+  const [selectedAnalysis, setSelectedAnalysis] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handlePictureClick = (analysis) => {
+    setSelectedAnalysis(analysis);
+    setIsPopupOpen(true);
+  };
 
   useEffect(() => {
     if (!isNaN(id_n)) {
@@ -47,7 +54,10 @@ export default function Album() {
     navigate("/historique");
   };
 
-  // remplacer par une requête API pour récupérer les données de l'album
+  const handleClosePopup = () => {
+    setIsPopupOpen(false); // Cierra el popup
+  };
+
   const userData = {
     userName: "John Doe",
     age: "30",
@@ -63,14 +73,35 @@ export default function Album() {
         lastModified: new Date(
           state.data.newest_analysis_date
         ).toLocaleDateString(),
-        dangerosite: state.data.newest_analysis_severity,
+        dangerosite: state.data.newest_analysis_danger_rate,
         images: state.data.analyses.map((analysis) => ({
           image: analysis.photo,
           date: new Date(analysis.date).toLocaleDateString(),
-          dangerosite: analysis.result,
+          dangerosite: analysis.danger_rate,
         })),
       }
     : null;
+
+  const dates = state.data
+    ? state.data.analyses.map((analysis) =>
+        new Date(analysis.date).toLocaleDateString()
+      )
+    : [];
+  const danger_rates = state.data
+    ? state.data.analyses.map((analysis) => analysis.danger_rate)
+    : [];
+  const asymmetry = state.data
+    ? state.data.analyses.map((analysis) => analysis.asymmetry)
+    : [];
+  const irregularity = state.data
+    ? state.data.analyses.map((analysis) => analysis.irregularity)
+    : [];
+  const color = state.data
+    ? state.data.analyses.map((analysis) => analysis.color)
+    : [];
+  const size = state.data
+    ? state.data.analyses.map((analysis) => analysis.size)
+    : [];
 
   const handleGeneratePDF = async () => {
     if (!albumData) return;

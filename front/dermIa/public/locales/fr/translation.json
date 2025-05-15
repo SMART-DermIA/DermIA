@@ -54,9 +54,12 @@
   },
   "album": {
     "album": "Album",
+    "analysisDetails": "Détails de l'analyse",
     "creation": "Premier analyse",
     "lastModified": "Dernière analyse",
     "dernierDangerosite": "Dernier dangerosité",
+    "date": "Date",
+    "dangerRate": "Taux de dangerosité",
     "statTitle": "Statistiques d'évolution",
     "statDescription": "Ce graphique montre l'évolution des paramètres analysés (taille, couleur, asymétrie, etc.) sur les photos.",
     "chartTitle": "Évolution des paramètres",

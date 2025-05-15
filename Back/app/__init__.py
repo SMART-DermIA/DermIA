@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from flask import Flask, make_response, send_from_directory
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
@@ -18,6 +20,8 @@ def create_app():
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 Mo max
     app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.jpeg', '.png']
     app.config['UPLOAD_PATH'] = os.path.join(os.getcwd(), 'uploads')
+
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 
 
     app.config["JWT_TOKEN_LOCATION"] = ["cookies"]

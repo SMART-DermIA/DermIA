@@ -310,6 +310,7 @@ def get_album(id: int):
         "oldest_analysis_date": analyses[len(analyses)-1]["date"] if len(analyses) != 0 else None,
         "newest_analysis_date": latest_analysis.date.isoformat() if latest_analysis else None,
         "newest_analysis_photo": flask.request.host_url.strip("/") + latest_analysis.photo if latest_analysis else None,
+        "newest_analysis_danger_rate": latest_analysis.danger_rate if latest_analysis else None,
     }
 
     return jsonify({

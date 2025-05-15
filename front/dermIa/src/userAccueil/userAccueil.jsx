@@ -188,6 +188,7 @@ const UserAccueil = () => {
                 />
                 Annuler
               </button>
+              {/*TODO: make this a link to link to createAlbum page*/}
               <Link to={"/save-analysis"} className="confirm-button">
                 <BiPhotoAlbum
                   size={20}
@@ -196,6 +197,13 @@ const UserAccueil = () => {
                 Enregistrer dans un album
               </Link>
             </div>
+
+            <a
+              href="https://www.msdmanuals.com/fr/accueil/troubles-cutan%C3%A9s/excroissances-cutan%C3%A9es-b%C3%A9nignes/grains-de-beaut%C3%A9#Diagnostic_v28368748_fr"
+              className="more-info-link"
+            >
+              En savoir plus sur les grains de beauté.
+            </a>
           </div>
         </div>
       </div>
