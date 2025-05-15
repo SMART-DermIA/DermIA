@@ -40,9 +40,17 @@ export default function SaveAnalysis() {
       return;
     }
 
+    console.log("Creating album with title:", analysis);
     const formData = new FormData();
+
     formData.append("title", albumTitle);
-    formData.append("result", "hoal");
+    formData.append("result", analysis.result);
+    formData.append("danger_rate", analysis.danger_rate); 
+    formData.append("confidence", analysis.confidence);
+    formData.append("asymmetry", analysis.scores.asymmetry);
+    formData.append("color", analysis.scores.color); 
+    formData.append("irregularity", analysis.scores.irregularity); 
+    formData.append("size", analysis.scores.size); 
 
     const base64Data = analysis.image.split(",")[1];
     const binaryData = atob(base64Data);
@@ -64,7 +72,7 @@ export default function SaveAnalysis() {
 
       const result = await getUsersAlbums();
       dispatch({ type: "FETCH_SUCCESS", payload: result });
-      setIsPopupOpen(false); 
+      setIsPopupOpen(false);
     } catch (err) {
       console.error(err);
       alert(t("addToAlbum.error"));
